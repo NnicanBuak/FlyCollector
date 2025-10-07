@@ -1,0 +1,396 @@
+fileFormatVersion: 2
+guid: 3ffd4f7e735683147bfba389fdd90749
+ModelImporter:
+  serializedVersion: 24200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GRADIENTPALLETE
+    second: {fileID: 2100000, guid: 65b6cc0e2a129de45bcdb47e4331b89e, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Scene
+      takeName: Scene
+      internalID: -623603649343465320
+      firstFrame: 0
+      lastFrame: 10
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Fly
+        weight: 1
+      - path: Fly.001
+        weight: 1
+      - path: Fly.002
+        weight: 1
+      - path: Fly.003
+        weight: 1
+      - path: Fly.004
+        weight: 1
+      - path: Fly1
+        weight: 1
+      - path: Fly1.001
+        weight: 1
+      - path: Fly1.002
+        weight: 1
+      - path: Fly1.003
+        weight: 1
+      - path: Fly1.004
+        weight: 1
+      - path: Fly2
+        weight: 1
+      - path: Fly2.001
+        weight: 1
+      - path: Fly2.002
+        weight: 1
+      - path: Fly2.003
+        weight: 1
+      - path: Fly2.004
+        weight: 1
+      - path: Fly3
+        weight: 1
+      - path: Fly3.001
+        weight: 1
+      - path: Fly3.002
+        weight: 1
+      - path: Fly3.003
+        weight: 1
+      - path: Fly3.004
+        weight: 1
+      - path: Fly4
+        weight: 1
+      - path: Fly4.001
+        weight: 1
+      - path: Fly4.002
+        weight: 1
+      - path: Fly4.003
+        weight: 1
+      - path: Fly4.004
+        weight: 1
+      - path: Fly5
+        weight: 1
+      - path: Fly5.001
+        weight: 1
+      - path: Fly5.002
+        weight: 1
+      - path: Fly5.003
+        weight: 1
+      - path: Fly5.004
+        weight: 1
+      - path: Fly6
+        weight: 1
+      - path: Fly6.001
+        weight: 1
+      - path: Fly6.002
+        weight: 1
+      - path: Fly6.003
+        weight: 1
+      - path: Fly6.004
+        weight: 1
+      - path: Fly7
+        weight: 1
+      - path: Fly7.001
+        weight: 1
+      - path: Fly7.002
+        weight: 1
+      - path: Fly7.003
+        weight: 1
+      - path: Fly7.004
+        weight: 1
+      - path: Fly8
+        weight: 1
+      - path: Fly8.001
+        weight: 1
+      - path: Fly8.002
+        weight: 1
+      - path: Fly8.003
+        weight: 1
+      - path: Fly8.004
+        weight: 1
+      - path: Fly9
+        weight: 1
+      - path: Fly9.001
+        weight: 1
+      - path: Fly9.002
+        weight: 1
+      - path: Fly9.003
+        weight: 1
+      - path: Fly9.004
+        weight: 1
+      - path: Fly10
+        weight: 1
+      - path: Fly10.001
+        weight: 1
+      - path: Fly10.002
+        weight: 1
+      - path: Fly10.003
+        weight: 1
+      - path: Fly10.004
+        weight: 1
+      - path: Fly11
+        weight: 1
+      - path: Fly11.001
+        weight: 1
+      - path: Fly11.002
+        weight: 1
+      - path: Fly11.003
+        weight: 1
+      - path: Fly11.004
+        weight: 1
+      - path: Fly12
+        weight: 1
+      - path: Fly12.001
+        weight: 1
+      - path: Fly12.002
+        weight: 1
+      - path: Fly12.003
+        weight: 1
+      - path: Fly12.004
+        weight: 1
+      - path: Fly13
+        weight: 1
+      - path: Fly13.001
+        weight: 1
+      - path: Fly13.002
+        weight: 1
+      - path: Fly13.003
+        weight: 1
+      - path: Fly13.004
+        weight: 1
+      - path: Fly14
+        weight: 1
+      - path: Fly14.001
+        weight: 1
+      - path: Fly14.002
+        weight: 1
+      - path: Fly14.003
+        weight: 1
+      - path: Fly14.004
+        weight: 1
+      - path: Fly15
+        weight: 1
+      - path: Fly15.001
+        weight: 1
+      - path: Fly15.002
+        weight: 1
+      - path: Fly15.003
+        weight: 1
+      - path: Fly15.004
+        weight: 1
+      - path: Fly16
+        weight: 1
+      - path: Fly16.001
+        weight: 1
+      - path: Fly16.002
+        weight: 1
+      - path: Fly16.003
+        weight: 1
+      - path: Fly16.004
+        weight: 1
+      - path: Fly17
+        weight: 1
+      - path: Fly17.001
+        weight: 1
+      - path: Fly17.002
+        weight: 1
+      - path: Fly17.003
+        weight: 1
+      - path: Fly17.004
+        weight: 1
+      - path: Fly18
+        weight: 1
+      - path: Fly18.001
+        weight: 1
+      - path: Fly18.002
+        weight: 1
+      - path: Fly18.003
+        weight: 1
+      - path: Fly18.004
+        weight: 1
+      - path: Fly19
+        weight: 1
+      - path: Fly19.001
+        weight: 1
+      - path: Fly19.002
+        weight: 1
+      - path: Fly19.003
+        weight: 1
+      - path: Fly19.004
+        weight: 1
+      - path: Fly20
+        weight: 1
+      - path: Fly20.001
+        weight: 1
+      - path: Fly20.002
+        weight: 1
+      - path: Fly20.003
+        weight: 1
+      - path: Fly20.004
+        weight: 1
+      - path: Fly21
+        weight: 1
+      - path: Fly21.001
+        weight: 1
+      - path: Fly21.002
+        weight: 1
+      - path: Fly21.003
+        weight: 1
+      - path: Fly21.004
+        weight: 1
+      - path: Fly22
+        weight: 1
+      - path: Fly22.001
+        weight: 1
+      - path: Fly22.002
+        weight: 1
+      - path: Fly22.003
+        weight: 1
+      - path: Fly22.004
+        weight: 1
+      - path: Fly23
+        weight: 1
+      - path: Fly23.001
+        weight: 1
+      - path: Fly23.002
+        weight: 1
+      - path: Fly23.003
+        weight: 1
+      - path: Fly23.004
+        weight: 1
+      - path: Fly24
+        weight: 1
+      - path: Fly24.001
+        weight: 1
+      - path: Fly24.002
+        weight: 1
+      - path: Fly24.003
+        weight: 1
+      - path: Fly24.004
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
