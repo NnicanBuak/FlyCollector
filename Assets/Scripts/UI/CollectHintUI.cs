@@ -2,10 +2,6 @@
 using UnityEngine.UI;
 using TMPro;
 
-/// <summary>
-/// UI подсказка для сбора жуков (ПКМ -> Collect)
-/// Показывается когда жук в инспекции
-/// </summary>
 public class CollectHintUI : MonoBehaviour
 {
     public static CollectHintUI Instance { get; private set; }
@@ -41,7 +37,7 @@ public class CollectHintUI : MonoBehaviour
         
         Instance = this;
         
-        // Получаем компоненты
+
         if (hintPanel != null)
         {
             canvasGroup = hintPanel.GetComponent<CanvasGroup>();
@@ -54,7 +50,7 @@ public class CollectHintUI : MonoBehaviour
             normalScale = panelTransform.localScale;
         }
         
-        // Начинаем скрытыми
+
         Hide();
     }
 
@@ -62,21 +58,19 @@ public class CollectHintUI : MonoBehaviour
     {
         if (hintPanel == null || canvasGroup == null) return;
         
-        // Плавная анимация появления/скрытия
+
         float targetAlpha = shouldShow ? 1f : 0f;
         canvasGroup.alpha = Mathf.Lerp(canvasGroup.alpha, targetAlpha, Time.deltaTime * fadeSpeed);
         
         Vector3 targetScale = shouldShow ? normalScale : hiddenScale;
         panelTransform.localScale = Vector3.Lerp(panelTransform.localScale, targetScale, Time.deltaTime * scaleSpeed);
         
-        // Отключаем интерактивность когда скрыто
+
         canvasGroup.interactable = shouldShow;
         canvasGroup.blocksRaycasts = shouldShow;
     }
 
-    /// <summary>
-    /// Показать подсказку сбора
-    /// </summary>
+
     public void Show()
     {
         shouldShow = true;
@@ -86,7 +80,7 @@ public class CollectHintUI : MonoBehaviour
             hintPanel.SetActive(true);
         }
         
-        // Устанавливаем иконку и текст
+
         if (buttonIcon != null && rightMouseButtonIcon != null)
         {
             buttonIcon.sprite = rightMouseButtonIcon;
@@ -98,9 +92,7 @@ public class CollectHintUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Скрыть подсказку
-    /// </summary>
+
     public void Hide()
     {
         shouldShow = false;
@@ -116,9 +108,7 @@ public class CollectHintUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Установить текст подсказки
-    /// </summary>
+
     public void SetText(string text)
     {
         collectText = text;

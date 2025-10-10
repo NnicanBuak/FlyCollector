@@ -17,15 +17,15 @@ public class GameOverSceneController : MonoBehaviour
     void Update()
     {
         if (transitioning) return;
+        
+        // TODO: заменить старый InpitSystem
+        // if (Input.anyKeyDown)
+        // {
+        //     GoNext();
+        //     return;
+        // }
 
-        // Любая клавиша
-        if (Input.anyKeyDown)
-        {
-            GoNext();
-            return;
-        }
 
-        // Любой клик (мышь/тап)
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2))
         {
             GoNext();

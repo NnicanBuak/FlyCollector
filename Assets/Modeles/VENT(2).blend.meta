@@ -3,7 +3,12 @@ guid: d04463a736bc68e4bab65e75ee8cf9ac
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GRADIENTPALLETE
+    second: {fileID: 2100000, guid: 65b6cc0e2a129de45bcdb47e4331b89e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

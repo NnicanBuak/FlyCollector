@@ -1,68 +1,70 @@
-﻿// EndGameResultsUI.cs
-// Скрипт для "сцены завершения": показывает иконки банок по числу пойманных,
-// и выводит количество "неправильных" (тех, кого не было в цели).
-using System.Collections.Generic;
-using System.Linq;
+using Game;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndGameResultsUI : MonoBehaviour
+public class EndGameResultUI : MonoBehaviour
 {
-    [Header("UI")]
-    [Tooltip("Родитель (Grid/HorizontalLayoutGroup) для иконок-банок")]
-    [SerializeField] private Transform jarsParent;
+    [Header("UI References")]
+    [SerializeField] private TMP_Text titleText;
+    [SerializeField] private TMP_Text detailsText;
+    [SerializeField] private Image outcomeIcon;
+    [SerializeField] private Sprite victorySprite;
+    [SerializeField] private Sprite wrongBugsSprite;
+    [SerializeField] private Sprite timeoutSprite;
 
-    [Tooltip("Префаб одной иконки банки (например, Image внутри пустого GO)")]
-    [SerializeField] private GameObject jarIconPrefab;
+    [Header("Keys in GameSceneManager persistent data")]
+    [SerializeField] private string outcomeKey = "gameOutcome";
+    [SerializeField] private string totalCaughtKey = "totalCaught";
+    [SerializeField] private string wrongCountKey = "wrongCount";
 
-    [Tooltip("Иконка банка-спрайт (если префабу нужен спрайт)")]
-    [SerializeField] private Sprite jarSprite;
-
-    [Header("Тексты")]
-    [SerializeField] private TextMeshProUGUI totalCaughtText;
-    [SerializeField] private TextMeshProUGUI wrongCountText;
-
-    [Header("Опции отображения")]
-    [Tooltip("Очищать контейнер перед созданием иконок")]
-    [SerializeField] private bool clearBeforeBuild = true;
+    private void Awake()
+    {
+        if (titleText == null)  titleText  = GetComponentInChildren<TMP_Text>();
+        if (detailsText == null) detailsText = titleText;
+    }
 
     private void Start()
     {
-        Build();
-    }
+        GameOutcome outcome = GameOutcome.Victory;
+        int total = 0, wrong = 0;
 
-    public void Build()
-    {
-        var targets = TargetBugsRuntime.Instance ? TargetBugsRuntime.Instance.Targets : new List<string>();
-        var caught  = CaughtBugsRuntime.Instance ? CaughtBugsRuntime.Instance.Caught  : new List<string>();
-
-        var targetSet = new HashSet<string>(targets.Select(TargetBugsRuntime.NormalizeKey));
-        var caughtList = caught.Select(TargetBugsRuntime.NormalizeKey).ToList();
-
-        int totalCaught = caughtList.Count;
-        int wrong = caughtList.Count(c => !targetSet.Contains(c));
-
-        // Иконки-банки по числу пойманных
-        if (jarsParent && jarIconPrefab)
+        var gsm = GameSceneManager.Instance;
+        if (gsm != null)
         {
-            if (clearBeforeBuild)
-            {
-                for (int i = jarsParent.childCount - 1; i >= 0; i--)
-                    Destroy(jarsParent.GetChild(i).gameObject);
-            }
-
-            for (int i = 0; i < totalCaught; i++)
-            {
-                var go = Instantiate(jarIconPrefab, jarsParent);
-                var img = go.GetComponentInChildren<Image>();
-                if (img && jarSprite) img.sprite = jarSprite;
-                // можно добавить подсказку/тултип с именем
-                // var tt = go.GetComponent<Tooltip>(); tt?.SetText(caughtList[i]);
-            }
+            if (gsm.HasPersistentData(outcomeKey))
+                outcome = gsm.GetPersistentData<GameOutcome>(outcomeKey, GameOutcome.Victory);
+            total = gsm.GetPersistentData<int>(totalCaughtKey, 0);
+            wrong = gsm.GetPersistentData<int>(wrongCountKey, 0);
         }
 
-        if (totalCaughtText) totalCaughtText.text = $"Собрано жуков: {totalCaught}";
-        if (wrongCountText)  wrongCountText.text  = $"Неправильных жуков: {wrong}";
+        Apply(outcome, total, wrong);
+    }
+
+    private void Apply(GameOutcome outcome, int total, int wrong)
+    {
+        if (titleText)
+            titleText.text = outcome switch
+            {
+                GameOutcome.Victory   => "Победа!",
+                GameOutcome.WrongBugs => "Неверные жуки",
+                GameOutcome.Timeout   => "Время вышло",
+                _ => "Результат"
+            };
+
+        if (detailsText)
+            detailsText.text = $"Поймано: {total}\nОшибок: {wrong}";
+
+        if (outcomeIcon)
+        {
+            outcomeIcon.sprite = outcome switch
+            {
+                GameOutcome.Victory   => victorySprite,
+                GameOutcome.WrongBugs => wrongBugsSprite,
+                GameOutcome.Timeout   => timeoutSprite,
+                _ => null
+            };
+            outcomeIcon.enabled = outcomeIcon.sprite != null;
+        }
     }
 }

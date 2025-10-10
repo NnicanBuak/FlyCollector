@@ -18,7 +18,7 @@ public class CreditsController : MonoBehaviour
     {
         if (transitioning) return;
 
-        // Любой клик/тап
+
         if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1) || Input.GetMouseButtonDown(2) ||
             (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
         {
