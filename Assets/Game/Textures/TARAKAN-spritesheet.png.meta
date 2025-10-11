@@ -1,0 +1,1236 @@
+fileFormatVersion: 2
+guid: 267f4b88bcd56fb48bce6859b4817e4e
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 2663
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ff618e4953c13f4cb470c59d07233dc
+      internalID: -1674002494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 2663
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48d68e5800de9344e9cd6978858daabf
+      internalID: 1838149418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 2663
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b631ef2809834264fb20974ba4e55296
+      internalID: -457631338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 1469
+        y: 2663
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6a092746a70a9344bc2ff3cf2425133
+      internalID: 454332737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 2663
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab09a024e20a3f3408e7f1c15209e09f
+      internalID: -1471761383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 2369
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67306a191b6f7614d83de0db5e473479
+      internalID: 740766547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 2369
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ac144cc5aa7d624eaceddafec374bad
+      internalID: 1663809901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 2369
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07c662d3a64e9de438147771540cc5f6
+      internalID: -1003236712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 1469
+        y: 2369
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad74a1349b7a6d847a4bcf6eae0b4b0f
+      internalID: 1575351554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 2369
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d70b2dcda2fb18a4180e4025b89b53c0
+      internalID: -111328555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 2074
+        width: 471
+        height: 277
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3786b6f1b4e8b1944a744699262da37d
+      internalID: -825160630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 2074
+        width: 471
+        height: 277
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7a973d7341f3384bbe791ef46b2444b
+      internalID: -2060883023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 2074
+        width: 471
+        height: 277
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fd1e7b6ae0df2b47b3e8fed33388d07
+      internalID: -2023812449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 1469
+        y: 2074
+        width: 471
+        height: 277
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41f5a1e8b1b182447a8aa2c43fd133f6
+      internalID: 1095269847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 2074
+        width: 471
+        height: 277
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7183d39de8d64344bf11a3259eac160
+      internalID: -1706367698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 1778
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 786eda03a3af04a47b64260a64202a77
+      internalID: 1259482452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_16
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1778
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef6e6b81fd71608428ae2c720d8d62a1
+      internalID: 1158973675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_17
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 1778
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d90d62666664fdd4f83e202f2bc94f7d
+      internalID: -1451915426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_18
+      rect:
+        serializedVersion: 2
+        x: 1469
+        y: 1778
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a8d02555a376784682469f4234d363e
+      internalID: 2039032745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_19
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 1778
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc9a9a049d9792a48bb26920d79fb19c
+      internalID: 188623123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_20
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 1483
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b78ff062a50d674bb367bf37b37f9cf
+      internalID: 1270622187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_21
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1483
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0561adcb83d5e344e84471937750c15f
+      internalID: 1824345529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_22
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 1483
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2c14452ce624f8498436b89482bc024
+      internalID: -864357189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_23
+      rect:
+        serializedVersion: 2
+        x: 1469
+        y: 1483
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9813bf9296fb8fc4ea23f4231117ce4b
+      internalID: 1973187275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_24
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 1483
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f3c26e6adc901b409c209925c698564
+      internalID: -1022118095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_25
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 1188
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c64337e19db3627428617ee27c82827c
+      internalID: 904812096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_26
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 1188
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ad1a735708b66645b1b0a95a9f3a349
+      internalID: 963044964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_27
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 1188
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39cc7c0d8608f6040807d41c264aa38e
+      internalID: -480934379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_28
+      rect:
+        serializedVersion: 2
+        x: 1469
+        y: 1188
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a17d25fd69e8ac943aebb47780fdabf2
+      internalID: 1010826211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_29
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 1188
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a25085bf82e933445a08a79406abb146
+      internalID: 940785947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_30
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 894
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af794ed408db6454a8eb8c8bc0084939
+      internalID: -1561611764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_31
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 894
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4858f2cac9c29424aa9bb6cc3f742a52
+      internalID: -2119572791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_32
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 894
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73f79cecc4c1b9e43ab4847a6a75a388
+      internalID: 112798910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_33
+      rect:
+        serializedVersion: 2
+        x: 1469
+        y: 894
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da0385a49b35ea24aa9dee1245716a38
+      internalID: 374354822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_34
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 894
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6541ae170001f0c468db06d2c95eff5f
+      internalID: 2146613212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_35
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 599
+        width: 471
+        height: 277
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc909c729bfb9a74993d0565ea1704bf
+      internalID: -1913540874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_36
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 599
+        width: 471
+        height: 277
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfa06bb8a3754df44b0af719bd644756
+      internalID: 1182097356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_37
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 599
+        width: 471
+        height: 277
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93221e713929c2e4481f660b0837553a
+      internalID: -1901695950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_38
+      rect:
+        serializedVersion: 2
+        x: 1469
+        y: 599
+        width: 471
+        height: 277
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f75b481650c450d428ef45c39e161aff
+      internalID: 1557959461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_39
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 599
+        width: 471
+        height: 277
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 586399a74e3689e49a9953d3a96e1562
+      internalID: -304281550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_40
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 303
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5da156813901177479159b5c3f9d3fa0
+      internalID: -873142886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_41
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 303
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8448ea4c50617745bccc870bbc4e3cf
+      internalID: -641201712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_42
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 303
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 391f68e6f8b224a47941174a36550d47
+      internalID: 1722565536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_43
+      rect:
+        serializedVersion: 2
+        x: 1469
+        y: 303
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25355e3a8e334a240a1580409dfbbb71
+      internalID: 1951528683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_44
+      rect:
+        serializedVersion: 2
+        x: 1956
+        y: 303
+        width: 471
+        height: 278
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f2b4df9608743b469b41fd8d3f81878
+      internalID: 1668317106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_45
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 8
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0baca1eca3109024c96edb1dff5f13db
+      internalID: -1641577543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_46
+      rect:
+        serializedVersion: 2
+        x: 495
+        y: 8
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e071e6454691763499d2ea9b4e0e2e3a
+      internalID: -1691784461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TARAKAN-spritesheet_47
+      rect:
+        serializedVersion: 2
+        x: 982
+        y: 8
+        width: 471
+        height: 279
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5317a90cb9e5b3a40944f43f99c4023c
+      internalID: 1024286995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 89fd87611b598ed4ebfc7e7c191613b3
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      TARAKAN-spritesheet_0: -1674002494
+      TARAKAN-spritesheet_1: 1838149418
+      TARAKAN-spritesheet_10: -825160630
+      TARAKAN-spritesheet_11: -2060883023
+      TARAKAN-spritesheet_12: -2023812449
+      TARAKAN-spritesheet_13: 1095269847
+      TARAKAN-spritesheet_14: -1706367698
+      TARAKAN-spritesheet_15: 1259482452
+      TARAKAN-spritesheet_16: 1158973675
+      TARAKAN-spritesheet_17: -1451915426
+      TARAKAN-spritesheet_18: 2039032745
+      TARAKAN-spritesheet_19: 188623123
+      TARAKAN-spritesheet_2: -457631338
+      TARAKAN-spritesheet_20: 1270622187
+      TARAKAN-spritesheet_21: 1824345529
+      TARAKAN-spritesheet_22: -864357189
+      TARAKAN-spritesheet_23: 1973187275
+      TARAKAN-spritesheet_24: -1022118095
+      TARAKAN-spritesheet_25: 904812096
+      TARAKAN-spritesheet_26: 963044964
+      TARAKAN-spritesheet_27: -480934379
+      TARAKAN-spritesheet_28: 1010826211
+      TARAKAN-spritesheet_29: 940785947
+      TARAKAN-spritesheet_3: 454332737
+      TARAKAN-spritesheet_30: -1561611764
+      TARAKAN-spritesheet_31: -2119572791
+      TARAKAN-spritesheet_32: 112798910
+      TARAKAN-spritesheet_33: 374354822
+      TARAKAN-spritesheet_34: 2146613212
+      TARAKAN-spritesheet_35: -1913540874
+      TARAKAN-spritesheet_36: 1182097356
+      TARAKAN-spritesheet_37: -1901695950
+      TARAKAN-spritesheet_38: 1557959461
+      TARAKAN-spritesheet_39: -304281550
+      TARAKAN-spritesheet_4: -1471761383
+      TARAKAN-spritesheet_40: -873142886
+      TARAKAN-spritesheet_41: -641201712
+      TARAKAN-spritesheet_42: 1722565536
+      TARAKAN-spritesheet_43: 1951528683
+      TARAKAN-spritesheet_44: 1668317106
+      TARAKAN-spritesheet_45: -1641577543
+      TARAKAN-spritesheet_46: -1691784461
+      TARAKAN-spritesheet_47: 1024286995
+      TARAKAN-spritesheet_5: 740766547
+      TARAKAN-spritesheet_6: 1663809901
+      TARAKAN-spritesheet_7: -1003236712
+      TARAKAN-spritesheet_8: 1575351554
+      TARAKAN-spritesheet_9: -111328555
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

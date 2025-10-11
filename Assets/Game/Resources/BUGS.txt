@@ -1,0 +1,367 @@
+
+FLY.0
+Cicada magna pede (heaven bug)
+teal spine, yellow head
+FLY.0
+Cicada magna pede (tropical hunter)
+most of the bug is green
+FLY
+La Regina Semiramide (the saint)
+blue wings, yellow body
+FLY1.00
+La Regina Semiramide (red dot)
+purple wings, light-blue body
+FLY1.00
+La Regina Semiramide (parrot mode)
+thick orange wings, blue center
+FLY1.003
+La Regina Semiramide (tree baboon)
+white legs, brown wings and head
+FLY1.004
+La Regina Semiramide (night wish)
+purple wings, red head and body
+FLY2
+Aranea Cancri Armatae (monkey style)
+brown legs, grey-yellow hat
+FLY2.001
+Aranea Cancri Armatae (clownfish)
+purple legs, orange body, teal hat
+FLY2.002
+Aranea Cancri Armatae (arctic fellow)
+deep blue legs, white-blue hat
+FLY2.003
+Aranea Cancri Armatae (crazy orange)
+deep green legs, orange-green hat
+FLY2.004
+Aranea Cancri Armatae (snow white)
+most of the bug is white
+FLY3
+Un insecto timido (shipbreaker)
+black head, white wings, brown antennae
+FLY3.001
+Un insecto timido (fruit plate)
+green head, orange wings, pink antennae
+FLY3.002
+Un insecto timido (lumen)
+deep yellow head, pink wings, blue antennae
+FLY3.003
+Un insecto timido (shadow walker)
+blue wings, purple head, green antennae
+FLY3.004
+Un insecto timido (god-bug)
+most of the bug is white
+FLY4
+Vesparum cornua (toxic waste)
+purple and green body, grey horns
+FLY4.001
+Vesparum cornua (the saint)
+light-yellow and light-blue body, grey horns
+FLY4.002
+Vesparum cornua (centaurus)
+dark-green body, dark-pink wings, light blue horns
+FLY4.003
+Vesparum cornua (god-bug)
+teal eyes, lightskin body, grey wings
+FLY4.004
+Vesparum cornua (pinkman)
+teal and pink body, brown wings, blue horns
+FLY5
+Duplex cadaver-esus beetle (dead orange)
+purple and orange body
+FLY5.001
+Duplex cadaver-esus beetle (arctic fellow)
+light-blue and deep-teal body
+FLY5.002
+Duplex cadaver-esus beetle (sheeva)
+deep green and deep blue body
+FLY5.003
+Duplex cadaver-esus beetle (frog-lester)
+orange and emerald body
+FLY5.004
+Duplex cadaver-esus beetle (prometheus)
+red and blue body
+FLY6
+Cantharum cellularum est (the pinkman)
+golden hat, pink and blue body
+FLY6.001
+Cantharum cellularum est (royal guard)
+light green hat, blue and white body
+FLY6.002
+Cantharum cellularum est (crazy orange)
+orange and green body, teal-brown hat
+FLY6.003
+Cantharum cellularum est (fluffy bunny)
+pink and white body, teal hat
+FLY6.004
+Cantharum cellularum est (the saint)
+light-blue and white-blue body, yellow hat
+FLY7
+Culex turtur (swamp king)
+green wings, white hat
+FLY7.001
+Culex turtur (underdog)
+light-yellow and green wings, white-blue hat
+FLY7.002
+Culex turtur (shadow walker)
+purple-yellow wings, blue hat
+FLY7.003
+Culex turtur (stephano)
+brown hat, blue-purple wings
+FLY7.004
+Culex turtur (avanger)
+white hat, most of the bug is teal
+FLY8
+Lepus Volant (the basis bunny)
+most of the bug is white
+FLY8.001
+Lepus Volant (freeze-bunny)
+most of the bug is blue
+FLY8.002
+Lepus Volant (shadow tyrant)
+most of the bug is deep-blue, red-orange spine
+FLY8.003
+Lepus Volant (Lucaris)
+Blue ears, red spune
+FLY8.004
+Lepus Volant (young turtle)
+most of the bug is light green, blue spine
+FLY9
+Volare Umbrella (salad)
+green and white center, light blue spine
+FLY9.001
+Volare Umbrella (royal blue)
+golden center, blue spine
+FLY9.002
+Volare Umbrella (tropical hunter)
+black and purple center, light-green spine
+FLY9.003
+Volare Umbrella (the saint)
+light-blue and light-yellow center, orange spine
+FLY9.004
+Volare Umbrella (chameleon)
+white-teal center, light-teal spine
+FLY10
+Sciurus culex (the rabbit)
+brown body, grey spine
+FLY10.001
+Sciurus culex (arctic fellow)
+blue and white body, blue dot
+FLY10.002
+Sciurus culex (swamp keeper)
+white-purple body, orange spine
+FLY10.003
+Sciurus culex (magma-bug)
+orange body, pink spine, white dot
+FLY10.004
+Sciurus culex (the trickster)
+pink body, most of the bug is emerald
+FLY11
+Regia Vesparum (the candybar)
+teal and pink body, purple horns
+FLY11.001
+Regia Vesparum (snow-white)
+most of the bug is white
+FLY11.002
+Regia Vesparum (baboon)
+green and brown body, deep green horns
+FLY11.003
+Regia Vesparum (god-bug)
+white-green and light-yellow body, white-blue horns
+FLY11.004
+Regia Vesparum (pink peach)
+pink and brown body, pink horns
+FLY12
+Aranea Caprae (violet avenger)
+purple spine, blue horns, yellow antennae
+FLY12.001
+Aranea Caprae (blue diamond)
+most of the bug is blue and light-blue
+FLY12.002
+Aranea Caprae (spider-blue)
+green spine, blue and white horns, malachite antennae
+FLY12.003
+Aranea Caprae (chameleon)
+light-brown spine, malachite antennae, chromic horns
+FLY12.004
+Aranea Caprae (drain-angel)
+pink spine, deep-purple and dark-green horns, orange antennae
+FLY13
+Struthio culex (dying-star)
+iron spine, purple legs
+FLY13.001
+Struthio culex (cyber-imperia)
+dark-iron spine, dark-teal legs
+FLY13.002
+Struthio culex (swamp beast)
+swamp-green wings, malachite body
+FLY13.003
+Struthio culex (angel-chameleon)
+chromic wings, most of the bug is white
+FLY13.004
+Struthio culex (steppen wolf)
+white body, light blue wings
+FLY14
+Stultus magnus cimex est (Thanos)
+purple spine, light-blue body, golden wings
+FLY14.001
+Stultus magnus cimex est (shadow walker)
+blue spine, blue body, purple wings
+FLY14.002
+Stultus magnus cimex est (sapphire)
+darkgreen spine, most of the bug is blue
+FLY14.003
+Stultus magnus cimex est (tropical hunter)
+most of the bug is light green, dark green wings
+FLY14.004
+Stultus magnus cimex est (the candybar)
+pink spine, purple body, iron wings
+FLY15
+Scarabaeus exanimatio (queen bee)
+light-orange and brown body, light-blue wings
+FLY15.001
+Scarabaeus exanimatio (dreambreaker)
+white-pink and iron body, white wings
+FLY15.002
+Scarabaeus exanimatio (frog-lester)
+teal and white body, brown wings
+FLY15.003
+Scarabaeus exanimatio (chameleon)
+chromic body, light green legs
+FLY15.004
+Scarabaeus exanimatio (shadow walker)
+brown wings, purple and dark-blue body
+FLY16
+Bulla beetle (steppen wolf)
+light blue spine, dark teal wings, orange head
+FLY16.001
+Bulla beetle (the saint)
+dark-blue spine, light-yellow wings, malachite head
+FLY16.002
+Bulla beetle (farmer)
+light-purple spine, white and orange wings
+FLY16.003
+Bulla beetle (frog-lester)
+most of the bug is green, light-bronze spine
+FLY16.004
+Bulla beetle (cyber-stalker)
+light-blue spine, dark-purple wings
+FLY17
+Circulus Beetle (the basic)
+blue spine, green wings, white horns
+FLY17.001
+Circulus Beetle (god-bug)
+white-pink spine, golden wings
+FLY17.002
+Circulus Beetle (crab-pod)
+orange spine, dark wings
+FLY17.003
+Circulus Beetle (the candybar)
+pink spine, bone wings, emerald horns
+FLY17.004
+Circulus Beetle (shadow stalker)
+light purple spine, white-teal wings, purple horns
+FLY18
+Rana beetle (toxic waste)
+most of the bug is blue and purple
+FLY18.001
+Rana beetle (iron smith)
+red spine, blue wings, yellow head
+FLY18.002
+Rana beetle (dirt eater)
+purple head, brown spine, dark-green wings
+FLY18.003
+Rana beetle (sheeva)
+ruby spine, purple wings, light-blue head
+FLY18.004
+Rana beetle (god-bug)
+golden bug, white-pink wings
+FLY19
+Vesparum cervorum (lucaris)
+blue and white-blue body, brown wings, green horns
+FLY19.001
+Vesparum cervorum (iron smith)
+red and gold body, white-blue wings, gold horns
+FLY19.002
+Vesparum cervorum (darkwood)
+purple horns, brown body, white wings
+FLY19.003
+Vesparum cervorum (red puppet)
+red body, light-blue horns and wings
+FLY19.004
+Vesparum cervorum (sphinx)
+teal and gold body, dark wings, teal horns
+FLY20
+Armadillo Beetle (horseman)
+brown and purple body, skeleton head
+FLY20.001
+Armadillo Beetle (the saint)
+light-brown and light-blue body, deep-teal head
+FLY20.002
+Armadillo Beetle (hophman paradigma)
+white-blue and dark-green body, red head, gold horns
+FLY20.003
+Armadillo Beetle (snow white)
+most of the bug is white, brown head, sapphire horns
+FLY20.004
+Armadillo Beetle (sweet tooth)
+chromic-pink body, deep-red head, light-green horns
+FLY21
+Larva crassa est (the basic)
+white-yellow spine, light-blue wings, brown horns
+FLY21.001
+Larva crassa est (ghost-mind)
+light-blue horns, white wings and white body
+FLY21.002
+Larva crassa est (seawood)
+teal spine, orange wings, white horns
+FLY21.003
+Larva crassa est (ocean lettuce)
+deep-teal spine, white wings, orange head and horns
+FLY21.004
+Larva crassa est (metroid)
+orange spine, brown wings, blue head, white horn
+FLY22
+Custodia taurus scarabaeus (blue avenger)
+light-blue spine, grey and blue wings, dark horns
+FLY22.001
+Custodia taurus Scarabaeus (iron smith)
+red and dark-grey wings, white spine, gold center
+FLY22.002
+Custodia taurus Scarabaeus (sandstorm)
+brown and light-brown wings, brown head, orange and blue spine
+FLY22.003
+Custodia taurus Scarabaeus (hyper-being)
+white spine, red and light-teal wings, light-teal head
+FLY22.004
+Custodia taurus Scarabaeus (thanos)
+purple and gold wings, purple head, light-brown spine
+FLY23
+La Scarabei сursor (arctic fellow)
+grey center, teal-blue wings, white horns, black antennae
+FLY23.001
+La Scarabei сursor (caveman)
+light-green center, red and blue body, bone antennae
+FLY23.002
+La Scarabei сursor (tropical hunter)
+gold center, brown and green body, deep-gold antennae
+FLY23.003
+La Scarabei сursor (iron smith)
+dark center, purple antennae, gold and red body
+FLY23.004
+La Scarabei сursor (the saint)
+white and gold body, teal antennae
+FLY24
+Insectorum thoracem laneum (soft bug)
+purple wings, light-pink spine, white body
+FLY24.001
+Insectorum thoracem laneum (metalslug)
+iron body, white-blue wings, white spine
+FLY24.002
+Insectorum thoracem laneum (azure-emerald)
+teal spine, deep-teal body, dark-green wings
+FLY24.003
+Insectorum thoracem laneum (chronosphere)
+light-gold wings, white-teal body, grey spine
+FLY24.004
+Insectorum thoracem laneum (the basic)
+dark spine, gold wings, iron body

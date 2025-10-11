@@ -21,8 +21,8 @@ namespace BuildTools
         static readonly Dictionary<string, string> OutputByProfileName = new Dictionary<string, string>
         {
             {"Windows", "Platforms/Windows/FlyCollector-win/FlyCollector.exe"},
-            {"Linux", "Platforms/Linux/FlyCollector-linux/FlyCollector.x86_64"},
-            {"Web", "Platforms/Web/Build/"}
+            {"Web", "Platforms/Web/Build/"},
+            {"Linux", "Platforms/Linux/FlyCollector-linux/FlyCollector.x86_64"}
         };
 
         // Map profile asset path to output path (more reliable if profile names change)

@@ -181,6 +181,10 @@ private void CopyMeshes(GameObject srcRoot, GameObject dstRoot, string meshesFol
     {
         string path = Path.Combine(folder, mesh.name + ".asset").Replace("\\", "/");
         path = AssetDatabase.GenerateUniqueAssetPath(path);
+
+        // Ensure mesh stays readable for Outline script (needs to write to UV4)
+        mesh.UploadMeshData(false);
+
         AssetDatabase.CreateAsset(mesh, path);
     }
 

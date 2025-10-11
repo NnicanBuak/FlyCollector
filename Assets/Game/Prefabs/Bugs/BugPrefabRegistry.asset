@@ -1,0 +1,268 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ca52b6b9b51cf84689c2573ba8bceb1, type: 3}
+  m_Name: BugPrefabRegistry
+  m_EditorClassIdentifier: Assembly-CSharp::BugPrefabRegistry
+  prefabFolderPath: Assets/Prefabs/Bugs
+  prefabSuffix: _Variant
+  prefabPrefix: 
+  entries:
+  - key: Fly
+    prefab: {fileID: 4153533381575686488, guid: e292d2b5173f9b944a690e4fb6aee749, type: 3}
+  - key: Fly.001
+    prefab: {fileID: 2019401132428811847, guid: e0ec7df1cc42be9479ef3b53b9f16dad, type: 3}
+  - key: Fly.002
+    prefab: {fileID: 2328137372563387069, guid: bf356ad558d70504baf74b4781d7b867, type: 3}
+  - key: Fly.003
+    prefab: {fileID: 5996673539106240653, guid: 81db0429f1dbefe4981c74bc21ca242f, type: 3}
+  - key: Fly.004
+    prefab: {fileID: 7922572698797194936, guid: 060e1b1dfbd0d284fb63df278ed66eb8, type: 3}
+  - key: Fly1
+    prefab: {fileID: 8551641753787990481, guid: b7837deab9ec3424ba5c8c11408399bd, type: 3}
+  - key: Fly1.001
+    prefab: {fileID: 1994173957911885429, guid: 0d2a8cd70f62029419ef9785a1a142d7, type: 3}
+  - key: Fly1.002
+    prefab: {fileID: 4788645332911105789, guid: d8c9e4800f8a3194d92955a38daace87, type: 3}
+  - key: Fly1.003
+    prefab: {fileID: 5238529489210723993, guid: b5e51fb5b213dc4409808302c40ea0ed, type: 3}
+  - key: Fly1.004
+    prefab: {fileID: 5305750663834075428, guid: 2f1d10a98002adc4485755ec51e558ae, type: 3}
+  - key: Fly10
+    prefab: {fileID: 5859203075748684878, guid: 062d46cc843296045ae6280ddb38ed84, type: 3}
+  - key: Fly10.001
+    prefab: {fileID: 3155914926575865315, guid: 50a039911da6bee4096457f57cfab043, type: 3}
+  - key: Fly10.002
+    prefab: {fileID: 3821090382180665537, guid: 9d34dfd8b80d2a94cb54622c6e7d12bb, type: 3}
+  - key: Fly10.003
+    prefab: {fileID: 2775036745977923680, guid: 297e1038599f7714c8b5b1c5bbb23ef9, type: 3}
+  - key: Fly10.004
+    prefab: {fileID: 1970414801396656989, guid: c4ac41a8b342efb4a96c5cb21873fdbc, type: 3}
+  - key: Fly11
+    prefab: {fileID: 1981777433568862648, guid: 3a96754b52738a5478150755de0b0c78, type: 3}
+  - key: Fly11.001
+    prefab: {fileID: 1484642866744213729, guid: 3028e6adfbb38f64fb4e56ef3d74ae79, type: 3}
+  - key: Fly11.002
+    prefab: {fileID: 1534585346059382119, guid: 6cb3006fe39dc8f4b9e18ebae3bd776c, type: 3}
+  - key: Fly11.003
+    prefab: {fileID: 8469127631394916138, guid: 17d56ee13af22e043bd3d0dce1df1875, type: 3}
+  - key: Fly11.004
+    prefab: {fileID: 2676700851830504638, guid: f194e897474432744b991cd876925d2e, type: 3}
+  - key: Fly12
+    prefab: {fileID: 2571321140355658764, guid: b67465c289e245b44b33dafdec181ed8, type: 3}
+  - key: Fly12.001
+    prefab: {fileID: 1585080042065662338, guid: 75dba5f8740d3624686ee68375c81fd5, type: 3}
+  - key: Fly12.002
+    prefab: {fileID: 5666650984076160092, guid: 30339c38a7a7c184da9fdb63f88c45d9, type: 3}
+  - key: Fly12.003
+    prefab: {fileID: 5292201372144803097, guid: e6358f05d5cd53643a1afab0cb060075, type: 3}
+  - key: Fly12.004
+    prefab: {fileID: 2044966059155798699, guid: 502649f9976ddc443aee0cbcddbf2a7c, type: 3}
+  - key: Fly13
+    prefab: {fileID: 2918220269825088915, guid: 860ad4fa90d657a49850b38e57567c8f, type: 3}
+  - key: Fly13.001
+    prefab: {fileID: 2077367142296635797, guid: babd371e5acb42547aa1f48994d3ff9e, type: 3}
+  - key: Fly13.002
+    prefab: {fileID: 7516400572857202180, guid: c51228129fbfab34f88ed163b2cf7c73, type: 3}
+  - key: Fly13.003
+    prefab: {fileID: 5842272781138041057, guid: b471c15f96bcbcb41bbbd6343d920936, type: 3}
+  - key: Fly13.004
+    prefab: {fileID: 3550143702632698243, guid: eb122ac2ff03b86488aecdbf3e573177, type: 3}
+  - key: Fly14
+    prefab: {fileID: 5370570864494207809, guid: 920049e549d49f340ad892747fc9aef6, type: 3}
+  - key: Fly14.001
+    prefab: {fileID: 343179938888312797, guid: 4fc2e81e48980474bbad799b0b2d5819, type: 3}
+  - key: Fly14.002
+    prefab: {fileID: 8798549369762213571, guid: 4211c6fd7c651f348a9699e3a3ab833e, type: 3}
+  - key: Fly14.003
+    prefab: {fileID: 6857239275473443210, guid: 1393e9a72f6faed43971af9ea1d9654a, type: 3}
+  - key: Fly14.004
+    prefab: {fileID: 4623238449235162040, guid: 47b49b6fe8409e54eb366e7943637254, type: 3}
+  - key: Fly15
+    prefab: {fileID: 1407478555260544137, guid: bd330234d1ad1f54dafedc6dc5ecbf48, type: 3}
+  - key: Fly15.001
+    prefab: {fileID: 660468285218422424, guid: c924251d8ab4a694b950d53d045ead98, type: 3}
+  - key: Fly15.002
+    prefab: {fileID: 6552723440733133330, guid: 024d57576236e5948bf9eb2838398345, type: 3}
+  - key: Fly15.003
+    prefab: {fileID: 1719213002159708158, guid: 9f35caf6d2397e74cb43ec54268212ef, type: 3}
+  - key: Fly15.004
+    prefab: {fileID: 6979481262258636010, guid: 4fbb73255943c374383e42c18c2c768e, type: 3}
+  - key: Fly16
+    prefab: {fileID: 2498634427753808533, guid: 255c674295a1e8642bedf177ea54aefe, type: 3}
+  - key: Fly16.001
+    prefab: {fileID: 9205145046843332840, guid: 5efe71c36f8607d45a0aa7c6dd93e194, type: 3}
+  - key: Fly16.002
+    prefab: {fileID: 1251066617700691320, guid: 488bd2d8032ceb74980cee9a6ff4f677, type: 3}
+  - key: Fly16.003
+    prefab: {fileID: 3566313961008573476, guid: 6fc3fe495ba2faa4fbfc6c2905fe23fa, type: 3}
+  - key: Fly16.004
+    prefab: {fileID: 901996945774746931, guid: a75cb6fcf214c4f4ca71c97a9a949989, type: 3}
+  - key: Fly17
+    prefab: {fileID: 7704257213190974227, guid: 3defba3ba7313c64fbffd3fbc8956f50, type: 3}
+  - key: Fly17.001
+    prefab: {fileID: 7786314235600034426, guid: 2ccd5a7036fe63c48a8aafb5c11fe82d, type: 3}
+  - key: Fly17.002
+    prefab: {fileID: 6390639178743418354, guid: 57156f90442e3e5439adf4a8ce2795b9, type: 3}
+  - key: Fly17.003
+    prefab: {fileID: 8236559922102774901, guid: 88656ee5680ce924382a3079abd6c92a, type: 3}
+  - key: Fly17.004
+    prefab: {fileID: 6105110127802542794, guid: 7f380436df00ab04089d4b352090e545, type: 3}
+  - key: Fly18
+    prefab: {fileID: 3354910662294879980, guid: 54774afed1e409b4f8422ef30ea3a233, type: 3}
+  - key: Fly18.001
+    prefab: {fileID: 3496548468021124854, guid: b924ccef9d774bc4db5aa78329aa351b, type: 3}
+  - key: Fly18.002
+    prefab: {fileID: 1543796078143792478, guid: b0598d5886b6ba14d9340a3d33601309, type: 3}
+  - key: Fly18.003
+    prefab: {fileID: 7554498005427247093, guid: de6ba7c0646aa164b9fc9d3d384e91de, type: 3}
+  - key: Fly18.004
+    prefab: {fileID: 67013816121166208, guid: 779045d6b153c274383e79344fa73cab, type: 3}
+  - key: Fly19
+    prefab: {fileID: 6615447550442462187, guid: a45a7d6870e93314091e9cb7639fee57, type: 3}
+  - key: Fly19.001
+    prefab: {fileID: 3996556217323924724, guid: 36ab5d8bee60a9644a7a22872bc8f946, type: 3}
+  - key: Fly19.002
+    prefab: {fileID: 4010285437946358196, guid: 132a92b3fac279c4ab7b980c3c3c816a, type: 3}
+  - key: Fly19.003
+    prefab: {fileID: 3316017458298141872, guid: ccffaa27b5fa8304f9d6c629cb8cdb2b, type: 3}
+  - key: Fly19.004
+    prefab: {fileID: 324164399699731370, guid: 1900e6159c1f3e64481181209829e102, type: 3}
+  - key: Fly2
+    prefab: {fileID: 624846860818593340, guid: 7d734e82fb6820d40b4f2e00b49d32bb, type: 3}
+  - key: Fly2.001
+    prefab: {fileID: 873457631809564023, guid: a8a9884d7b0159f47a6cf85ddae8f693, type: 3}
+  - key: Fly2.002
+    prefab: {fileID: 1256420062273718160, guid: 197b5432a014c4040a964d12eaaf1daa, type: 3}
+  - key: Fly2.003
+    prefab: {fileID: 6958250992247229643, guid: 0efe4cbe3c0dc124c92ddb12c30a7c3d, type: 3}
+  - key: Fly2.004
+    prefab: {fileID: 1264983809883157918, guid: deb3ff3dd95634740bdd75ecc6ba8d1d, type: 3}
+  - key: Fly20
+    prefab: {fileID: 4232657025788163454, guid: a3b38deb38b6122489267480367cf865, type: 3}
+  - key: Fly20.001
+    prefab: {fileID: 1862880161154152027, guid: 9e81366365c25b94eaf79f9ac47d0ad4, type: 3}
+  - key: Fly20.002
+    prefab: {fileID: 4272512347693323488, guid: 170d022a5f6908e47b79be13c795a407, type: 3}
+  - key: Fly20.003
+    prefab: {fileID: 5659521063229311017, guid: 45080103c61d64e44aac270dfb66b6fb, type: 3}
+  - key: Fly20.004
+    prefab: {fileID: 3999087532880356639, guid: 2cbf96b8c4293be449451fc24ff5fee2, type: 3}
+  - key: Fly21
+    prefab: {fileID: 6810512281944055188, guid: 17793f0ce1421c043a933640662bb9a8, type: 3}
+  - key: Fly21.001
+    prefab: {fileID: 5462412255225572932, guid: cfce1909feb33a1469342e76fbb57351, type: 3}
+  - key: Fly21.002
+    prefab: {fileID: 2240282102206794109, guid: 119f147b68e4d7b44b2d619ad25a94a9, type: 3}
+  - key: Fly21.003
+    prefab: {fileID: 6097296305196930099, guid: 89a99f4b235d4494d81f47b8b651c27d, type: 3}
+  - key: Fly21.004
+    prefab: {fileID: 3205700620483298764, guid: 1e2f99f4d7da5a04d8d12c738fe0a549, type: 3}
+  - key: Fly22
+    prefab: {fileID: 1217701459288673088, guid: bb254919557d67d4fad47df3bbe6d023, type: 3}
+  - key: Fly22.001
+    prefab: {fileID: 4993438198762323461, guid: b82bddbf619adf54a9d659b393eabec0, type: 3}
+  - key: Fly22.002
+    prefab: {fileID: 5467135183341338844, guid: a3a07e889820d464b95a6be199f5c67e, type: 3}
+  - key: Fly22.003
+    prefab: {fileID: 5775333381802401031, guid: e06c14e35c31be140b4cc8b8e5ba541e, type: 3}
+  - key: Fly22.004
+    prefab: {fileID: 8144090396278134844, guid: aa7dcfe5b340d2b4aba8abc9bb96b906, type: 3}
+  - key: Fly23
+    prefab: {fileID: 1526028124167194193, guid: 7facf96345e630f42bcde19eb04b4450, type: 3}
+  - key: Fly23.001
+    prefab: {fileID: 1168965483423458442, guid: 54dedbc1d2cad3b44bbb29007ab002db, type: 3}
+  - key: Fly23.002
+    prefab: {fileID: 3042480995625899025, guid: 77347a0e3069c1b46ade63238d85f089, type: 3}
+  - key: Fly23.003
+    prefab: {fileID: 4091463848692828862, guid: fb384721cb1615b4aa2c5cb67724940a, type: 3}
+  - key: Fly23.004
+    prefab: {fileID: 5704148995669056877, guid: b5a81d28fcc242f4db3e8ef726a72794, type: 3}
+  - key: Fly24
+    prefab: {fileID: 574939883463256817, guid: 5f7773d7bf76fd94b82abb903b9e3041, type: 3}
+  - key: Fly24.001
+    prefab: {fileID: 2604981883235034263, guid: ff252994ea63d294689575523c913485, type: 3}
+  - key: Fly24.002
+    prefab: {fileID: 1683947982659877713, guid: d991503b8d92a75469da313b6ee7e294, type: 3}
+  - key: Fly24.003
+    prefab: {fileID: 1616147320516703097, guid: 2e480f4fce84f9d4ead7e499c3a73eb4, type: 3}
+  - key: Fly24.004
+    prefab: {fileID: 5942686044466341572, guid: 0945199b528f3604d9456c56007943b5, type: 3}
+  - key: Fly3
+    prefab: {fileID: 8674907478208634160, guid: 63b67e8069354cf4da33ae02917cc3b2, type: 3}
+  - key: Fly3.001
+    prefab: {fileID: 5218965877967273832, guid: f143d860fdf8a70449d3adc15efd2b8d, type: 3}
+  - key: Fly3.002
+    prefab: {fileID: 1549266708832988739, guid: 7a920aefb1d84634c97f4247c195ac4a, type: 3}
+  - key: Fly3.003
+    prefab: {fileID: 3713031974251509393, guid: ee35a26243083e044aae89428034815c, type: 3}
+  - key: Fly3.004
+    prefab: {fileID: 915582024418413362, guid: 53330ac541b80de46924c4854e803392, type: 3}
+  - key: Fly4
+    prefab: {fileID: 4745538709898605664, guid: 085d4201e5a8e724ebc0f3dd51bdcc46, type: 3}
+  - key: Fly4.001
+    prefab: {fileID: 2309507975571180534, guid: 3dd699a851565a946a3a9d05685ef182, type: 3}
+  - key: Fly4.002
+    prefab: {fileID: 689699433960335283, guid: 243b8b6962ccbd044bac2a1b1f48eaca, type: 3}
+  - key: Fly4.003
+    prefab: {fileID: 4789945881132983123, guid: c6607f78dfb00864f89862ed3e6134a6, type: 3}
+  - key: Fly4.004
+    prefab: {fileID: 1238584141526505003, guid: ea7f348a12b9c654d981e7f139dfb92c, type: 3}
+  - key: Fly5
+    prefab: {fileID: 1037637007215620214, guid: 2a85293215c4410419fa84256b65720e, type: 3}
+  - key: Fly5.001
+    prefab: {fileID: 1708294139881687905, guid: b92936890089ee1448ba630680052c5d, type: 3}
+  - key: Fly5.002
+    prefab: {fileID: 9202322695080995408, guid: a58ffca17d937ba4cb42049233505301, type: 3}
+  - key: Fly5.003
+    prefab: {fileID: 1094328276524600374, guid: b0dc788d898c6f543bac48112bb2f212, type: 3}
+  - key: Fly5.004
+    prefab: {fileID: 2822700793746637106, guid: 039ee239e7baff84790897a3c3343722, type: 3}
+  - key: Fly6
+    prefab: {fileID: 5533074862323078660, guid: aacf210d27ea0864bba418a34d6b1321, type: 3}
+  - key: Fly6.001
+    prefab: {fileID: 9201564673101027914, guid: eab82a4614306ae469252b88c7038a8d, type: 3}
+  - key: Fly6.002
+    prefab: {fileID: 8774177418575378804, guid: 9b08f89600e0f7d42a7b128e8f3c9764, type: 3}
+  - key: Fly6.003
+    prefab: {fileID: 5836158642453202978, guid: bf0226f0fc833a24a8a9fce8d33e20ae, type: 3}
+  - key: Fly6.004
+    prefab: {fileID: 8076745062716368299, guid: bb77562f7970b2d48ba045d7f1cedd9b, type: 3}
+  - key: Fly7
+    prefab: {fileID: 3455252629983012902, guid: 73785f8181530da40a56cc3225e22718, type: 3}
+  - key: Fly7.001
+    prefab: {fileID: 4868783399901354649, guid: 82e24330599d52b43a17fcdf9ffa78ca, type: 3}
+  - key: Fly7.002
+    prefab: {fileID: 7433259372105808700, guid: c4dc2a5336a94234ca9c4ed7f33c9b3b, type: 3}
+  - key: Fly7.003
+    prefab: {fileID: 5983778199046335583, guid: bcbc08683a522bd4a92217b0a7d56448, type: 3}
+  - key: Fly7.004
+    prefab: {fileID: 863777623247494784, guid: b6adc5008bd70314483ce9a64544089d, type: 3}
+  - key: Fly8
+    prefab: {fileID: 5331064052510734359, guid: dfa61d824cdbb6b41bdca5b2eca66f92, type: 3}
+  - key: Fly8.001
+    prefab: {fileID: 5557071034693085158, guid: 6151b36037d27e94a9aef8344c461f64, type: 3}
+  - key: Fly8.002
+    prefab: {fileID: 3445084865920121130, guid: 06a33554d53542843b02160e8abbcb79, type: 3}
+  - key: Fly8.003
+    prefab: {fileID: 7749958937745801322, guid: 614faeadec6463144a149d21cca11fac, type: 3}
+  - key: Fly8.004
+    prefab: {fileID: 7579043947644861226, guid: 93fac360ca3d6984daf16ef771c3d52f, type: 3}
+  - key: Fly9
+    prefab: {fileID: 9039663946842947816, guid: 72e9a516e1710694bb6a082bad17ddbd, type: 3}
+  - key: Fly9.001
+    prefab: {fileID: 8967805411469222566, guid: 62d033538d2e4b043be896cc44e00827, type: 3}
+  - key: Fly9.002
+    prefab: {fileID: 5145530944776349968, guid: d1fad25aaea3f034981a9c1346d2967c, type: 3}
+  - key: Fly9.003
+    prefab: {fileID: 2068675930613374340, guid: 185a845745d004b4ca30610959c1c068, type: 3}
+  - key: Fly9.004
+    prefab: {fileID: 7347336281915646418, guid: 24971487db0761644b5d6ff9df79ab27, type: 3}
