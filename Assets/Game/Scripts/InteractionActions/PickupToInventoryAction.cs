@@ -100,6 +100,14 @@ public class PickupToInventoryAction : InteractionActionBase
     /// </summary>
     private Item TryGetDynamicItem(InteractionContext ctx)
     {
+        // First, check if InteractableObject carries a dynamic Item payload
+        if (ctx.Object is InteractableObject io)
+        {
+            var dyn = io.GetDynamicItem();
+            if (dyn != null)
+                return dyn;
+        }
+
         // Try to find BugJarTrap on this GameObject or parent
         var jarTrap = ctx.GameObject?.GetComponent<BugCatching.BugJarTrap>();
         if (jarTrap == null && ctx.Transform != null)

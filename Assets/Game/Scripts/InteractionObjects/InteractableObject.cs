@@ -40,6 +40,9 @@ public class InteractableObject : MonoBehaviour, IInteractable
     public UnityEvent onInteractStarted;
     public UnityEvent onInteractFinished;
 
+    [Header("Dynamic Payload (optional)")]
+    [SerializeField] private Item dynamicItem;
+
 
     private bool _hovered;
     private bool _isRunning;
@@ -78,6 +81,16 @@ public class InteractableObject : MonoBehaviour, IInteractable
         _hovered = false;
         if (useOutline && _outline && disableOutlineOnExit)
             _outline.enabled = false;
+    }
+
+    public void SetDynamicItem(Item item)
+    {
+        dynamicItem = item;
+    }
+
+    public Item GetDynamicItem()
+    {
+        return dynamicItem;
     }
 
     public void OnInteract(Camera playerCamera)

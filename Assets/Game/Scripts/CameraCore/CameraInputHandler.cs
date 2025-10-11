@@ -1,28 +1,44 @@
-using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class CameraInputHandler
 {
-    private readonly Mouse mouse;
-    private readonly Keyboard keyboard;
-
-    public CameraInputHandler()
+    public bool IsLeftClickPressed()
     {
-        mouse = Mouse.current;
-        keyboard = Keyboard.current;
+        var currentMouse = Mouse.current;
+        return currentMouse != null && currentMouse.leftButton.wasPressedThisFrame;
     }
 
-    public bool IsLeftClickPressed() => mouse != null && mouse.leftButton.wasPressedThisFrame;
-    public bool IsRightClickPressed() => mouse != null && mouse.rightButton.wasPressedThisFrame;
-    public bool IsEscapePressed() => keyboard != null && keyboard[Key.Escape].wasPressedThisFrame;
-    public bool IsEnterPressed() => keyboard != null && keyboard[Key.Enter].wasPressedThisFrame;
-
-    public Vector2 GetMousePosition()
+    public bool IsRightClickPressed()
     {
-        return mouse != null
-            ? mouse.position.ReadValue()
-            : new Vector2(Screen.width / 2f, Screen.height / 2f);
+        var currentMouse = Mouse.current;
+        return currentMouse != null && currentMouse.rightButton.wasPressedThisFrame;
     }
 
-    public bool IsExitInputPressed() => IsEscapePressed() || IsRightClickPressed();
+    public bool IsEscapePressed()
+    {
+        var currentKeyboard = Keyboard.current;
+        return currentKeyboard != null && currentKeyboard.escapeKey.wasPressedThisFrame;
+    }
+
+    /// <summary>
+    /// Выходит из инспекта при нажатии ЛКМ или ESC.
+    /// Обработка RMB находится внутри InspectSession (collect-mode).
+    /// </summary>
+    public bool IsInspectExitPressed()
+    {
+        // ESC always exits
+        if (IsEscapePressed()) return true;
+
+        // LMB exits only when not clicking over UI
+        var currentMouse = Mouse.current;
+        if (currentMouse != null && currentMouse.leftButton.wasPressedThisFrame)
+        {
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                return false;
+            return true;
+        }
+
+        return false;
+    }
 }

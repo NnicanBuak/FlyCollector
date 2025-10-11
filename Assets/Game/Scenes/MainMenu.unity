@@ -360,7 +360,6 @@ GameObject:
   - component: {fileID: 296831541}
   - component: {fileID: 296831542}
   - component: {fileID: 296831544}
-  - component: {fileID: 296831543}
   m_Layer: 5
   m_Name: VolumeSlider
   m_TagString: Untagged
@@ -438,50 +437,10 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &296831543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 296831540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55e0bc9860e5eb341b70f97657b6e86c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Audio.VolumeSlider
-  sprite1: {fileID: 0}
-  sprite2: {fileID: 0}
-  sprite3: {fileID: 0}
-  sprite4: {fileID: 0}
-  sprite5: {fileID: 0}
-  sprite6: {fileID: 0}
-  sprite7: {fileID: 0}
-  sprite8: {fileID: 0}
-  sprite9: {fileID: 0}
-  sprite10: {fileID: 0}
-  sprite11: {fileID: 0}
-  sprite12: {fileID: 0}
-  thresholds:
-  - 0.1
-  - 0.2
-  - 0.3
-  - 0.4
-  - 0.5
-  - 0.6
-  - 0.7
-  - 0.8
-  - 0.9
-  - 0.95
-  - 0.97
-  defaultVolume: 1
-  saveKey: MasterVolume
-  showDebug: 0
-  volumeIcon: {fileID: 0}
 --- !u!114 &296831544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1319,6 +1278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7bbf92b00ef8874b9e30e61d57736d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HideOnWebGL
+  destroyOnWebGL: 0
   showDebug: 0
 --- !u!1 &1379393617
 GameObject:
@@ -2018,5 +1978,5 @@ SceneRoots:
   - {fileID: 1429821506}
   - {fileID: 1379393621}
   - {fileID: 835925420}
-  - {fileID: 343788256}
   - {fileID: 103046995}
+  - {fileID: 343788256}

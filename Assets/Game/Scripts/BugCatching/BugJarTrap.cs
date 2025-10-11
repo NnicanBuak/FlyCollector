@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 using BugData;
 
 namespace BugCatching
@@ -62,10 +63,8 @@ namespace BugCatching
         private GameObject targetBug;
         private string targetBugName;
 
-        private AudioSource audioSource;
-
-        private const string ANIM_FLY_TO_TABLE = "JarFlyToTable";
-        private const string ANIM_FLY_BACK = "JarFlyBack";
+    private AudioSource audioSource;
+    private Tween flyTween;
         private const string ANIM_SEAL = "JarSeal";
 
         private void Awake()
@@ -99,6 +98,16 @@ namespace BugCatching
         #endregion
 
         #region Public Methods
+        public float FlyDuration => flyTime;
+
+        public void TriggerOpen()
+        {
+            if (animator != null)
+            {
+                animator.SetTrigger("Open");
+            }
+        }
+
         public void SetTargetBug(GameObject bug)
         {
             targetBug = bug;
@@ -108,6 +117,9 @@ namespace BugCatching
             {
                 Debug.Log($"[BugJarTrap] Target bug set: {bug?.name}");
             }
+
+            // Update InteractableObject's dynamic Item based on bug name
+            UpdateInteractableItemFromRegistry();
         }
 
         public string GetTargetBugName() => targetBugName;
@@ -132,12 +144,7 @@ namespace BugCatching
             }
 
             currentState = State.FlyingToTable;
-
-
-            if (animator != null)
-            {
-                animator.SetTrigger(ANIM_FLY_TO_TABLE);
-            }
+            
 
 
             if (flyToTableSound != null && audioSource != null)
@@ -146,7 +153,30 @@ namespace BugCatching
             }
 
 
-            StartCoroutine(FlyToTableCoroutine());
+            if (flyTween != null && flyTween.IsActive()) flyTween.Kill();
+            flyTween = DG.Tweening.DOTween.Sequence()
+                .Join(transform.DOMove(tablePosition.position, flyTime).SetEase(DG.Tweening.Ease.InOutSine))
+                .Join(transform.DORotateQuaternion(tablePosition.rotation, flyTime).SetEase(DG.Tweening.Ease.InOutSine))
+                .OnComplete(() =>
+                {
+                    if (showDebug)
+                    {
+                        Debug.Log($"[BugJarTrap] Arrived at table");
+                    }
+                    currentState = State.AtTable;
+                    if (interactableObject != null)
+                    {
+                        interactableObject.enabled = true;
+                        if (showDebug)
+                        {
+                            Debug.Log($"[BugJarTrap] InteractableObject enabled");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[BugJarTrap] InteractableObject is null - cannot enable interaction!");
+                    }
+                });
         }
 
         /// <summary>
@@ -187,7 +217,30 @@ namespace BugCatching
             }
 
 
-            StartCoroutine(FlyToHoldPointCoroutine(holdPoint));
+            if (flyTween != null && flyTween.IsActive()) flyTween.Kill();
+            flyTween = DG.Tweening.DOTween.Sequence()
+                .Join(transform.DOMove(holdPoint.position, flyTime).SetEase(DG.Tweening.Ease.InOutSine))
+                .Join(transform.DORotateQuaternion(holdPoint.rotation, flyTime).SetEase(DG.Tweening.Ease.InOutSine))
+                .OnComplete(() =>
+                {
+                    if (showDebug)
+                    {
+                        Debug.Log($"[BugJarTrap] Arrived at holdPoint");
+                    }
+                    currentState = State.AtTable;
+                    if (interactableObject != null)
+                    {
+                        interactableObject.enabled = true;
+                        if (showDebug)
+                        {
+                            Debug.Log($"[BugJarTrap] InteractableObject enabled at holdPoint");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[BugJarTrap] InteractableObject is null - cannot enable interaction!");
+                    }
+                });
         }
 
         public void FlyBack()
@@ -212,19 +265,24 @@ namespace BugCatching
             }
 
 
-            if (animator != null)
-            {
-                animator.SetTrigger(ANIM_FLY_BACK);
-            }
-
-
             if (flyBackSound != null && audioSource != null)
             {
                 audioSource.PlayOneShot(flyBackSound, soundVolume);
             }
 
 
-            StartCoroutine(FlyBackCoroutine());
+            if (flyTween != null && flyTween.IsActive()) flyTween.Kill();
+            flyTween = DG.Tweening.DOTween.Sequence()
+                .Join(transform.DOMove(originalPosition, flyTime).SetEase(DG.Tweening.Ease.InOutSine))
+                .Join(transform.DORotateQuaternion(originalRotation, flyTime).SetEase(DG.Tweening.Ease.InOutSine))
+                .OnComplete(() =>
+                {
+                    if (showDebug)
+                    {
+                        Debug.Log($"[BugJarTrap] Returned to original position");
+                    }
+                    ResetToIdle();
+                });
         }
 
         public void Seal()
@@ -275,6 +333,43 @@ namespace BugCatching
         public GameObject GetTargetBug() => targetBug;
 
         public Transform GetTablePosition() => tablePosition;
+
+        public InteractableObject GetInteractable() => interactableObject;
+
+        public void SetInteractableItem(Item item)
+        {
+            if (interactableObject != null)
+            {
+                interactableObject.SetDynamicItem(item);
+            }
+        }
+
+        /// <summary>
+        /// Resolve Item ScriptableObject by targetBugName via BugItemRegistry and assign to InteractableObject.
+        /// Tries both "<bug>_Variant" and plain "<bug>" names.
+        /// </summary>
+        public void UpdateInteractableItemFromRegistry()
+        {
+            if (string.IsNullOrEmpty(targetBugName) || interactableObject == null) return;
+
+            var registry = FindFirstObjectByType<BugItemRegistry>();
+            if (registry == null) return;
+
+            // Prefer variant name
+            string baseName = targetBugName.Replace("(Clone)", "").Trim();
+            string variantName = baseName + "_Variant";
+
+            if (registry.TryGetItem(variantName, out var item) && item != null)
+            {
+                SetInteractableItem(item);
+                return;
+            }
+
+            if (registry.TryGetItem(baseName, out var plainItem) && plainItem != null)
+            {
+                SetInteractableItem(plainItem);
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -482,7 +577,8 @@ namespace BugCatching
 
             if (MultiHintController.Instance != null)
             {
-                MultiHintController.Instance.HideAll();
+                // Keep showing Put (LMB), hide Collect (RMB)
+                MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse);
             }
 
 
@@ -490,20 +586,27 @@ namespace BugCatching
 
             currentState = State.FlyingBack;
 
-
-            if (animator != null)
-            {
-                animator.SetTrigger(ANIM_FLY_BACK);
-            }
-
-
             if (flyBackSound != null && audioSource != null)
             {
                 audioSource.PlayOneShot(flyBackSound, soundVolume);
             }
 
 
-            yield return StartCoroutine(FlyBackCoroutine());
+            // Start tweened fly-back and wait until it completes
+            if (flyTween != null && flyTween.IsActive()) flyTween.Kill();
+            flyTween = DG.Tweening.DOTween.Sequence()
+                .Join(transform.DOMove(originalPosition, flyTime).SetEase(DG.Tweening.Ease.InOutSine))
+                .Join(transform.DORotateQuaternion(originalRotation, flyTime).SetEase(DG.Tweening.Ease.InOutSine))
+                .OnComplete(() =>
+                {
+                    if (showDebug)
+                    {
+                        Debug.Log($"[BugJarTrap] Returned to original position");
+                    }
+                    ResetToIdle();
+                });
+            while (flyTween != null && flyTween.IsActive())
+                yield return null;
         }
 
         private void ResetToIdle()

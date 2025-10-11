@@ -1,31 +1,56 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 /// <summary>
 /// Controls multiple hint panels with fade/scale animation.
-/// Manages up to 3 hint objects that can be shown/hidden simultaneously.
 /// </summary>
 public class MultiHintController : MonoBehaviour
 {
+    [Serializable]
+    private struct HintPanelEntry
+    {
+        [Tooltip("Unique identifier used when calling Show.")]
+        public string id;
+
+        [Tooltip("Root GameObject of the hint panel.")]
+        public GameObject panel;
+    }
+
+    public static class PanelNames
+    {
+        public const string RightMouse = "RMB";
+        public const string LeftMouse = "LMB";
+        public const string Custom = "Custom";
+    }
+
     public static MultiHintController Instance { get; private set; }
 
     [Header("Hint Panels")]
-    [SerializeField] private GameObject[] hintPanels = new GameObject[3];
+    [FormerlySerializedAs("hintPanels")]
+    [SerializeField, HideInInspector] private GameObject[] legacyHintPanels = Array.Empty<GameObject>();
+    [SerializeField] private HintPanelEntry[] hintPanels = Array.Empty<HintPanelEntry>();
 
     [Header("Animation")]
-    [SerializeField] private float fadeSpeed = 5f;
-    [SerializeField] private float scaleSpeed = 8f;
+    [FormerlySerializedAs("fadeSpeed")]
+    [SerializeField] private float animationSpeed = 5f;
     [SerializeField] private Vector3 hiddenScale = new Vector3(0.8f, 0.8f, 1f);
+    [SerializeField, Min(0f)] private float horizontalSpacing = 40f;
 
     [Header("Debug")]
-    [SerializeField] private bool showDebug = false;
+    [SerializeField] private bool showDebug;
 
-    private Vector3 normalScale = Vector3.one;
-    private CanvasGroup[] canvasGroups;
-    private RectTransform[] rectTransforms;
-    private bool[] activeStates;
+    private readonly Vector3 normalScale = Vector3.one;
 
-    void Awake()
+    private CanvasGroup[] canvasGroups = Array.Empty<CanvasGroup>();
+    private RectTransform[] rectTransforms = Array.Empty<RectTransform>();
+    private Vector2[] baseAnchoredPositions = Array.Empty<Vector2>();
+    private bool[] activeStates = Array.Empty<bool>();
+    private Dictionary<string, int> panelLookup = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
+    private bool initialized;
+
+    private void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -34,190 +59,368 @@ public class MultiHintController : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
-
-        Debug.Log($"[MultiHintController] Instance initialized on {gameObject.name}. Array size: {hintPanels.Length}");
-
         InitializePanels();
     }
 
-    void OnDestroy()
+    private void Update()
     {
-        if (Instance == this)
-        {
-            Instance = null;
-            if (showDebug)
-                Debug.Log("[MultiHintController] Instance destroyed");
-        }
+        if (!initialized)
+            return;
+
+        AnimatePanels();
     }
 
-    void Update()
+    private void OnValidate()
     {
-        AnimatePanels();
+        MigrateLegacyPanels();
+
+        if (hintPanels == null)
+            return;
+
+        for (int i = 0; i < hintPanels.Length; i++)
+        {
+            if (string.IsNullOrWhiteSpace(hintPanels[i].id))
+            {
+                var entry = hintPanels[i];
+                entry.id = GetDefaultPanelId(i);
+                hintPanels[i] = entry;
+            }
+        }
     }
 
     private void InitializePanels()
     {
-        int count = hintPanels.Length;
+        MigrateLegacyPanels();
+        int count = hintPanels?.Length ?? 0;
+
         canvasGroups = new CanvasGroup[count];
         rectTransforms = new RectTransform[count];
         activeStates = new bool[count];
-
-        Debug.Log($"[MultiHintController] Initializing {count} panels...");
+        baseAnchoredPositions = new Vector2[count];
+        panelLookup = new Dictionary<string, int>(count, StringComparer.OrdinalIgnoreCase);
 
         for (int i = 0; i < count; i++)
         {
-            if (hintPanels[i] == null)
+            var entry = hintPanels[i];
+            string id = NormalizeId(entry.id, i);
+
+            if (!panelLookup.ContainsKey(id))
             {
-                Debug.LogWarning($"[MultiHintController] Panel {i} is null in inspector!");
+                panelLookup.Add(id, i);
+            }
+            else
+            {
+                Debug.LogWarning($"[MultiHintController] Duplicate hint id '{id}' detected at index {i}. Only the first occurrence will be used.");
+            }
+
+            if (entry.panel == null)
+            {
+                Debug.LogWarning($"[MultiHintController] Panel '{id}' is null in inspector!");
                 continue;
             }
 
-            Debug.Log($"[MultiHintController] Panel {i} = {hintPanels[i].name}");
+            if (showDebug)
+                Debug.Log($"[MultiHintController] Panel '{id}' resolved to {entry.panel.name}");
 
-            // Get or add CanvasGroup
-            canvasGroups[i] = hintPanels[i].GetComponent<CanvasGroup>();
-            if (canvasGroups[i] == null)
-                canvasGroups[i] = hintPanels[i].AddComponent<CanvasGroup>();
+            var canvasGroup = entry.panel.GetComponent<CanvasGroup>();
+            if (canvasGroup == null && Application.isPlaying)
+            {
+                canvasGroup = entry.panel.AddComponent<CanvasGroup>();
+            }
 
-            // Get RectTransform
-            rectTransforms[i] = hintPanels[i].GetComponent<RectTransform>();
+            if (canvasGroup == null)
+            {
+                Debug.LogWarning($"[MultiHintController] Panel '{id}' is missing a CanvasGroup component and will be skipped.", entry.panel);
+                canvasGroups[i] = null;
+                rectTransforms[i] = entry.panel.GetComponent<RectTransform>();
+                if (rectTransforms[i] != null)
+                    baseAnchoredPositions[i] = rectTransforms[i].anchoredPosition;
+                activeStates[i] = false;
+                continue;
+            }
 
-            // Initialize hidden
-            canvasGroups[i].alpha = 0f;
+            canvasGroups[i] = canvasGroup;
+            rectTransforms[i] = entry.panel.GetComponent<RectTransform>();
+
+            canvasGroup.alpha = 0f;
+            canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
+
             if (rectTransforms[i] != null)
+            {
+                // Store base Y, but normalize X to 0 so a single
+                // active hint centers at zero regardless of authoring offsets.
+                var ap = rectTransforms[i].anchoredPosition;
+                baseAnchoredPositions[i] = new Vector2(0f, ap.y);
                 rectTransforms[i].localScale = hiddenScale;
+            }
 
+            entry.panel.SetActive(true);
             activeStates[i] = false;
         }
+
+        UpdatePanelPositions();
+        initialized = true;
+    }
+
+    private void MigrateLegacyPanels()
+    {
+        if (legacyHintPanels == null || legacyHintPanels.Length == 0)
+            return;
+
+        int count = legacyHintPanels.Length;
+
+        if (hintPanels == null || hintPanels.Length < count)
+        {
+            Array.Resize(ref hintPanels, count);
+        }
+
+        for (int i = 0; i < count; i++)
+        {
+            if (legacyHintPanels[i] == null)
+                continue;
+
+            if (hintPanels == null)
+                continue;
+
+            if (hintPanels[i].panel == null)
+            {
+                var entry = hintPanels[i];
+                entry.panel = legacyHintPanels[i];
+                if (string.IsNullOrWhiteSpace(entry.id))
+                    entry.id = GetDefaultPanelId(i);
+                hintPanels[i] = entry;
+            }
+        }
+
+        legacyHintPanels = Array.Empty<GameObject>();
+    }
+
+    private string NormalizeId(string id, int index)
+    {
+        if (string.IsNullOrWhiteSpace(id))
+            id = GetDefaultPanelId(index);
+
+        id = id.Trim();
+        var entry = hintPanels[index];
+        if (entry.id != id)
+        {
+            entry.id = id;
+            hintPanels[index] = entry;
+        }
+        return id;
+    }
+
+    private string GetDefaultPanelId(int index)
+    {
+        return index switch
+        {
+            0 => PanelNames.RightMouse,
+            1 => PanelNames.LeftMouse,
+            2 => PanelNames.Custom,
+            _ => $"Panel{index}"
+        };
+    }
+
+    private bool TryGetPanelIndex(string panelId, out int index)
+    {
+        if (!initialized)
+            InitializePanels();
+
+        if (string.IsNullOrWhiteSpace(panelId) || panelLookup == null)
+        {
+            index = -1;
+            return false;
+        }
+
+        return panelLookup.TryGetValue(panelId.Trim(), out index);
+    }
+
+    /// <summary>
+    /// Shows hint panels by their identifiers.
+    /// </summary>
+    public void Show(params string[] panelIds)
+    {
+        if (!initialized)
+            InitializePanels();
+
+        if (activeStates == null)
+            return;
+
+        for (int i = 0; i < activeStates.Length; i++)
+            activeStates[i] = false;
+
+        if (panelIds == null)
+            return;
+
+        foreach (string rawId in panelIds)
+        {
+            if (!TryGetPanelIndex(rawId, out int index))
+            {
+                if (showDebug)
+                    Debug.LogWarning($"[MultiHintController] Unknown hint panel '{rawId}'");
+                continue;
+            }
+
+            activeStates[index] = true;
+
+            var entry = hintPanels[index];
+            if (entry.panel != null)
+            {
+                entry.panel.SetActive(true);
+
+                if (showDebug && canvasGroups[index] != null)
+                {
+                    Debug.Log($"[MultiHintController] Showing '{entry.id}' (alpha={canvasGroups[index].alpha:F2}, scale={rectTransforms[index]?.localScale})");
+                }
+            }
+        }
+
+        UpdatePanelPositions();
+    }
+
+    /// <summary>
+    /// Hides all hint panels.
+    /// </summary>
+    public void HideAll()
+    {
+        if (!initialized)
+            InitializePanels();
+
+        if (activeStates == null)
+            return;
+
+        for (int i = 0; i < activeStates.Length; i++)
+            activeStates[i] = false;
+
+        UpdatePanelPositions();
+    }
+
+    /// <summary>
+    /// Shows all configured hint panels.
+    /// </summary>
+    public void ShowAll()
+    {
+        if (!initialized)
+            InitializePanels();
+
+        if (activeStates == null)
+            return;
+
+        for (int i = 0; i < activeStates.Length; i++)
+        {
+            activeStates[i] = true;
+            hintPanels[i].panel?.SetActive(true);
+        }
+
+        UpdatePanelPositions();
+    }
+
+    /// <summary>
+    /// Checks whether a panel with the provided identifier is currently active.
+    /// </summary>
+    public bool IsActive(string panelId)
+    {
+        return TryGetPanelIndex(panelId, out int index) &&
+               index >= 0 &&
+               index < activeStates.Length &&
+               activeStates[index];
     }
 
     private void AnimatePanels()
     {
-        for (int i = 0; i < hintPanels.Length; i++)
-        {
-            if (hintPanels[i] == null)
-            {
-                if (canvasGroups[i] != null || rectTransforms[i] != null)
-                {
-                    Debug.LogWarning($"[MultiHintController] Panel {i} became null during runtime! Was it destroyed?");
-                    canvasGroups[i] = null;
-                    rectTransforms[i] = null;
-                }
-                continue;
-            }
-
-            if (canvasGroups[i] == null) continue;
-
-            bool shouldShow = activeStates[i];
-
-            // Animate alpha
-            float targetAlpha = shouldShow ? 1f : 0f;
-            canvasGroups[i].alpha = Mathf.Lerp(canvasGroups[i].alpha, targetAlpha, Time.deltaTime * fadeSpeed);
-
-            // Animate scale
-            if (rectTransforms[i] != null)
-            {
-                Vector3 targetScale = shouldShow ? normalScale : hiddenScale;
-                rectTransforms[i].localScale = Vector3.Lerp(rectTransforms[i].localScale, targetScale, Time.deltaTime * scaleSpeed);
-            }
-
-            // Update interactivity
-            canvasGroups[i].interactable = shouldShow;
-            canvasGroups[i].blocksRaycasts = shouldShow;
-        }
-    }
-
-    /// <summary>
-    /// Show specific hint panels by index.
-    /// Example: Show(0, 2) - shows panels 0 and 2, hides panel 1
-    /// </summary>
-    public void Show(params int[] indices)
-    {
-        Debug.Log($"[MultiHintController] Show called with indices: [{string.Join(", ", indices)}]");
-
-        // Check if arrays are initialized
-        if (activeStates == null || hintPanels == null)
-        {
-            Debug.LogError("[MultiHintController] Show called but arrays not initialized! Awake may not have run yet.");
+        if (canvasGroups == null)
             return;
-        }
 
-        // Log current state of all panels
+        float speed = animationSpeed > 0f ? animationSpeed * Time.deltaTime : float.PositiveInfinity;
+
         for (int i = 0; i < hintPanels.Length; i++)
         {
-            Debug.Log($"[MultiHintController] Panel {i} state: {(hintPanels[i] != null ? hintPanels[i].name : "NULL")}");
-        }
+            var entry = hintPanels[i];
+            var canvasGroup = (canvasGroups != null && i < canvasGroups.Length) ? canvasGroups[i] : null;
+            var rect = (rectTransforms != null && i < rectTransforms.Length) ? rectTransforms[i] : null;
 
-        // Hide all first
-        for (int i = 0; i < activeStates.Length; i++)
-            activeStates[i] = false;
+            if (entry.panel == null || canvasGroup == null)
+                continue;
 
-        // Show specified indices
-        foreach (int index in indices)
-        {
-            if (index >= 0 && index < activeStates.Length)
-            {
-                activeStates[index] = true;
-                if (hintPanels[index] != null)
-                {
-                    hintPanels[index].SetActive(true);
+            bool shouldShow = activeStates != null && i < activeStates.Length && activeStates[i];
+            float targetAlpha = shouldShow ? 1f : 0f;
+            Vector3 targetScale = shouldShow ? normalScale : hiddenScale;
 
-                    // Log detailed state for debugging visibility issues
-                    if (canvasGroups[index] != null)
-                    {
-                        Debug.Log($"[MultiHintController] Panel {index} ({hintPanels[index].name}) set to active. " +
-                                  $"CanvasGroup alpha={canvasGroups[index].alpha:F2}, " +
-                                  $"scale={rectTransforms[index]?.localScale}, " +
-                                  $"activeInHierarchy={hintPanels[index].activeInHierarchy}");
-                    }
-                    else
-                    {
-                        Debug.Log($"[MultiHintController] Panel {index} ({hintPanels[index].name}) set to active, but CanvasGroup is null!");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning($"[MultiHintController] Panel {index} is null! Was destroyed or never assigned.");
-                }
-            }
+            canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, targetAlpha, speed);
+            if (rect != null)
+                rect.localScale = Vector3.MoveTowards(rect.localScale, targetScale, speed);
+
+            bool fullyVisible = Mathf.Approximately(canvasGroup.alpha, 1f);
+            canvasGroup.interactable = shouldShow && fullyVisible;
+            canvasGroup.blocksRaycasts = canvasGroup.interactable;
         }
     }
 
-    /// <summary>
-    /// Hide all hint panels.
-    /// </summary>
-    public void HideAll()
+    private void UpdatePanelPositions()
     {
-        if (showDebug)
-            Debug.Log("[MultiHintController] HideAll called");
+        if (rectTransforms == null || rectTransforms.Length == 0)
+            return;
 
-        for (int i = 0; i < activeStates.Length; i++)
+        if (baseAnchoredPositions == null || baseAnchoredPositions.Length != rectTransforms.Length)
+            baseAnchoredPositions = new Vector2[rectTransforms.Length];
+
+        for (int i = 0; i < rectTransforms.Length; i++)
         {
-            activeStates[i] = false;
-        }
-    }
+            var rect = rectTransforms[i];
+            if (rect == null)
+                continue;
 
-    /// <summary>
-    /// Show all hint panels.
-    /// </summary>
-    public void ShowAll()
-    {
-        for (int i = 0; i < activeStates.Length; i++)
+            Vector2 basePos = baseAnchoredPositions[i];
+            rect.anchoredPosition = basePos;
+        }
+
+        if (activeStates == null)
+            return;
+
+        List<int> activeIndices = new List<int>();
+        for (int i = 0; i < activeStates.Length && i < rectTransforms.Length; i++)
         {
-            activeStates[i] = true;
-            if (hintPanels[i] != null)
-                hintPanels[i].SetActive(true);
+            if (activeStates[i] && rectTransforms[i] != null)
+                activeIndices.Add(i);
         }
-    }
 
-    /// <summary>
-    /// Check if specific panel is currently active.
-    /// </summary>
-    public bool IsActive(int index)
-    {
-        if (index >= 0 && index < activeStates.Length)
-            return activeStates[index];
-        return false;
+        if (activeIndices.Count <= 1)
+            return;
+
+        float[] widths = new float[activeIndices.Count];
+        float totalWidth = 0f;
+
+        for (int idx = 0; idx < activeIndices.Count; idx++)
+        {
+            var rect = rectTransforms[activeIndices[idx]];
+            float width = rect.rect.width;
+            if (Mathf.Approximately(width, 0f))
+                width = rect.sizeDelta.x;
+            widths[idx] = width;
+            totalWidth += width;
+        }
+
+        if (activeIndices.Count > 1)
+            totalWidth += horizontalSpacing * (activeIndices.Count - 1);
+
+        float cursor = -totalWidth * 0.5f;
+
+        for (int idx = 0; idx < activeIndices.Count; idx++)
+        {
+            int panelIndex = activeIndices[idx];
+            var rect = rectTransforms[panelIndex];
+            if (rect == null)
+                continue;
+
+            float width = widths[idx];
+            float centerX = cursor + width * 0.5f;
+            Vector2 basePos = baseAnchoredPositions[panelIndex];
+            rect.anchoredPosition = new Vector2(basePos.x + centerX, basePos.y);
+            cursor += width + horizontalSpacing;
+        }
     }
 }
+

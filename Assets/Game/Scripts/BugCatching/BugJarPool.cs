@@ -81,6 +81,8 @@ namespace BugCatching
             {
                 allJars.Add(jar);
                 availableJars.Add(jar);
+                // Make all discovered jars inactive by default: disable their colliders
+                SetJarColliderEnabled(jar, false);
             }
 
             if (showDebug)
@@ -99,6 +101,9 @@ namespace BugCatching
             var jar = availableJars.First();
             availableJars.Remove(jar);
             busyJars.Add(jar);
+
+            // Activate jar collision while it's in use
+            SetJarColliderEnabled(jar, true);
 
             if (showDebug)
                 Debug.Log($"[BugJarPool] Jar taken from pool: {jar.name}. Available: {availableJars.Count}, Busy: {busyJars.Count}");
@@ -129,6 +134,9 @@ namespace BugCatching
             busyJars.Remove(jar);
             availableJars.Add(jar);
 
+            // Deactivate jar collision when returned to the pool
+            SetJarColliderEnabled(jar, false);
+
             if (showDebug)
                 Debug.Log($"[BugJarPool] Jar returned to pool: {jar.name}. Available: {availableJars.Count}, Busy: {busyJars.Count}");
         }
@@ -141,6 +149,7 @@ namespace BugCatching
             foreach (var jar in allJars)
             {
                 availableJars.Add(jar);
+                SetJarColliderEnabled(jar, false);
             }
 
             if (showDebug)
@@ -149,6 +158,13 @@ namespace BugCatching
         #endregion
 
         #region Private Methods
+        private void SetJarColliderEnabled(BugJarTrap jar, bool enabled)
+        {
+            if (jar == null) return;
+            var col = jar.GetComponent<BoxCollider>();
+            if (col == null) col = jar.GetComponentInChildren<BoxCollider>(true);
+            if (col != null) col.enabled = enabled;
+        }
         #endregion
 
         #region Gizmos

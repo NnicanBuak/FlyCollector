@@ -1,99 +1,125 @@
+using System;
 using UnityEngine;
-using Bug;
 
 public class CameraInspectManager
 {
-    private readonly Transform holdPoint;
-    private readonly float inspectFlyTime;
+    private Transform defaultHoldPoint;
+    private float defaultInspectFlyTime;
     private readonly bool showDebug;
 
+    public event Action OnInspectStarted;
+    public event Action OnInspectEnded;
+
     private InspectSession currentInspect;
-
-
-    public event System.Action<BugAI> OnBugAIInspected;
-    public event System.Action<BugAI, GameObject> OnBugAIInspectedWhileFocused;
-    public event System.Action OnInspectEnded;
+    private bool finishing;
 
     public bool IsInspecting => currentInspect != null;
 
     public CameraInspectManager(Transform holdPoint, float inspectFlyTime, bool showDebug = false)
     {
-        this.holdPoint = holdPoint;
-        this.inspectFlyTime = inspectFlyTime;
+        defaultHoldPoint = holdPoint;
+        defaultInspectFlyTime = inspectFlyTime;
         this.showDebug = showDebug;
     }
 
-    public void Update(bool exitPressed)
+    public void ConfigureDefaults(Transform holdPoint, float inspectFlyTime)
     {
-        if (currentInspect == null)
+        defaultHoldPoint = holdPoint;
+        defaultInspectFlyTime = inspectFlyTime;
+    }
+
+    public void StartInspect(GameObject target, Action onFinish = null)
+    {
+        if (target == null)
+        {
+            Debug.LogError("[CameraInspectManager] StartInspect: target == null");
             return;
+        }
+        if (defaultHoldPoint == null)
+        {
+            Debug.LogError("[CameraInspectManager] StartInspect: holdPoint == null (assign in inspector)");
+            return;
+        }
 
-        currentInspect.UpdateInput(exitPressed);
+        StartInspectInternal(target, defaultHoldPoint, defaultInspectFlyTime, onFinish);
     }
 
-    public bool TryStartInspect(GameObject target, Camera cam, GameObject currentFocusTarget, System.Action onFinish = null)
+    public void StartInspect(GameObject go, Transform customHoldPoint, float flyTime)
     {
-        return StartInspect(target, holdPoint, inspectFlyTime, cam, currentFocusTarget, onFinish);
+        if (go == null)
+        {
+            Debug.LogError("[CameraInspectManager] StartInspect(old): go == null");
+            return;
+        }
+        if (customHoldPoint == null)
+        {
+            Debug.LogError("[CameraInspectManager] StartInspect(old): holdPoint == null");
+            return;
+        }
+
+        StartInspectInternal(go, customHoldPoint, flyTime, null);
     }
 
-    public bool StartInspect(GameObject target, Transform hp, float fly, Camera cam, GameObject currentFocusTarget, System.Action onFinish = null)
+    public void UpdateInspect()
     {
+        if (!IsInspecting) return;
+        currentInspect.UpdateInput();
+    }
+
+    public void ForceEndInspect()
+    {
+        if (!IsInspecting) return;
+        if (finishing) return;
+
+        finishing = true;
+
+        currentInspect.EndInspectNow();
+
+        if (currentInspect != null)
+        {
+            currentInspect = null;
+            OnInspectEnded?.Invoke();
+        }
+
         if (showDebug)
-            Debug.Log($"[CameraInspectManager] Starting inspect: {target.name}");
+            Debug.Log("[CameraInspectManager] Inspect force-ended");
+    }
 
-        var inspectable = target.GetComponent<IInspectable>();
-        if (inspectable == null)
+    private void HandleSessionFinish(Action externalOnFinish)
+    {
+        if (finishing)
         {
-            Debug.LogWarning($"[CameraInspectManager] IInspectable not found on {target.name}");
-            return false;
+            currentInspect = null;
+            externalOnFinish?.Invoke();
+            OnInspectEnded?.Invoke();
+            return;
         }
 
-        // Check if inspection is allowed (e.g., bug accessibility)
-        if (!inspectable.OnInspect(cam))
-        {
-            if (showDebug)
-                Debug.Log($"[CameraInspectManager] Inspection denied for {target.name}");
-            return false;
-        }
+        finishing = true;
+        currentInspect = null;
+        externalOnFinish?.Invoke();
+        OnInspectEnded?.Invoke();
+    }
 
-        var bug = target.GetComponentInParent<BugAI>();
-        if (bug != null)
-        {
-            OnBugAIInspected?.Invoke(bug);
+    private void StartInspectInternal(GameObject target, Transform point, float flyTime, Action onFinish)
+    {
+        if (IsInspecting) ForceEndInspect();
 
-            if (currentFocusTarget != null)
-            {
-                OnBugAIInspectedWhileFocused?.Invoke(bug, currentFocusTarget);
-                if (showDebug)
-                    Debug.Log($"[CameraInspectManager] BugAI inspected while focused on: {currentFocusTarget.name}");
-            }
-        }
+        finishing = false;
 
+        // Choose bug-specific session if requested by InspectableObject
+        var insp = target.GetComponent<InspectableObject>();
+        bool isBug = insp != null && insp.IsBug();
 
-        if (FocusLevelManager.Instance != null && !FocusLevelManager.Instance.HasEverInteracted)
-        {
-            if (!InteractionGate.Consume())
-                FocusLevelManager.Instance.TriggerFirstInteraction("Inspect");
-        }
-
-        // Track camera mode change to Inspect
-        GAManager.Instance.TrackCameraModeChange("Normal", "Inspect");
-
-        currentInspect = new InspectSession(
-            target,
-            hp != null ? hp : holdPoint,
-            fly > 0f ? fly : inspectFlyTime,
-            () =>
-            {
-                currentInspect = null;
-                onFinish?.Invoke();
-                OnInspectEnded?.Invoke();
-
-                // Track camera mode change back to Normal
-                GAManager.Instance.TrackCameraModeChange("Inspect", "Normal");
-            });
+        currentInspect = isBug
+            ? new BugInspectSession(target, point, flyTime, () => HandleSessionFinish(onFinish))
+            : new InspectSession(target, point, flyTime, () => HandleSessionFinish(onFinish));
 
         currentInspect.Begin();
-        return true;
+
+        if (showDebug)
+            Debug.Log($"[CameraInspectManager] Inspect started for {target.name}");
+
+        OnInspectStarted?.Invoke();
     }
 }

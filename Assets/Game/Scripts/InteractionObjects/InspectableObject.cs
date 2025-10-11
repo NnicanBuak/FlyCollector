@@ -4,6 +4,10 @@ using Bug;
 
 public class InspectableObject : MonoBehaviour, IInspectable
 {
+    [Header("Type")]
+    [Tooltip("Mark this object as a bug to enable bug-specific inspect behavior")]
+    [SerializeField] private bool isBug = false;
+
     [Header("Настройки инспекции")] [Tooltip("Можно ли инспектировать этот объект")] [SerializeField]
     private bool canInspect = true;
 
@@ -151,6 +155,8 @@ public class InspectableObject : MonoBehaviour, IInspectable
             }
         }
     }
+
+    public bool IsBug() => isBug;
 
     void Start()
     {

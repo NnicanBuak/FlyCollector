@@ -1,22 +1,34 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace InteractionActions
 {
     /// <summary>
-    /// Shows hint panels via MultiHintController.
+    /// Shows hint panels via <see cref="MultiHintController"/> using named identifiers.
     /// Used for displaying context hints.
-    /// Panel 0 = RMB hint
-    /// Panel 1 = LMB hint
-    /// Panel 2 = Custom/Action hint (panel 3)
     /// </summary>
     public class ShowHintAction : InteractionActionBase
     {
         [Header("Hint Settings")]
-        [Tooltip("Hint panel indices to show (0=RMB, 1=LMB, 2=Custom)")]
-        [SerializeField] private int[] hintIndices = new int[] { 2 };
+        [Tooltip("Hint panel identifiers to show (e.g. RMB, LMB, Custom).")]
+        [SerializeField] private string[] panelIds = { MultiHintController.PanelNames.Custom };
+
+        [FormerlySerializedAs("hintIndices")]
+        [SerializeField, HideInInspector] private int[] legacyPanelIndices = Array.Empty<int>();
+
         [SerializeField] private float displayDuration = 2f;
         [SerializeField] private bool autoHide = true;
+
+        private void OnValidate()
+        {
+            if (legacyPanelIndices != null && legacyPanelIndices.Length > 0)
+            {
+                panelIds = ConvertLegacyIndices(legacyPanelIndices);
+                legacyPanelIndices = Array.Empty<int>();
+            }
+        }
 
         public override IEnumerator Execute(InteractionContext context)
         {
@@ -26,10 +38,8 @@ namespace InteractionActions
                 yield break;
             }
 
-            // Show hint panels
-            MultiHintController.Instance.Show(hintIndices);
+            MultiHintController.Instance.Show(panelIds);
 
-            // Wait if auto-hide is enabled
             if (autoHide && displayDuration > 0f)
             {
                 yield return new WaitForSeconds(displayDuration);
@@ -38,11 +48,37 @@ namespace InteractionActions
         }
 
         /// <summary>
-        /// Sets hint indices dynamically (useful for runtime configuration).
+        /// Allows runtime configuration of panels to display.
         /// </summary>
+        public void SetPanelNames(params string[] names)
+        {
+            panelIds = names ?? Array.Empty<string>();
+        }
+
+        [Obsolete("Use SetPanelNames instead.")]
         public void SetHintIndices(params int[] indices)
         {
-            hintIndices = indices;
+            panelIds = ConvertLegacyIndices(indices);
+        }
+
+        private static string[] ConvertLegacyIndices(int[] indices)
+        {
+            if (indices == null || indices.Length == 0)
+                return Array.Empty<string>();
+
+            var result = new string[indices.Length];
+            for (int i = 0; i < indices.Length; i++)
+            {
+                result[i] = indices[i] switch
+                {
+                    0 => MultiHintController.PanelNames.RightMouse,
+                    1 => MultiHintController.PanelNames.LeftMouse,
+                    2 => MultiHintController.PanelNames.Custom,
+                    _ => $"Panel{indices[i]}"
+                };
+            }
+
+            return result;
         }
     }
 }

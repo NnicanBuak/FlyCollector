@@ -108,7 +108,8 @@ namespace BugCatching
             isProcessing = false;
 
             if (hideHintOnDone && MultiHintController.Instance)
-                MultiHintController.Instance.HideAll();
+                // Keep showing Put (LMB), hide Collect (RMB)
+                MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse);
         }
         #endregion
 

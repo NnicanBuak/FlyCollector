@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using DG.Tweening;
 using Bug;
 using BugCatching;
 
@@ -21,6 +22,15 @@ public class CameraController : MonoBehaviour
     [Header("Gameplay")]
     [SerializeField] private BugJarCatchController bugJarCatchController;
     public BugJarCatchController BugJarCatchController => bugJarCatchController;
+
+    [Header("Collect Mode")]
+    [Tooltip("Fixed camera pose used while in Collect mode (optional)")]
+    [SerializeField] private Transform collectModeCameraPose;
+    public Transform CollectModeCameraPose => collectModeCameraPose;
+
+    [Tooltip("World-space offset for bug position relative to active jar in Collect mode")]
+    [SerializeField] private Vector3 collectBugOffset = new Vector3(0f, 0.1f, 0.15f);
+    public Vector3 CollectBugOffset => collectBugOffset;
 
     [Header("Mouse Follow")]
     [Tooltip("Enable camera rotation following mouse cursor")]
@@ -64,6 +74,7 @@ public class CameraController : MonoBehaviour
 
     private Vector3 cameraReturnPos;
     private Quaternion cameraReturnRot;
+    private Tween cameraMoveTween;
 
 
     [System.Serializable]
@@ -71,8 +82,10 @@ public class CameraController : MonoBehaviour
     [System.Serializable]
     public class BugAIWithFocusEvent : UnityEvent<BugAI, GameObject> { }
 
+    #pragma warning disable 0067 // Suppress 'event is never used' warnings for optional hooks
     public event System.Action<BugAI> OnBugAIInspected;
     public event System.Action<BugAI, GameObject> OnBugAIInspectedWhileFocused;
+    #pragma warning restore 0067
     public event System.Action InspectEnded;
 
     public bool IsAtZeroFocus => focusManager != null && focusManager.IsAtZeroFocus;
@@ -98,18 +111,7 @@ public class CameraController : MonoBehaviour
         pushSystem.Mode = pushMode;
         pushSystem.Button = pushButton;
         pushSystem.SetCooldown(pushCooldown);
-
-
-        inspectManager.OnBugAIInspected += (bug) =>
-        {
-            BugAIInspected?.Invoke(bug);
-            OnBugAIInspected?.Invoke(bug);
-        };
-        inspectManager.OnBugAIInspectedWhileFocused += (bug, focusTarget) =>
-        {
-            BugAIInspectedWhileFocused?.Invoke(bug, focusTarget);
-            OnBugAIInspectedWhileFocused?.Invoke(bug, focusTarget);
-        };
+        
         inspectManager.OnInspectEnded += () => InspectEnded?.Invoke();
 
         if (showDebugInfo)
@@ -138,13 +140,19 @@ public class CameraController : MonoBehaviour
     void Update()
     {
 
-        if (inspectManager.IsInspecting)
+        
+        if (inspectManager.IsInspecting) 
         {
-            // Only ESC exits inspect mode; RMB is handled internally by InspectSession
-            bool exitPressed = inputHandler.IsEscapePressed();
-            inspectManager.Update(exitPressed);
+            // Exit inspect on LMB or ESC; RMB is handled inside InspectSession (collect-mode)
+            if (inputHandler != null && inputHandler.IsInspectExitPressed())
+            { 
+                inspectManager.ForceEndInspect();
+            return; 
+            }
+            inspectManager.UpdateInspect();
             return;
         }
+
 
 
         if (focusManager.FocusDepth > 0)
@@ -215,7 +223,6 @@ public class CameraController : MonoBehaviour
 
             bool lmb = inputHandler.IsLeftClickPressed();
             bool rmb = inputHandler.IsRightClickPressed();
-            bool enter = inputHandler.IsEnterPressed();
 
 
             if (pushSystem.TryPushOnClick(pushable, hit.point, ray.direction, lmb, rmb, focusManager.FocusDepth))
@@ -224,7 +231,7 @@ public class CameraController : MonoBehaviour
             }
 
 
-            if ((lmb || enter) && (pushSystem.Mode != CameraPushSystem.PushMode.OnClick || pushSystem.Button != CameraPushSystem.PushButton.LeftClick))
+            if ((lmb) && (pushSystem.Mode != CameraPushSystem.PushMode.OnClick || pushSystem.Button != CameraPushSystem.PushButton.LeftClick))
             {
                 bool handled = false;
 
@@ -278,7 +285,7 @@ public class CameraController : MonoBehaviour
             Debug.Log($"[CameraController] Starting inspect: {target.name}");
 
         GameObject currentFocusTarget = focusManager.GetCurrentFocusedObject();
-        inspectManager.TryStartInspect(target, cam, currentFocusTarget, onFinish);
+        inspectManager.StartInspect(target, onFinish);
     }
 
     private void StartFocus(GameObject target)
@@ -306,26 +313,13 @@ public class CameraController : MonoBehaviour
         if (allowReturn) UpdateReturnPosition();
 
         float t = (flyTimeOverride > 0f) ? flyTimeOverride : focusFlyTime;
-        StartCoroutine(FlyCameraTo(point.position, point.rotation, t));
-    }
-
-    private System.Collections.IEnumerator FlyCameraTo(Vector3 pos, Quaternion rot, float time)
-    {
-        if (cam == null) yield break;
-
-        Vector3 startPos = cam.transform.position;
-        Quaternion startRot = cam.transform.rotation;
-        float t = 0f;
-
-        while (t < time)
-        {
-            float k = Mathf.SmoothStep(0f, 1f, t / time);
-            cam.transform.position = Vector3.Lerp(startPos, pos, k);
-            cam.transform.rotation = Quaternion.Slerp(startRot, rot, k);
-            t += Time.deltaTime;
-            yield return null;
-        }
-
-        cam.transform.SetPositionAndRotation(pos, rot);
+        if (cameraMoveTween != null && cameraMoveTween.IsActive()) cameraMoveTween.Kill();
+        var seq = DOTween.Sequence();
+        seq.Join(cam.transform.DOMove(point.position, t).SetEase(Ease.InOutSine))
+           .Join(cam.transform.DORotateQuaternion(point.rotation, t).SetEase(Ease.InOutSine));
+        cameraMoveTween = seq;
     }
 }
+
+
+
