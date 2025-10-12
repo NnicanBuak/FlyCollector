@@ -4,6 +4,7 @@ using System;
 public class BugCounter : MonoBehaviour
 {
     public static BugCounter Instance { get; private set; }
+    public static event Action<BugCounter> InstanceChanged;
 
     [Header("Jar Settings")]
     [Tooltip("Maximum number of jars available")]
@@ -40,6 +41,7 @@ public class BugCounter : MonoBehaviour
         }
 
         Instance = this;
+        InstanceChanged?.Invoke(this);
 
         if (persistBetweenScenes)
         {
@@ -141,5 +143,14 @@ public class BugCounter : MonoBehaviour
     public bool HasJars(int requiredAmount)
     {
         return _currentJars >= requiredAmount;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+            InstanceChanged?.Invoke(null);
+        }
     }
 }

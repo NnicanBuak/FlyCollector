@@ -1,7 +1,9 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using BugData;
+using Bug;
 
 namespace BugCatching
 {
@@ -46,6 +48,7 @@ namespace BugCatching
             FlyingToTable,
             AtTable,
             Sealing,
+            Sealed,
             FlyingBack
         }
         #endregion
@@ -62,10 +65,13 @@ namespace BugCatching
 
         private GameObject targetBug;
         private string targetBugName;
+        private Item targetItem;
+        private string targetItemKey;
+        private bool consumed;
+        private bool suppressCollectHintOnSeal;
 
-    private AudioSource audioSource;
-    private Tween flyTween;
-        private const string ANIM_SEAL = "JarSeal";
+        private AudioSource audioSource;
+        private Tween flyTween;
 
         private void Awake()
         {
@@ -81,6 +87,8 @@ namespace BugCatching
             {
                 interactableObject.enabled = false;
             }
+
+            consumed = false;
         }
 
         private void Start()
@@ -108,21 +116,45 @@ namespace BugCatching
             }
         }
 
-        public void SetTargetBug(GameObject bug)
+        public void TriggerClose()
+        {
+            if (animator != null)
+            {
+                animator.SetTrigger("Close");
+            }
+        }
+
+        public void SetTargetBug(GameObject bug, Item item = null, string itemKey = null)
         {
             targetBug = bug;
             targetBugName = bug != null ? bug.name : null;
+            targetItem = item;
+            targetItemKey = itemKey;
+            consumed = false;
+
+            if (bug != null && !gameObject.activeSelf)
+            {
+                gameObject.SetActive(true);
+            }
 
             if (showDebug)
             {
                 Debug.Log($"[BugJarTrap] Target bug set: {bug?.name}");
             }
 
-            // Update InteractableObject's dynamic Item based on bug name
-            UpdateInteractableItemFromRegistry();
+            if (targetItem != null)
+            {
+                SetInteractableItem(targetItem);
+            }
+            else
+            {
+                // Update InteractableObject's dynamic Item based on bug name
+                UpdateInteractableItemFromRegistry();
+            }
         }
 
         public string GetTargetBugName() => targetBugName;
+        public Item GetTargetItem() => targetItem;
 
         public void FlyToTable()
         {
@@ -301,22 +333,28 @@ namespace BugCatching
 
             if (showDebug)
             {
-                Debug.Log($"[BugJarTrap] Sealing jar with bug: {targetBug.name}");
-            }
+            Debug.Log($"[BugJarTrap] Sealing jar with bug: {targetBug.name}");
+        }
 
             currentState = State.Sealing;
+            consumed = true;
 
+            if (BugCounter.Instance != null)
+            {
+                BugCounter.Instance.DecrementJars();
+            }
+
+            if (BugJarPool.Instance != null)
+            {
+                BugJarPool.Instance.ConsumeJar(this);
+            }
 
             if (interactableObject != null)
             {
-                interactableObject.enabled = false;
+                interactableObject.SetCanInteract(false);
             }
 
-
-            if (animator != null)
-            {
-                animator.SetTrigger(ANIM_SEAL);
-            }
+            TriggerClose();
 
 
             if (sealSound != null && audioSource != null)
@@ -350,25 +388,48 @@ namespace BugCatching
         /// </summary>
         public void UpdateInteractableItemFromRegistry()
         {
-            if (string.IsNullOrEmpty(targetBugName) || interactableObject == null) return;
+            if (interactableObject == null) return;
 
-            var registry = FindFirstObjectByType<BugItemRegistry>();
-            if (registry == null) return;
-
-            // Prefer variant name
-            string baseName = targetBugName.Replace("(Clone)", "").Trim();
-            string variantName = baseName + "_Variant";
-
-            if (registry.TryGetItem(variantName, out var item) && item != null)
+            if (targetItem != null)
             {
-                SetInteractableItem(item);
+                SetInteractableItem(targetItem);
                 return;
             }
 
-            if (registry.TryGetItem(baseName, out var plainItem) && plainItem != null)
+            if (string.IsNullOrEmpty(targetBugName)) return;
+
+            var registry = BugItemRegistry.Instance;
+            if (registry == null) return;
+
+            string lookupKey = targetBugName;
+            if (targetBug != null)
             {
-                SetInteractableItem(plainItem);
+                var bugAI = targetBug.GetComponent<BugAI>();
+                if (bugAI != null)
+                    lookupKey = bugAI.GetBugType();
             }
+
+            if (!string.IsNullOrEmpty(lookupKey) && registry.TryGetItem(lookupKey, out var item) && item != null)
+            {
+                targetItem = item;
+                targetItemKey = lookupKey;
+                SetInteractableItem(item);
+            }
+            else
+            {
+                string baseName = targetBugName.Replace("(Clone)", "").Trim();
+                if (registry.TryGetItem(baseName, out var fallback) && fallback != null)
+                {
+                    targetItem = fallback;
+                    targetItemKey = baseName;
+                    SetInteractableItem(fallback);
+                }
+            }
+        }
+
+        public void SetSuppressCollectHintOnSeal(bool suppress)
+        {
+            suppressCollectHintOnSeal = suppress;
         }
         #endregion
 
@@ -514,7 +575,7 @@ namespace BugCatching
 
             // Track bug catch time for analytics
             string bugFileName = targetBug.name;
-            var bugAI = targetBug.GetComponent<Bug.BugAI>();
+            var bugAI = targetBug.GetComponent<BugAI>();
             if (bugAI != null)
             {
                 string bugType = bugAI.GetBugType();
@@ -524,16 +585,63 @@ namespace BugCatching
             }
 
 
-            var registry = FindFirstObjectByType<BugItemRegistry>();
-            if (registry != null && registry.TryGetItem(bugFileName, out var item) && item != null)
+            var registry = BugItemRegistry.Instance;
+            Item resolvedItem = targetItem;
+            string resolvedKey = targetItemKey;
+
+            if (resolvedItem == null && registry != null)
             {
+                // Build a list of lookup variants to maximize hit rate.
+                var tryKeys = new List<string>(4);
+
+                if (!string.IsNullOrWhiteSpace(bugFileName))
+                {
+                    tryKeys.Add(bugFileName);
+
+                    // Trim common runtime suffixes/prefixes.
+                    var cloneTrimmed = bugFileName.Replace("(Clone)", "").Trim();
+                    if (!string.Equals(cloneTrimmed, bugFileName, System.StringComparison.Ordinal))
+                        tryKeys.Add(cloneTrimmed);
+
+                    var variantTrimmed = cloneTrimmed.Replace("_Variant", "", System.StringComparison.OrdinalIgnoreCase).TrimEnd('_');
+                    if (!string.Equals(variantTrimmed, cloneTrimmed, System.StringComparison.Ordinal))
+                        tryKeys.Add(variantTrimmed);
+                }
+
+                if (bugAI != null)
+                {
+                    string bugType = bugAI.GetBugType();
+                    if (!string.IsNullOrWhiteSpace(bugType))
+                        tryKeys.Add(bugType);
+                }
+
+                foreach (var key in tryKeys)
+                {
+                    if (string.IsNullOrWhiteSpace(key)) continue;
+                    if (registry.TryGetItem(key, out resolvedItem) && resolvedItem != null)
+                    {
+                        resolvedKey = key;
+                        break;
+                    }
+                }
+            }
+
+            if (resolvedItem != null)
+            {
+                targetItem = resolvedItem;
+                targetItemKey = resolvedKey;
+                if (interactableObject != null)
+                {
+                    interactableObject.SetDynamicItem(resolvedItem);
+                }
+
                 if (InventoryManager.Instance != null)
                 {
-                    InventoryManager.Instance.AddItem(item, 1);
+                    InventoryManager.Instance.AddItem(resolvedItem, 1);
 
                     if (showDebug)
                     {
-                        Debug.Log($"[BugJarTrap] Added {item.itemName} to inventory");
+                        Debug.Log($"[BugJarTrap] Added {resolvedItem.itemName} to inventory");
                     }
                 }
                 else
@@ -555,8 +663,6 @@ namespace BugCatching
 
             if (BugCounter.Instance != null)
             {
-                BugCounter.Instance.DecrementJars();
-
                 if (showDebug)
                 {
                     Debug.Log($"[BugJarTrap] Jar counter decremented: {BugCounter.Instance.CurrentJars} remaining");
@@ -577,12 +683,29 @@ namespace BugCatching
 
             if (MultiHintController.Instance != null)
             {
-                // Keep showing Put (LMB), hide Collect (RMB)
-                MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse);
+                if (suppressCollectHintOnSeal)
+                {
+                    MultiHintController.Instance.HideAll();
+                }
+                else
+                {
+                    // Keep showing Put (LMB), hide Collect (RMB)
+                    MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse);
+                }
             }
 
 
             yield return new WaitForSeconds(0.2f);
+
+            if (consumed)
+            {
+                currentState = State.Sealed;
+                if (interactableObject != null)
+                {
+                    interactableObject.SetCanInteract(true);
+                }
+                yield break;
+            }
 
             currentState = State.FlyingBack;
 
@@ -613,7 +736,16 @@ namespace BugCatching
         {
             currentState = State.Idle;
             targetBug = null;
+            targetBugName = null;
+            targetItem = null;
+            targetItemKey = null;
+            consumed = false;
+            suppressCollectHintOnSeal = false;
 
+            if (interactableObject != null)
+            {
+                interactableObject.SetDynamicItem(null);
+            }
 
             if (BugJarPool.Instance != null)
             {
@@ -624,6 +756,45 @@ namespace BugCatching
                     Debug.Log($"[BugJarTrap] Returned to pool");
                 }
             }
+        }
+
+        private void FinalizeConsumedJar()
+        {
+            if (showDebug)
+            {
+                Debug.Log($"[BugJarTrap] Consuming jar {name} (removed from pool)");
+            }
+
+            if (BugJarPool.Instance != null)
+            {
+                BugJarPool.Instance.ConsumeJar(this);
+            }
+
+            if (interactableObject != null)
+            {
+                interactableObject.enabled = false;
+                interactableObject.SetDynamicItem(null);
+            }
+
+            if (flyTween != null && flyTween.IsActive())
+            {
+                flyTween.Kill();
+                flyTween = null;
+            }
+
+            transform.SetParent(originalParent, true);
+            transform.position = originalPosition;
+            transform.rotation = originalRotation;
+
+            currentState = State.Idle;
+            targetBug = null;
+            targetBugName = null;
+            targetItem = null;
+            targetItemKey = null;
+            consumed = false;
+            suppressCollectHintOnSeal = false;
+
+            gameObject.SetActive(false);
         }
         #endregion
 

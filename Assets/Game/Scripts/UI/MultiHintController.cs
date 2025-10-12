@@ -135,8 +135,7 @@ public class MultiHintController : MonoBehaviour
                 Debug.LogWarning($"[MultiHintController] Panel '{id}' is missing a CanvasGroup component and will be skipped.", entry.panel);
                 canvasGroups[i] = null;
                 rectTransforms[i] = entry.panel.GetComponent<RectTransform>();
-                if (rectTransforms[i] != null)
-                    baseAnchoredPositions[i] = rectTransforms[i].anchoredPosition;
+                StoreBaseAnchoredPosition(i, id);
                 activeStates[i] = false;
                 continue;
             }
@@ -148,14 +147,9 @@ public class MultiHintController : MonoBehaviour
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
 
+            StoreBaseAnchoredPosition(i, id);
             if (rectTransforms[i] != null)
-            {
-                // Store base Y, but normalize X to 0 so a single
-                // active hint centers at zero regardless of authoring offsets.
-                var ap = rectTransforms[i].anchoredPosition;
-                baseAnchoredPositions[i] = new Vector2(0f, ap.y);
                 rectTransforms[i].localScale = hiddenScale;
-            }
 
             entry.panel.SetActive(true);
             activeStates[i] = false;
@@ -380,22 +374,60 @@ public class MultiHintController : MonoBehaviour
         if (activeStates == null)
             return;
 
-        List<int> activeIndices = new List<int>();
+        List<int> activeMouseIndices = new List<int>();
         for (int i = 0; i < activeStates.Length && i < rectTransforms.Length; i++)
         {
-            if (activeStates[i] && rectTransforms[i] != null)
-                activeIndices.Add(i);
+            if (!activeStates[i] || rectTransforms[i] == null)
+                continue;
+
+            if (hintPanels != null && i < hintPanels.Length)
+            {
+                string id = hintPanels[i].id;
+                if (!string.IsNullOrEmpty(id))
+                {
+                    id = id.Trim();
+                    if (string.Equals(id, PanelNames.LeftMouse, StringComparison.OrdinalIgnoreCase) ||
+                        string.Equals(id, PanelNames.RightMouse, StringComparison.OrdinalIgnoreCase))
+                    {
+                        activeMouseIndices.Add(i);
+                    }
+                }
+            }
         }
 
-        if (activeIndices.Count <= 1)
+        if (activeMouseIndices.Count > 1)
+        {
+            activeMouseIndices.Sort((a, b) =>
+            {
+                int pa = GetMousePanelPriority(a);
+                int pb = GetMousePanelPriority(b);
+                if (pa != pb)
+                    return pa.CompareTo(pb);
+                return a.CompareTo(b);
+            });
+        }
+
+        if (activeMouseIndices.Count == 0)
             return;
 
-        float[] widths = new float[activeIndices.Count];
+        if (activeMouseIndices.Count == 1)
+        {
+            int idx = activeMouseIndices[0];
+            var rect = rectTransforms[idx];
+            if (rect != null)
+            {
+                Vector2 basePos = baseAnchoredPositions[idx];
+                rect.anchoredPosition = new Vector2(0f, basePos.y);
+            }
+            return;
+        }
+
+        float[] widths = new float[activeMouseIndices.Count];
         float totalWidth = 0f;
 
-        for (int idx = 0; idx < activeIndices.Count; idx++)
+        for (int idx = 0; idx < activeMouseIndices.Count; idx++)
         {
-            var rect = rectTransforms[activeIndices[idx]];
+            var rect = rectTransforms[activeMouseIndices[idx]];
             float width = rect.rect.width;
             if (Mathf.Approximately(width, 0f))
                 width = rect.sizeDelta.x;
@@ -403,14 +435,14 @@ public class MultiHintController : MonoBehaviour
             totalWidth += width;
         }
 
-        if (activeIndices.Count > 1)
-            totalWidth += horizontalSpacing * (activeIndices.Count - 1);
+        if (activeMouseIndices.Count > 1)
+            totalWidth += horizontalSpacing * (activeMouseIndices.Count - 1);
 
         float cursor = -totalWidth * 0.5f;
 
-        for (int idx = 0; idx < activeIndices.Count; idx++)
+        for (int idx = 0; idx < activeMouseIndices.Count; idx++)
         {
-            int panelIndex = activeIndices[idx];
+            int panelIndex = activeMouseIndices[idx];
             var rect = rectTransforms[panelIndex];
             if (rect == null)
                 continue;
@@ -418,9 +450,49 @@ public class MultiHintController : MonoBehaviour
             float width = widths[idx];
             float centerX = cursor + width * 0.5f;
             Vector2 basePos = baseAnchoredPositions[panelIndex];
-            rect.anchoredPosition = new Vector2(basePos.x + centerX, basePos.y);
+            rect.anchoredPosition = new Vector2(centerX, basePos.y);
             cursor += width + horizontalSpacing;
         }
     }
-}
 
+    private int GetMousePanelPriority(int index)
+    {
+        if (hintPanels == null || index < 0 || index >= hintPanels.Length)
+            return 0;
+
+        string id = hintPanels[index].id;
+        if (string.Equals(id, PanelNames.LeftMouse, StringComparison.OrdinalIgnoreCase))
+            return -1;
+        if (string.Equals(id, PanelNames.RightMouse, StringComparison.OrdinalIgnoreCase))
+            return 1;
+        return 0;
+    }
+
+    private void StoreBaseAnchoredPosition(int index, string id)
+    {
+        if (index < 0 || index >= rectTransforms.Length)
+            return;
+
+        var rect = rectTransforms[index];
+        if (rect == null)
+        {
+            baseAnchoredPositions[index] = Vector2.zero;
+            return;
+        }
+
+        Vector2 ap = rect.anchoredPosition;
+        if (IsMouseHintId(id))
+            baseAnchoredPositions[index] = new Vector2(0f, ap.y);
+        else
+            baseAnchoredPositions[index] = ap;
+    }
+
+    private static bool IsMouseHintId(string id)
+    {
+        if (string.IsNullOrEmpty(id))
+            return false;
+
+        return string.Equals(id, PanelNames.LeftMouse, StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(id, PanelNames.RightMouse, StringComparison.OrdinalIgnoreCase);
+    }
+}

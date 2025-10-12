@@ -1,6 +1,6 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
-using System.Linq;
 
 public class BugCounterUI : MonoBehaviour
 {
@@ -12,104 +12,231 @@ public class BugCounterUI : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool showDebug;
 
+    private bool subscribedToBugCounter;
+    private bool subscribedToCaughtRuntime;
+    private TargetBugsRuntime currentTargetRuntime;
+    private Coroutine initialRefreshRoutine;
+
     private void Awake()
     {
-        if (Instance && Instance != this) { Destroy(gameObject); return; }
+        if (Instance && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     private void OnEnable()
     {
-
         if (InventoryManager.Instance != null)
         {
             InventoryManager.Instance.InventoryChanged += OnInventoryChangedCSharp;
             InventoryManager.Instance.OnInventoryChanged.AddListener(OnInventoryChangedUnity);
         }
 
-        if (TargetBugsRuntime.Instance != null)
-        {
-            TargetBugsRuntime.Instance.TargetsChanged += UpdateCounter;
-            TargetBugsRuntime.Instance.BugsToSpawnChanged += UpdateCounter;
-        }
+        BugCounter.InstanceChanged += OnBugCounterInstanceChanged;
+        TrySubscribeBugCounter();
 
+        CaughtBugsRuntime.InstanceChanged += OnCaughtRuntimeInstanceChanged;
+        TrySubscribeCaughtRuntime();
 
-        if (BugCounter.Instance != null)
-        {
-            BugCounter.Instance.OnJarsChanged += OnJarsChanged;
-        }
+        TargetBugsRuntime.InstanceChanged += OnTargetRuntimeInstanceChanged;
+        SubscribeTargetRuntime(TargetBugsRuntime.Instance);
 
         UpdateCounter();
+
+        initialRefreshRoutine = StartCoroutine(InitialRefresh());
     }
 
     private void OnDisable()
     {
+        if (initialRefreshRoutine != null)
+        {
+            StopCoroutine(initialRefreshRoutine);
+            initialRefreshRoutine = null;
+        }
+
         if (InventoryManager.Instance != null)
         {
             InventoryManager.Instance.InventoryChanged -= OnInventoryChangedCSharp;
             InventoryManager.Instance.OnInventoryChanged.RemoveListener(OnInventoryChangedUnity);
         }
 
-        if (TargetBugsRuntime.Instance != null)
+        BugCounter.InstanceChanged -= OnBugCounterInstanceChanged;
+        UnsubscribeBugCounter();
+
+        CaughtBugsRuntime.InstanceChanged -= OnCaughtRuntimeInstanceChanged;
+        UnsubscribeCaughtRuntime();
+
+        TargetBugsRuntime.InstanceChanged -= OnTargetRuntimeInstanceChanged;
+        UnsubscribeTargetRuntime();
+    }
+
+    private IEnumerator InitialRefresh()
+    {
+        const float timeout = 2f;
+        float elapsed = 0f;
+
+        while (elapsed < timeout)
         {
-            TargetBugsRuntime.Instance.TargetsChanged -= UpdateCounter;
-            TargetBugsRuntime.Instance.BugsToSpawnChanged -= UpdateCounter;
+            if (TargetBugsRuntime.Instance != null &&
+                TargetBugsRuntime.Instance.Targets != null &&
+                TargetBugsRuntime.Instance.Targets.Count > 0)
+            {
+                UpdateCounter();
+                yield break;
+            }
+
+            // If target runtime not ready yet, at least show something meaningful from BugCounter.
+            if (TargetBugsRuntime.Instance == null && BugCounter.Instance != null && counterText != null)
+            {
+                counterText.text = BugCounter.Instance.MaxJars.ToString();
+            }
+
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
         }
 
-        if (BugCounter.Instance != null)
+        UpdateCounter();
+    }
+
+    private void OnBugCounterInstanceChanged(BugCounter counter)
+    {
+        UnsubscribeBugCounter();
+        TrySubscribeBugCounter();
+        UpdateCounter();
+    }
+
+    private void OnCaughtRuntimeInstanceChanged(CaughtBugsRuntime runtime)
+    {
+        UnsubscribeCaughtRuntime();
+        TrySubscribeCaughtRuntime();
+        UpdateCounter();
+    }
+
+    private void TrySubscribeBugCounter()
+    {
+        if (!subscribedToBugCounter && BugCounter.Instance != null)
         {
-            BugCounter.Instance.OnJarsChanged -= OnJarsChanged;
+            BugCounter.Instance.OnJarsChanged += OnJarsChanged;
+            subscribedToBugCounter = true;
         }
     }
 
-    private void OnJarsChanged(int newCount)
+    private void UnsubscribeBugCounter()
+    {
+        if (subscribedToBugCounter && BugCounter.Instance != null)
+        {
+            BugCounter.Instance.OnJarsChanged -= OnJarsChanged;
+        }
+        subscribedToBugCounter = false;
+    }
+
+    private void TrySubscribeCaughtRuntime()
+    {
+        if (!subscribedToCaughtRuntime && CaughtBugsRuntime.Instance != null)
+        {
+            CaughtBugsRuntime.Instance.OnCaughtChanged += OnCaughtChanged;
+            subscribedToCaughtRuntime = true;
+        }
+    }
+
+    private void UnsubscribeCaughtRuntime()
+    {
+        if (subscribedToCaughtRuntime && CaughtBugsRuntime.Instance != null)
+        {
+            CaughtBugsRuntime.Instance.OnCaughtChanged -= OnCaughtChanged;
+        }
+        subscribedToCaughtRuntime = false;
+    }
+
+    private void SubscribeTargetRuntime(TargetBugsRuntime runtime)
+    {
+        if (currentTargetRuntime == runtime)
+            return;
+
+        UnsubscribeTargetRuntime();
+
+        if (runtime != null)
+        {
+            runtime.TargetsChanged += UpdateCounter;
+            runtime.BugsToSpawnChanged += UpdateCounter;
+            currentTargetRuntime = runtime;
+        }
+    }
+
+    private void UnsubscribeTargetRuntime()
+    {
+        if (currentTargetRuntime != null)
+        {
+            currentTargetRuntime.TargetsChanged -= UpdateCounter;
+            currentTargetRuntime.BugsToSpawnChanged -= UpdateCounter;
+            currentTargetRuntime = null;
+        }
+    }
+
+    private void OnJarsChanged(int _)
     {
         UpdateCounter();
     }
 
+    private void OnCaughtChanged()
+    {
+        UpdateCounter();
+    }
+
+    private void OnTargetRuntimeInstanceChanged(TargetBugsRuntime runtime)
+    {
+        SubscribeTargetRuntime(runtime);
+        UpdateCounter();
+    }
+
     private void OnInventoryChangedCSharp() => UpdateCounter();
-    private void OnInventoryChangedUnity()   => UpdateCounter();
+    private void OnInventoryChangedUnity() => UpdateCounter();
 
     public void UpdateCounter()
     {
         int targetCount = 0;
-        int caughtCount = 0;
+        int correctCount = 0;
+        int wrongCount = 0;
+        bool usedRuntimeStats = false;
 
-
-        if (TargetBugsRuntime.Instance != null && TargetBugsRuntime.Instance.Targets != null && TargetBugsRuntime.Instance.Targets.Count > 0)
+        if (TargetBugsRuntime.Instance != null &&
+            TargetBugsRuntime.Instance.Targets != null &&
+            TargetBugsRuntime.Instance.Targets.Count > 0)
         {
             targetCount = TargetBugsRuntime.Instance.Targets.Count;
 
-
             if (CaughtBugsRuntime.Instance != null)
             {
-                var targets = TargetBugsRuntime.Instance.Targets;
-                caughtCount = CaughtBugsRuntime.Instance.Caught.Count(id => targets.Contains(id));
+                CaughtBugsRuntime.Instance.GetStats(out _, out correctCount, out wrongCount);
+                usedRuntimeStats = true;
             }
         }
-        else if (BugCounter.Instance != null)
-        {
 
-            targetCount = BugCounter.Instance.MaxJars;
-            caughtCount = BugCounter.Instance.MaxJars - BugCounter.Instance.CurrentJars;
-
-            if (showDebug)
-                Debug.Log($"[BugCounterUI] Fallback mode: using BugCounter (max={targetCount}, current={BugCounter.Instance.CurrentJars})");
-        }
-        else
+        if (!usedRuntimeStats)
         {
-            if (showDebug)
+            if (BugCounter.Instance != null)
+            {
+                targetCount = BugCounter.Instance.MaxJars;
+                correctCount = BugCounter.Instance.MaxJars - BugCounter.Instance.CurrentJars;
+
+                if (showDebug)
+                    Debug.Log($"[BugCounterUI] Fallback mode: using BugCounter (max={targetCount}, current={BugCounter.Instance.CurrentJars})");
+            }
+            else if (showDebug)
+            {
                 Debug.LogWarning("[BugCounterUI] Both TargetBugsRuntime and BugCounter are not available!");
+            }
         }
 
-        int remain = Mathf.Max(0, targetCount - caughtCount);
+        int remain = Mathf.Max(0, targetCount - correctCount);
         if (counterText != null) counterText.text = remain.ToString();
 
         if (showDebug)
-            Debug.Log($"[BugCounterUI] target={targetCount}, caught={caughtCount} => remain={remain}");
+            Debug.Log($"[BugCounterUI] target={targetCount}, correct={correctCount}, wrong={wrongCount} => remain={remain}");
     }
-
 
     public void DecrementCounter(int amount = 1)
     {
@@ -121,10 +248,9 @@ public class BugCounterUI : MonoBehaviour
             counterText.text = newValue.ToString();
 
             if (showDebug)
-                Debug.Log($"[BugCounterUI] Decremented: {current} → {newValue}");
+                Debug.Log($"[BugCounterUI] Decremented: {current} -> {newValue}");
         }
     }
-
 
     public void IncrementCounter(int amount = 1)
     {
@@ -136,7 +262,7 @@ public class BugCounterUI : MonoBehaviour
             counterText.text = newValue.ToString();
 
             if (showDebug)
-                Debug.Log($"[BugCounterUI] Incremented: {current} → {newValue}");
+                Debug.Log($"[BugCounterUI] Incremented: {current} -> {newValue}");
         }
     }
 }

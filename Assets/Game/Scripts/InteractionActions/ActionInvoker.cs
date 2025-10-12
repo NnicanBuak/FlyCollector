@@ -19,7 +19,8 @@ public class ActionInvoker : MonoBehaviour
             GameObject= gameObject,
             Transform = transform,
             Inventory = InventoryManager.Instance,
-            Animator  = GetComponent<Animator>()
+            Animator  = GetComponent<Animator>(),
+            FailureReason = null
         };
 
         foreach (var a in actions)

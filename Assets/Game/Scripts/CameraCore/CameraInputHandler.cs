@@ -30,9 +30,9 @@ public class CameraInputHandler
         // ESC always exits
         if (IsEscapePressed()) return true;
 
-        // LMB exits only when not clicking over UI
+        // RMB exits only when not clicking over UI
         var currentMouse = Mouse.current;
-        if (currentMouse != null && currentMouse.leftButton.wasPressedThisFrame)
+        if (currentMouse != null && currentMouse.rightButton.wasPressedThisFrame)
         {
             if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
                 return false;

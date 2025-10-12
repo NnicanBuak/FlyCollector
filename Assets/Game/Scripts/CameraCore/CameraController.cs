@@ -32,6 +32,10 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 collectBugOffset = new Vector3(0f, 0.1f, 0.15f);
     public Vector3 CollectBugOffset => collectBugOffset;
 
+    [Tooltip("Local offset for bug position inside jar when sealing")]
+    [SerializeField] private Vector3 collectSealedBugOffset = new Vector3(0f, 0.05f, 0f);
+    public Vector3 CollectSealedBugOffset => collectSealedBugOffset;
+
     [Header("Mouse Follow")]
     [Tooltip("Enable camera rotation following mouse cursor")]
     public bool enableMouseFollow = true;
@@ -60,6 +64,10 @@ public class CameraController : MonoBehaviour
     [Header("Debug")]
     public bool showDebugInfo = true;
 
+    [Header("Home Pose")]
+    [Tooltip("Automatically capture Home pose on Start")] public bool autoSetHomeOnStart = true;
+    [Tooltip("Time to return camera to Home pose")] public float returnHomeTime = 0.5f;
+
 
     private Camera cam;
     private AudioSource audioSource;
@@ -75,6 +83,13 @@ public class CameraController : MonoBehaviour
     private Vector3 cameraReturnPos;
     private Quaternion cameraReturnRot;
     private Tween cameraMoveTween;
+
+    // Home pose state
+    private Vector3 homePos;
+    private Quaternion homeRot;
+    private float homeFov;
+    private bool homeSet;
+    private bool isReturningHome;
 
 
     [System.Serializable]
@@ -112,7 +127,15 @@ public class CameraController : MonoBehaviour
         pushSystem.Button = pushButton;
         pushSystem.SetCooldown(pushCooldown);
         
-        inspectManager.OnInspectEnded += () => InspectEnded?.Invoke();
+        inspectManager.OnInspectEnded += () =>
+        {
+            InspectEnded?.Invoke();
+            // Return to Home only after bug inspection sessions
+            if (inspectManager != null && inspectManager.LastWasBug)
+            {
+                ReturnHome(returnHomeTime);
+            }
+        };
 
         if (showDebugInfo)
             Debug.Log($"[CameraController] Initialized OK. MaxDist: {maxDistance}");
@@ -121,6 +144,10 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         UpdateReturnPosition();
+        if (autoSetHomeOnStart)
+        {
+            SetHomePoseFromCurrent();
+        }
     }
 
     public void UpdateReturnPosition()
@@ -143,7 +170,7 @@ public class CameraController : MonoBehaviour
         
         if (inspectManager.IsInspecting) 
         {
-            // Exit inspect on LMB or ESC; RMB is handled inside InspectSession (collect-mode)
+            // Exit inspect on RMB or ESC; LMB is used for collect inside InspectSession
             if (inputHandler != null && inputHandler.IsInspectExitPressed())
             { 
                 inspectManager.ForceEndInspect();
@@ -187,7 +214,7 @@ public class CameraController : MonoBehaviour
         HandleNormalMode();
 
 
-        if (enableMouseFollow && !inspectManager.IsInspecting && cam != null)
+        if (enableMouseFollow && !inspectManager.IsInspecting && cam != null && !isReturningHome)
         {
             mouseFollow.Update(Mouse.current);
         }
@@ -319,7 +346,65 @@ public class CameraController : MonoBehaviour
            .Join(cam.transform.DORotateQuaternion(point.rotation, t).SetEase(Ease.InOutSine));
         cameraMoveTween = seq;
     }
+
+    public void SetHomePoseFromCurrent()
+    {
+        if (cam == null) cam = Camera.main;
+        if (cam == null) return;
+        homePos = cam.transform.position;
+        homeRot = cam.transform.rotation;
+        homeFov = cam.orthographic ? 0f : cam.fieldOfView;
+        homeSet = true;
+        if (showDebugInfo)
+            Debug.Log($"[CameraController] Home pose set at {homePos}");
+    }
+
+    public void SetHomePose(Transform pose)
+    {
+        if (pose == null)
+        {
+            Debug.LogWarning("[CameraController] SetHomePose: pose is null");
+            return;
+        }
+        homePos = pose.position;
+        homeRot = pose.rotation;
+        if (cam != null && !cam.orthographic)
+            homeFov = cam.fieldOfView; // Keep current FOV if not specified
+        homeSet = true;
+        if (showDebugInfo)
+            Debug.Log($"[CameraController] Home pose set from transform {pose.name}");
+    }
+
+    public void ReturnHome(float duration)
+    {
+        if (!homeSet || cam == null)
+        {
+            if (showDebugInfo)
+                Debug.LogWarning("[CameraController] ReturnHome skipped: Home not set or camera missing");
+            return;
+        }
+
+        if (cameraMoveTween != null && cameraMoveTween.IsActive()) cameraMoveTween.Kill();
+
+        isReturningHome = true;
+        var t = Mathf.Max(0f, duration);
+
+        var seq = DOTween.Sequence();
+        seq.Join(cam.transform.DOMove(homePos, t).SetEase(Ease.InOutSine))
+           .Join(cam.transform.DORotateQuaternion(homeRot, t).SetEase(Ease.InOutSine))
+           .OnComplete(() =>
+           {
+               isReturningHome = false;
+               mouseFollow.UpdateBaseRotation();
+               UpdateReturnPosition();
+           });
+        if (!cam.orthographic)
+            seq.Join(cam.DOFieldOfView(homeFov, t).SetEase(Ease.InOutSine));
+
+        cameraMoveTween = seq;
+    }
 }
+
 
 
 

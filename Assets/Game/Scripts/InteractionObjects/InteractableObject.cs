@@ -21,6 +21,9 @@ public class InteractableObject : MonoBehaviour, IInteractable
     [Header("Conditions & Actions (do not rename/remove)")]
     [SerializeField] private List<InteractionConditionBase> conditions = new List<InteractionConditionBase>();
     [SerializeField] private List<InteractionActionBase> actions = new List<InteractionActionBase>();
+    [Header("Failure Handling")]
+    [Tooltip("Actions executed when interaction conditions fail.")]
+    [SerializeField] private List<InteractionActionBase> failureActions = new List<InteractionActionBase>();
 
     [Header("Hover Outline (color only)")]
     [SerializeField] private bool useOutline = true;
@@ -109,6 +112,16 @@ public class InteractableObject : MonoBehaviour, IInteractable
             }
 
             Play(hoverUnavailableClip != null ? hoverUnavailableClip : interactFailClip);
+            if (failureActions != null && failureActions.Count > 0)
+            {
+                if (!_isRunning)
+                    _isRunning = true;
+                StartCoroutine(RunFailureActionsRoutine(playerCamera, null, null, failedCondition));
+            }
+            else if (_hovered)
+            {
+                ApplyHoverVisuals();
+            }
             return;
         }
         StartCoroutine(RunActionsRoutine(playerCamera, null, null));
@@ -184,7 +197,8 @@ public class InteractableObject : MonoBehaviour, IInteractable
             GameObject = gameObject,
             Transform = transform,
             Inventory = inv,
-            Animator = animator
+            Animator = animator,
+            FailureReason = null
         };
 
 
@@ -212,6 +226,57 @@ public class InteractableObject : MonoBehaviour, IInteractable
 
 
         if (_hovered) ApplyHoverVisuals();
+    }
+
+    private IEnumerator RunFailureActionsRoutine(Camera cam, InventoryManager inv, Animator animator, string failedCondition)
+    {
+        if (failureActions == null || failureActions.Count == 0)
+        {
+            if (_hovered) ApplyHoverVisuals();
+            yield break;
+        }
+
+        _isRunning = true;
+
+        var ctx = new InteractionContext
+        {
+            Camera = cam,
+            Object = this,
+            GameObject = gameObject,
+            Transform = transform,
+            Inventory = inv,
+            Animator = animator,
+            FailureReason = failedCondition
+        };
+
+        try
+        {
+            for (int i = 0; i < failureActions.Count; i++)
+            {
+                var act = failureActions[i];
+                if (!act) continue;
+                IEnumerator routine = null;
+                try
+                {
+                    routine = act.Execute(ctx);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[{name}] FailureAction {act.GetType().Name} threw on start: {ex.Message}", this);
+                    continue;
+                }
+
+                if (routine != null)
+                {
+                    yield return StartCoroutine(routine);
+                }
+            }
+        }
+        finally
+        {
+            _isRunning = false;
+            if (_hovered) ApplyHoverVisuals();
+        }
     }
 
 

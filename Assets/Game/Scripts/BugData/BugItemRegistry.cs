@@ -13,12 +13,18 @@ namespace BugData
     [CreateAssetMenu(menuName = "Bugs/Bug Item Registry", fileName = "BugItemRegistry")]
     public class BugItemRegistry : ScriptableObject
     {
+        private const string DefaultResourcePath = "BugItemRegistry";
+        private static BugItemRegistry _instance;
+
         #region Serialized Fields
         [Serializable]
         public class Entry
         {
             [Tooltip("Ключ жука (имя/ID). Можно писать как в prefab/GO: без учёта регистра, без расширения.")]
             public string key;
+
+            [Tooltip("Original prefab name used as a lookup fallback. Auto-populated when generating entries.")]
+            public string prefabKey;
 
             [Header("Инвентарь")]
             public Item item;
@@ -37,10 +43,10 @@ namespace BugData
         [Tooltip("Папка где создавать Item ScriptableObjects (например: Assets/Items)")]
         [SerializeField] private string outputItemsPath = "Assets/Items";
 
-        [Tooltip("Префикс для создаваемых Items")]
+        [Tooltip("Optional prefix to match and trim from prefab names during auto-populate. Leave empty to disable.")]
         [SerializeField] private string itemNamePrefix = "";
 
-        [Tooltip("Суффикс для создаваемых Items (например: _Item)")]
+        [Tooltip("Optional suffix to match and trim from prefab names during auto-populate. Leave empty to disable.")]
         [SerializeField] private string itemNameSuffix = "";
 
         [Space(10)]
@@ -60,19 +66,76 @@ namespace BugData
 
         void OnEnable()
         {
+            _instance = this;
+            RebuildMap();
+        }
+
+        private void RebuildMap()
+        {
             _map = new Dictionary<string, Entry>(StringComparer.OrdinalIgnoreCase);
             foreach (var e in entries)
             {
                 if (e == null || string.IsNullOrWhiteSpace(e.key)) continue;
-                _map[Normalize(e.key)] = e;
+
+                string normalizedKey = Normalize(e.key);
+                if (!string.IsNullOrEmpty(normalizedKey))
+                {
+                    _map[normalizedKey] = e;
+                }
+
+                if (!string.IsNullOrWhiteSpace(e.prefabKey))
+                {
+                    string normalizedPrefabKey = Normalize(e.prefabKey);
+                    if (!string.IsNullOrEmpty(normalizedPrefabKey))
+                    {
+                        _map[normalizedPrefabKey] = e;
+                    }
+                }
             }
+        }
+
+        private void EnsureInitialized()
+        {
+            if (_map == null)
+                RebuildMap();
         }
         #endregion
 
         #region Public Methods
+        public static BugItemRegistry Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    var loaded = Resources.FindObjectsOfTypeAll<BugItemRegistry>();
+                    if (loaded != null && loaded.Length > 0)
+                        _instance = loaded[0];
+                    if (_instance == null)
+                    {
+                        _instance = Resources.Load<BugItemRegistry>(DefaultResourcePath);
+                        if (_instance == null)
+                        {
+                            Debug.LogWarning($"[BugItemRegistry] Unable to locate registry at Resources/{DefaultResourcePath}");
+                            return null;
+                        }
+                    }
+                }
+
+                _instance.EnsureInitialized();
+                return _instance;
+            }
+        }
+
+        public static bool TryGetInstance(out BugItemRegistry registry)
+        {
+            registry = Instance;
+            return registry != null;
+        }
+
         public bool TryGet(string rawKey, out Entry entry)
         {
-            if (_map == null) OnEnable();
+            EnsureInitialized();
             return _map.TryGetValue(Normalize(rawKey), out entry);
         }
 
@@ -97,14 +160,22 @@ namespace BugData
         private static string Normalize(string s)
         {
             if (string.IsNullOrWhiteSpace(s)) return string.Empty;
+
             s = s.Trim().ToLowerInvariant();
-
-
             s = s.Replace("(clone)", "").Trim();
+            s = s.Replace('\\', '/');
 
+            int slash = s.LastIndexOf('/');
+            if (slash >= 0 && slash < s.Length - 1)
+            {
+                s = s.Substring(slash + 1);
+            }
 
-            int dot = s.LastIndexOf('.');
-            if (dot > 0) s = s.Substring(0, dot);
+            if (s.EndsWith(".prefab") || s.EndsWith(".asset"))
+            {
+                int dot = s.LastIndexOf('.');
+                if (dot > 0) s = s.Substring(0, dot);
+            }
 
             return s;
         }
@@ -155,7 +226,7 @@ namespace BugData
 
 
             var guids = AssetDatabase.FindAssets("t:GameObject", new[] { prefabsPath });
-            var createdItems = new List<(string key, Item item)>();
+            var createdItems = new List<(string cleanName, string prefabName, Item item)>();
             int createdCount = 0;
             int skippedCount = 0;
 
@@ -175,11 +246,52 @@ namespace BugData
                     continue;
                 }
 
-
                 string bugName = prefab.name;
 
+                bool prefixSpecified = !string.IsNullOrWhiteSpace(itemNamePrefix);
+                bool suffixSpecified = !string.IsNullOrWhiteSpace(itemNameSuffix);
 
-                string itemAssetName = itemNamePrefix + bugName + itemNameSuffix;
+                if (prefixSpecified && !bugName.StartsWith(itemNamePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    skippedCount++;
+                    continue;
+                }
+
+                if (suffixSpecified && !bugName.EndsWith(itemNameSuffix, StringComparison.OrdinalIgnoreCase))
+                {
+                    skippedCount++;
+                    continue;
+                }
+
+                string cleanName = bugName;
+
+                if (prefixSpecified && cleanName.StartsWith(itemNamePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    cleanName = cleanName.Substring(itemNamePrefix.Length);
+                }
+
+                if (suffixSpecified && cleanName.EndsWith(itemNameSuffix, StringComparison.OrdinalIgnoreCase))
+                {
+                    cleanName = cleanName.Substring(0, cleanName.Length - itemNameSuffix.Length);
+                }
+
+                cleanName = cleanName.Trim();
+
+                if (string.IsNullOrEmpty(cleanName))
+                {
+                    Debug.LogWarning($"[BugItemRegistry] Clean bug name became empty after trimming for prefab '{bugName}'. Skipping.");
+                    skippedCount++;
+                    continue;
+                }
+
+                if (createdItems.Any(x => string.Equals(x.cleanName, cleanName, StringComparison.OrdinalIgnoreCase)))
+                {
+                    Debug.LogWarning($"[BugItemRegistry] Duplicate clean bug name '{cleanName}' detected (prefab '{bugName}'). Skipping duplicate.");
+                    skippedCount++;
+                    continue;
+                }
+
+                string itemAssetName = cleanName;
                 string itemPath = $"{itemsPath}/{itemAssetName}.asset";
 
 
@@ -195,8 +307,8 @@ namespace BugData
                 {
 
                     item = ScriptableObject.CreateInstance<Item>();
-                    item.itemID = bugName.ToLower();
-                    item.itemName = bugName;
+                    item.itemID = cleanName.ToLowerInvariant();
+                    item.itemName = cleanName;
                     item.itemType = ItemType.Quest;
                     item.maxStackSize = 1;
 
@@ -207,7 +319,11 @@ namespace BugData
                 }
 
 
-                createdItems.Add((bugName, item));
+                item.itemID = cleanName.ToLowerInvariant();
+                item.itemName = cleanName;
+                EditorUtility.SetDirty(item);
+
+                createdItems.Add((cleanName, bugName, item));
             }
 
             if (createdItems.Count == 0)
@@ -216,14 +332,14 @@ namespace BugData
                 return;
             }
 
-
             entries.Clear();
-            foreach (var (key, item) in createdItems.OrderBy(x => x.key))
+            foreach (var data in createdItems.OrderBy(x => x.cleanName, StringComparer.OrdinalIgnoreCase))
             {
                 entries.Add(new Entry
                 {
-                    key = key,
-                    item = item,
+                    key = data.cleanName,
+                    prefabKey = data.prefabName,
+                    item = data.item,
                     defaultQuantity = 1
                 });
             }
@@ -233,7 +349,9 @@ namespace BugData
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
 
-            Debug.Log($"[BugItemRegistry] ✅ Complete! Created: {createdCount} new Items, Reused: {createdItems.Count - createdCount}, Skipped: {skippedCount} non-bug prefabs");
+            OnEnable(); // refresh lookup cache in editor so runtime has latest mappings
+
+            Debug.Log($"[BugItemRegistry] ✅ Complete! Created: {createdCount} new Items, Reused: {createdItems.Count - createdCount}, Skipped: {skippedCount} filtered or non-bug prefabs");
         }
         #endregion
 #endif

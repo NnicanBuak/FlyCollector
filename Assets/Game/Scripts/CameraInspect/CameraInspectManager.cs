@@ -12,8 +12,10 @@ public class CameraInspectManager
 
     private InspectSession currentInspect;
     private bool finishing;
+    private bool lastWasBug;
 
     public bool IsInspecting => currentInspect != null;
+    public bool LastWasBug => lastWasBug;
 
     public CameraInspectManager(Transform holdPoint, float inspectFlyTime, bool showDebug = false)
     {
@@ -110,6 +112,7 @@ public class CameraInspectManager
         // Choose bug-specific session if requested by InspectableObject
         var insp = target.GetComponent<InspectableObject>();
         bool isBug = insp != null && insp.IsBug();
+        lastWasBug = isBug;
 
         currentInspect = isBug
             ? new BugInspectSession(target, point, flyTime, () => HandleSessionFinish(onFinish))

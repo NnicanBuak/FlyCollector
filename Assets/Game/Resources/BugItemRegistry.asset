@@ -1,0 +1,769 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65e4e1101fcf2943a4fc2a4c3ca300e, type: 3}
+  m_Name: BugItemRegistry
+  m_EditorClassIdentifier: Assembly-CSharp::BugItemRegistry
+  bugPrefabsPath: Game/Prefabs/Bugs
+  outputItemsPath: Game/Items/Bugs
+  itemNamePrefix: 
+  itemNameSuffix: _Variant
+  entries:
+  - key: Fly
+    prefabKey: Fly_Variant
+    item: {fileID: 11400000, guid: cfdc0688ce459aa4096a0371e1f2cbad, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly.001
+    prefabKey: Fly.001_Variant
+    item: {fileID: 11400000, guid: 49a0e4ea71fc8034db44c1a6f7463ea9, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly.002
+    prefabKey: Fly.002_Variant
+    item: {fileID: 11400000, guid: 5293e63554485344cae01fbd95731d9e, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly.003
+    prefabKey: Fly.003_Variant
+    item: {fileID: 11400000, guid: ab44b110de50a124ba3ca7c0275c3d9f, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly.004
+    prefabKey: Fly.004_Variant
+    item: {fileID: 11400000, guid: d2c0cd9287d2e9144ad3d09f73f27516, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly1
+    prefabKey: Fly1_Variant
+    item: {fileID: 11400000, guid: 66c67b33b4d6d8b4e997597953d4d78f, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly1.001
+    prefabKey: Fly1.001_Variant
+    item: {fileID: 11400000, guid: 15056606ed76fce46b1327d72ee93490, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly1.002
+    prefabKey: Fly1.002_Variant
+    item: {fileID: 11400000, guid: 3df8bc1b1cb8fa74eaaa8dc4c37f417a, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly1.003
+    prefabKey: Fly1.003_Variant
+    item: {fileID: 11400000, guid: b5c3ab6a5f35c5c489a64e2e84267522, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly1.004
+    prefabKey: Fly1.004_Variant
+    item: {fileID: 11400000, guid: 3178ce861919f5e4d960cff1eb916d95, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly10
+    prefabKey: Fly10_Variant
+    item: {fileID: 11400000, guid: a84255f8333bff64ba31581e7099cd75, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly10.001
+    prefabKey: Fly10.001_Variant
+    item: {fileID: 11400000, guid: b29ce07f0a17fbd40b0169fe53673b5e, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly10.002
+    prefabKey: Fly10.002_Variant
+    item: {fileID: 11400000, guid: 7e7b9b051cf6bc84395aea533a298341, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly10.003
+    prefabKey: Fly10.003_Variant
+    item: {fileID: 11400000, guid: 4826a6ef5626ee249ad12e8bd65a8372, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly10.004
+    prefabKey: Fly10.004_Variant
+    item: {fileID: 11400000, guid: 9191c04b54fee2841bce866aa709e557, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly11
+    prefabKey: Fly11_Variant
+    item: {fileID: 11400000, guid: 1a916aaa47c86c34abbaa706e966c619, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly11.001
+    prefabKey: Fly11.001_Variant
+    item: {fileID: 11400000, guid: 5b164a0dc9e29264b847f0db33b1c2cf, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly11.002
+    prefabKey: Fly11.002_Variant
+    item: {fileID: 11400000, guid: 603650e8155acdf44a45992cdf65cac4, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly11.003
+    prefabKey: Fly11.003_Variant
+    item: {fileID: 11400000, guid: 4b1ef9ddb81b3f74c9c5c8f9367b2c95, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly11.004
+    prefabKey: Fly11.004_Variant
+    item: {fileID: 11400000, guid: 3f13e985bc6c97a4785f55098c3e0121, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly12
+    prefabKey: Fly12_Variant
+    item: {fileID: 11400000, guid: 71e4d8e2062c7544c80799c0f7dff31b, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly12.001
+    prefabKey: Fly12.001_Variant
+    item: {fileID: 11400000, guid: ec39bf047803ada48a932dc7c5c1314d, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly12.002
+    prefabKey: Fly12.002_Variant
+    item: {fileID: 11400000, guid: 61dee6b2c3702964c8dcd344e4c6e474, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly12.003
+    prefabKey: Fly12.003_Variant
+    item: {fileID: 11400000, guid: 333edcf6d8b40d844a05ed666fac7654, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly12.004
+    prefabKey: Fly12.004_Variant
+    item: {fileID: 11400000, guid: 58bbf7e71a41565468d10df4da648514, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly13
+    prefabKey: Fly13_Variant
+    item: {fileID: 11400000, guid: dcd8c44c41d65914fa4e477ae420d23c, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly13.001
+    prefabKey: Fly13.001_Variant
+    item: {fileID: 11400000, guid: b146ac6a589b7ce459226ec29cc1d396, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly13.002
+    prefabKey: Fly13.002_Variant
+    item: {fileID: 11400000, guid: a75ac532472975f488d25a2d3d49ddf1, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly13.003
+    prefabKey: Fly13.003_Variant
+    item: {fileID: 11400000, guid: fadf12f050556a441902361becaf39a7, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly13.004
+    prefabKey: Fly13.004_Variant
+    item: {fileID: 11400000, guid: 1be39f1d953e6344d9e996c9ad9dd214, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly14
+    prefabKey: Fly14_Variant
+    item: {fileID: 11400000, guid: 28819306500ee5a4588287943f53daf4, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly14.001
+    prefabKey: Fly14.001_Variant
+    item: {fileID: 11400000, guid: 5934bfddd7b71e04286a97bf5c8fa5dd, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly14.002
+    prefabKey: Fly14.002_Variant
+    item: {fileID: 11400000, guid: e369e3954416adc44b4d0815dbecb716, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly14.003
+    prefabKey: Fly14.003_Variant
+    item: {fileID: 11400000, guid: 752d5e2328f0dbb4eb93f9a44f891926, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly14.004
+    prefabKey: Fly14.004_Variant
+    item: {fileID: 11400000, guid: 8781340e42b570c409c0a7689d2ee28e, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly15
+    prefabKey: Fly15_Variant
+    item: {fileID: 11400000, guid: 4cd9c05e1f172aa4e80a8df385296fc3, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly15.001
+    prefabKey: Fly15.001_Variant
+    item: {fileID: 11400000, guid: 321bf3643947ffa4889f2b0c3f64582d, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly15.002
+    prefabKey: Fly15.002_Variant
+    item: {fileID: 11400000, guid: ad470f88df9b9f84a8db0523dece3703, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly15.003
+    prefabKey: Fly15.003_Variant
+    item: {fileID: 11400000, guid: acf84f35ce675a7438782641275a0eb3, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly15.004
+    prefabKey: Fly15.004_Variant
+    item: {fileID: 11400000, guid: 58190367de501b049b0a176c423baf0a, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly16
+    prefabKey: Fly16_Variant
+    item: {fileID: 11400000, guid: bc1983fc5cd50904b820016a80c1524e, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly16.001
+    prefabKey: Fly16.001_Variant
+    item: {fileID: 11400000, guid: 1a62e44e931f9054db956b69e32f4d1d, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly16.002
+    prefabKey: Fly16.002_Variant
+    item: {fileID: 11400000, guid: 4fc852fd72aa88246b21da3c304e7cbf, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly16.003
+    prefabKey: Fly16.003_Variant
+    item: {fileID: 11400000, guid: 7564c607b66d2a846a447adcaf067f0b, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly16.004
+    prefabKey: Fly16.004_Variant
+    item: {fileID: 11400000, guid: 47de4b5ce796f8d4bb98ba7560a64dab, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly17
+    prefabKey: Fly17_Variant
+    item: {fileID: 11400000, guid: 84437edc70652ab46824eb5a86bb643c, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly17.001
+    prefabKey: Fly17.001_Variant
+    item: {fileID: 11400000, guid: e888ac48f3e6057489f2cc89c81adcb7, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly17.002
+    prefabKey: Fly17.002_Variant
+    item: {fileID: 11400000, guid: 79c3b84d60990cf49b5a6256afe8da18, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly17.003
+    prefabKey: Fly17.003_Variant
+    item: {fileID: 11400000, guid: 29de0572a3ee7144bb40d29da544983c, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly17.004
+    prefabKey: Fly17.004_Variant
+    item: {fileID: 11400000, guid: 312fdeeec84b8684995c7817fd139d97, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly18
+    prefabKey: Fly18_Variant
+    item: {fileID: 11400000, guid: af8513006a06fd94ca812327c584933b, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly18.001
+    prefabKey: Fly18.001_Variant
+    item: {fileID: 11400000, guid: ce01a2363d34b7243bc09e7b7111e869, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly18.002
+    prefabKey: Fly18.002_Variant
+    item: {fileID: 11400000, guid: dc0a1e9f31eaaa5438d100c95c5d79c5, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly18.003
+    prefabKey: Fly18.003_Variant
+    item: {fileID: 11400000, guid: 65f4f67501ead3548bc4651ac148bd30, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly18.004
+    prefabKey: Fly18.004_Variant
+    item: {fileID: 11400000, guid: bcd8db543e0b6474aa0f8689465fbceb, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly19
+    prefabKey: Fly19_Variant
+    item: {fileID: 11400000, guid: b4d40b8788e501e4286338da306bd944, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly19.001
+    prefabKey: Fly19.001_Variant
+    item: {fileID: 11400000, guid: be7490ca0021e4e469964521f64a8ab8, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly19.002
+    prefabKey: Fly19.002_Variant
+    item: {fileID: 11400000, guid: b48f954fa9a42a449bc2331aa6b70d27, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly19.003
+    prefabKey: Fly19.003_Variant
+    item: {fileID: 11400000, guid: 38d2e28fa37653248ba17405788fe20e, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly19.004
+    prefabKey: Fly19.004_Variant
+    item: {fileID: 11400000, guid: 6c67477ef11be9446a2e403b6717c79c, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly2
+    prefabKey: Fly2_Variant
+    item: {fileID: 11400000, guid: e64417f992f45f64daebcb3295f9b7ba, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly2.001
+    prefabKey: Fly2.001_Variant
+    item: {fileID: 11400000, guid: 486e3b7c0b539da43bc2e387a3b024d4, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly2.002
+    prefabKey: Fly2.002_Variant
+    item: {fileID: 11400000, guid: 055d7186a3013e0489fa66add676c809, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly2.003
+    prefabKey: Fly2.003_Variant
+    item: {fileID: 11400000, guid: 76b546ece2a9d824dbc69eba49e8f4a8, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly2.004
+    prefabKey: Fly2.004_Variant
+    item: {fileID: 11400000, guid: c118fbc69f7b446488d91b5fe528d88e, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly20
+    prefabKey: Fly20_Variant
+    item: {fileID: 11400000, guid: 7a924039501a7e24c952dd33710ebe54, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly20.001
+    prefabKey: Fly20.001_Variant
+    item: {fileID: 11400000, guid: 81d7c6feb88a76b47bc63795c5bb1f29, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly20.002
+    prefabKey: Fly20.002_Variant
+    item: {fileID: 11400000, guid: e76c57e04c8080d4e934127bbdadc322, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly20.003
+    prefabKey: Fly20.003_Variant
+    item: {fileID: 11400000, guid: fae0621b69eaed241b406f3519297f8a, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly20.004
+    prefabKey: Fly20.004_Variant
+    item: {fileID: 11400000, guid: cf9868ea65131d149b392a0ec1ca7ef6, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly21
+    prefabKey: Fly21_Variant
+    item: {fileID: 11400000, guid: 09b2d3774ae70324e889f3d02bda0526, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly21.001
+    prefabKey: Fly21.001_Variant
+    item: {fileID: 11400000, guid: dd610dadc380ff044ba27a45e682ebca, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly21.002
+    prefabKey: Fly21.002_Variant
+    item: {fileID: 11400000, guid: b21721912717b5643adea70f6ff8c8ef, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly21.003
+    prefabKey: Fly21.003_Variant
+    item: {fileID: 11400000, guid: c874f026b4938d447924e06e7e0c2546, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly21.004
+    prefabKey: Fly21.004_Variant
+    item: {fileID: 11400000, guid: 85c1779cee51bbc478d16b5abb6e4569, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly22
+    prefabKey: Fly22_Variant
+    item: {fileID: 11400000, guid: 3c5d5a817ff0efd4893e9ac7ec2123da, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly22.001
+    prefabKey: Fly22.001_Variant
+    item: {fileID: 11400000, guid: a8c2e81df693a2642b387507a9a4d327, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly22.002
+    prefabKey: Fly22.002_Variant
+    item: {fileID: 11400000, guid: 75761a366e6275e42b481e6df133b623, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly22.003
+    prefabKey: Fly22.003_Variant
+    item: {fileID: 11400000, guid: 7970cee8dfb435f40aeb535c5d43612b, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly22.004
+    prefabKey: Fly22.004_Variant
+    item: {fileID: 11400000, guid: c8f823f465838f54cb304b99444fcacf, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly23
+    prefabKey: Fly23_Variant
+    item: {fileID: 11400000, guid: 07b1ff4d636df3f4cb7fcd9f13d24a01, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly23.001
+    prefabKey: Fly23.001_Variant
+    item: {fileID: 11400000, guid: a9766d4290c051d4ebd09b0b22b92659, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly23.002
+    prefabKey: Fly23.002_Variant
+    item: {fileID: 11400000, guid: eca9957afed1c734880a4acd4f8dbcac, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly23.003
+    prefabKey: Fly23.003_Variant
+    item: {fileID: 11400000, guid: d59713e3a9a59f64597f6ff956489c02, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly23.004
+    prefabKey: Fly23.004_Variant
+    item: {fileID: 11400000, guid: 0e4f75ded2f624a4e8c08bae081ee9bc, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly24
+    prefabKey: Fly24_Variant
+    item: {fileID: 11400000, guid: 78b833e231c43a346813b567a55bf285, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly24.001
+    prefabKey: Fly24.001_Variant
+    item: {fileID: 11400000, guid: d378b1677ec36a94baba917cc1fe4537, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly24.002
+    prefabKey: Fly24.002_Variant
+    item: {fileID: 11400000, guid: ef473efdf8c100f42adca9a036a5e2e4, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly24.003
+    prefabKey: Fly24.003_Variant
+    item: {fileID: 11400000, guid: be10fdc73afb3854c92cc5b475416764, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly24.004
+    prefabKey: Fly24.004_Variant
+    item: {fileID: 11400000, guid: 053b4b11b07c8114d8a29c52baefdeea, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly3
+    prefabKey: Fly3_Variant
+    item: {fileID: 11400000, guid: aa1395a1da957e14cb2dde4aee4245ec, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly3.001
+    prefabKey: Fly3.001_Variant
+    item: {fileID: 11400000, guid: 01b30defbbad5bf478570337c214abe9, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly3.002
+    prefabKey: Fly3.002_Variant
+    item: {fileID: 11400000, guid: e9c643f233ee82e4c87c6daf5c4ec2a9, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly3.003
+    prefabKey: Fly3.003_Variant
+    item: {fileID: 11400000, guid: 6bb298d6bd0e6944d805fbc83458d029, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly3.004
+    prefabKey: Fly3.004_Variant
+    item: {fileID: 11400000, guid: a363ba001f5a0a240baf5dd364a6bcc6, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly4
+    prefabKey: Fly4_Variant
+    item: {fileID: 11400000, guid: 5b4581f9a7bb47b4c9e013f21caaa789, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly4.001
+    prefabKey: Fly4.001_Variant
+    item: {fileID: 11400000, guid: 88bc0bfb5f1ee2040b1c4e964edc502c, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly4.002
+    prefabKey: Fly4.002_Variant
+    item: {fileID: 11400000, guid: f399ced1608866c4abe62b3c8695a5f4, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly4.003
+    prefabKey: Fly4.003_Variant
+    item: {fileID: 11400000, guid: 179105822926403449e7881fd5f2d8db, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly4.004
+    prefabKey: Fly4.004_Variant
+    item: {fileID: 11400000, guid: 145335bb41ff0f5408ebc504fb1b5ceb, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly5
+    prefabKey: Fly5_Variant
+    item: {fileID: 11400000, guid: 870449f189c0b994594cd5b942a2b3c3, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly5.001
+    prefabKey: Fly5.001_Variant
+    item: {fileID: 11400000, guid: 3326770b0e11e124980d7f25136ebd1c, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly5.002
+    prefabKey: Fly5.002_Variant
+    item: {fileID: 11400000, guid: 02d0d5a932c81594ba9b0ad45fb355a9, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly5.003
+    prefabKey: Fly5.003_Variant
+    item: {fileID: 11400000, guid: d8111cdabbb93234cb91be11e43970d7, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly5.004
+    prefabKey: Fly5.004_Variant
+    item: {fileID: 11400000, guid: 865e5042e49893d4fb77b78eaa1fc2b1, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly6
+    prefabKey: Fly6_Variant
+    item: {fileID: 11400000, guid: e0b2f5c9a150aa94eb24664a31821a56, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly6.001
+    prefabKey: Fly6.001_Variant
+    item: {fileID: 11400000, guid: 0d4350e4561e16d4b8c939aa16a88e3e, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly6.002
+    prefabKey: Fly6.002_Variant
+    item: {fileID: 11400000, guid: c82a76e57edefb147a1fe770eb611d7f, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly6.003
+    prefabKey: Fly6.003_Variant
+    item: {fileID: 11400000, guid: e65271d8f04b21a4e939768cd36902fc, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly6.004
+    prefabKey: Fly6.004_Variant
+    item: {fileID: 11400000, guid: 87ec4affdecc6634e91699516c0de4f4, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly7
+    prefabKey: Fly7_Variant
+    item: {fileID: 11400000, guid: 10a117c7c9cd98c44a7e6dec2fb2a9a7, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly7.001
+    prefabKey: Fly7.001_Variant
+    item: {fileID: 11400000, guid: ff53e07d5f39bb946b3f45f93cdec78a, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly7.002
+    prefabKey: Fly7.002_Variant
+    item: {fileID: 11400000, guid: b78ebed8cc0d5e64898d15d0c8f78c16, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly7.003
+    prefabKey: Fly7.003_Variant
+    item: {fileID: 11400000, guid: e813965fdadc3eb49a9bc7db1f0a2e76, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly7.004
+    prefabKey: Fly7.004_Variant
+    item: {fileID: 11400000, guid: 7fb3dc569767aae489d39b08a9e132e0, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly8
+    prefabKey: Fly8_Variant
+    item: {fileID: 11400000, guid: ac445f32340ff0b4b98fc9d0311e5ecb, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly8.001
+    prefabKey: Fly8.001_Variant
+    item: {fileID: 11400000, guid: 6d48f9f63d9c8e643bcbed4f4f095679, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly8.002
+    prefabKey: Fly8.002_Variant
+    item: {fileID: 11400000, guid: 3dbaf36753a0e4a448f64481c0f616b0, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly8.003
+    prefabKey: Fly8.003_Variant
+    item: {fileID: 11400000, guid: 2cc97295f93d1124193b91edd36fba8f, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly8.004
+    prefabKey: Fly8.004_Variant
+    item: {fileID: 11400000, guid: d470ec1c94368d14c81b6ec63fa34eab, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly9
+    prefabKey: Fly9_Variant
+    item: {fileID: 11400000, guid: 7682930c964fe5141822aa96722ef630, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly9.001
+    prefabKey: Fly9.001_Variant
+    item: {fileID: 11400000, guid: 0934af4b59fd6294a9b622ed84c3bfc9, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly9.002
+    prefabKey: Fly9.002_Variant
+    item: {fileID: 11400000, guid: 4a6577e4ebdb743469081d561a26d428, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly9.003
+    prefabKey: Fly9.003_Variant
+    item: {fileID: 11400000, guid: f575f8d6bc3187849adc0f92dd1b89e7, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}
+  - key: Fly9.004
+    prefabKey: Fly9.004_Variant
+    item: {fileID: 11400000, guid: 3476b174ffd4c364f8df16e852b5d7f7, type: 2}
+    defaultQuantity: 1
+    pickupEffectPrefab: {fileID: 0}
+    pickupSound: {fileID: 0}

@@ -1,26 +1,26 @@
-﻿
-
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using BugData;
 
 public class PickupToInventoryAction : InteractionActionBase
 {
-    [Header("Предмет")]
+    [Header("�������")]
     [SerializeField] private Item item;
     [SerializeField] private int quantity = 1;
 
-    [Header("Ожидание/Анимация")]
+    [Header("��������/��������")]
     [SerializeField] private bool waitForAnimator = true;
-    [SerializeField] private string waitStateName = "";  // если указать, подождёт окончания этого стейта
-    [SerializeField] private float fallbackWait = 0.5f;  // если анимации нет
+    [SerializeField] private string waitStateName = "";  // ���� �������, ������� ��������� ����� ������
+    [SerializeField] private float fallbackWait = 0.5f;  // ���� �������� ���
 
-    [Header("Эффекты")]
+    [Header("�������")]
     [SerializeField] private ParticleSystem pickupEffect;
     [SerializeField] private AudioClip pickupSound;
 
-    [Header("Удаление")]
+    [Header("��������")]
     [SerializeField] private bool destroyWholeGameObject = true;
-    [SerializeField] private GameObject onlyThisObject; // если нужно удалить конкретный GO
+    [SerializeField] private GameObject onlyThisObject; // ���� ����� ������� ���������� GO
 
     [Header("Debug")]
     [SerializeField] private bool showDebug;
@@ -45,17 +45,17 @@ public class PickupToInventoryAction : InteractionActionBase
             yield break;
         }
 
-        // проверить есть ли место
+        // ��������� ���� �� �����
         if (!InventoryManager.Instance.HasSpace(targetItem, quantity))
             yield break;
 
-        // дождаться анимации (если надо)
+        // ��������� �������� (���� ����)
         if (waitForAnimator)
         {
             var anim = ctx.Animator ? ctx.Animator : ctx.Transform.GetComponentInChildren<Animator>();
             if (anim && !string.IsNullOrEmpty(waitStateName))
             {
-                // подождём входа
+                // ������� �����
                 float t = 0f;
                 while (t < 2f && !anim.GetCurrentAnimatorStateInfo(0).IsName(waitStateName))
                 {
@@ -63,7 +63,7 @@ public class PickupToInventoryAction : InteractionActionBase
                     yield return null;
                 }
 
-                // подождём завершения
+                // ������� ����������
                 if (anim.GetCurrentAnimatorStateInfo(0).IsName(waitStateName))
                 {
                     while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.99f)
@@ -76,15 +76,15 @@ public class PickupToInventoryAction : InteractionActionBase
             }
         }
 
-        // эффект/звук
+        // ������/����
         if (pickupEffect) Object.Instantiate(pickupEffect, ctx.Transform.position, Quaternion.identity).Play();
         if (pickupSound)  AudioSource.PlayClipAtPoint(pickupSound, ctx.Transform.position);
 
-        // добавить в инвентарь
+        // �������� � ���������
         bool ok = InventoryManager.Instance.AddItem(targetItem, quantity);
         if (showDebug) Debug.Log($"[Act_PickupToInventory] Add {targetItem.itemName} x{quantity} = {ok}");
 
-        // удалить объект
+        // ������� ������
         if (ok)
         {
             if (destroyWholeGameObject)
@@ -122,6 +122,10 @@ public class PickupToInventoryAction : InteractionActionBase
             return null;
         }
 
+        var cachedItem = jarTrap.GetTargetItem();
+        if (cachedItem != null)
+            return cachedItem;
+
         string bugName = jarTrap.GetTargetBugName();
         if (string.IsNullOrEmpty(bugName))
         {
@@ -130,26 +134,41 @@ public class PickupToInventoryAction : InteractionActionBase
             return null;
         }
 
-        // Find BugItemRegistry in scene
-        var registry = Object.FindFirstObjectByType<BugData.BugItemRegistry>();
+        var registry = BugItemRegistry.Instance;
         if (registry == null)
         {
-            Debug.LogWarning("[PickupToInventoryAction] BugItemRegistry not found in scene!");
+            Debug.LogWarning("[PickupToInventoryAction] BugItemRegistry not available at runtime!");
             return null;
         }
 
-        // Try to get Item with _Variant suffix
-        string variantName = $"{bugName}_Variant";
-        if (registry.TryGetItem(variantName, out var loadedItem) && loadedItem != null)
+        var candidates = new List<string>(4);
+        candidates.Add(bugName);
+
+        string trimmed = bugName.Replace("(Clone)", "").Trim();
+        if (!string.Equals(trimmed, bugName, System.StringComparison.Ordinal))
+            candidates.Add(trimmed);
+
+        if (jarTrap.GetTargetBug() != null && jarTrap.GetTargetBug().TryGetComponent<Bug.BugAI>(out var ai))
         {
-            if (showDebug)
-                Debug.Log($"[PickupToInventoryAction] Loaded dynamic Item: {variantName}");
-            return loadedItem;
+            string bugType = ai.GetBugType();
+            if (!string.IsNullOrWhiteSpace(bugType))
+                candidates.Add(bugType);
         }
-        else
+
+        foreach (var candidate in candidates)
         {
-            Debug.LogWarning($"[PickupToInventoryAction] Failed to find Item in registry: {variantName}");
-            return null;
+            if (string.IsNullOrWhiteSpace(candidate)) continue;
+            if (registry.TryGetItem(candidate, out var directItem) && directItem != null)
+                return directItem;
+
+            string variantKey = candidate.EndsWith("_Variant", System.StringComparison.OrdinalIgnoreCase)
+                ? candidate
+                : $"{candidate}_Variant";
+            if (registry.TryGetItem(variantKey, out var variantItem) && variantItem != null)
+                return variantItem;
         }
+
+        Debug.LogWarning($"[PickupToInventoryAction] Failed to resolve Item in registry for bug '{bugName}'");
+        return null;
     }
 }

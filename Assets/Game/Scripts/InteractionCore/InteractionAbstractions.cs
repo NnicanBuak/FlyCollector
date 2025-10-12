@@ -9,6 +9,7 @@ public struct InteractionContext
     public Transform Transform;
     public InventoryManager Inventory;
     public Animator Animator;
+    public string FailureReason;
 }
 
 public abstract class InteractionConditionBase : MonoBehaviour

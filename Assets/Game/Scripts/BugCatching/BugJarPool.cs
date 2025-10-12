@@ -102,6 +102,9 @@ namespace BugCatching
             availableJars.Remove(jar);
             busyJars.Add(jar);
 
+            if (!jar.gameObject.activeSelf)
+                jar.gameObject.SetActive(true);
+
             // Activate jar collision while it's in use
             SetJarColliderEnabled(jar, true);
 
@@ -154,6 +157,26 @@ namespace BugCatching
 
             if (showDebug)
                 Debug.Log($"[BugJarPool] All {allJars.Count} jars reset to available state");
+        }
+
+        public void ConsumeJar(BugJarTrap jar)
+        {
+            if (jar == null) return;
+
+            bool removedAny = false;
+            if (availableJars.Remove(jar)) removedAny = true;
+            if (busyJars.Remove(jar)) removedAny = true;
+            if (allJars.Remove(jar)) removedAny = true;
+
+            SetJarColliderEnabled(jar, false);
+
+            if (showDebug)
+            {
+                if (removedAny)
+                    Debug.Log($"[BugJarPool] Jar consumed and removed from pool: {jar.name}. Available: {availableJars.Count}, Busy: {busyJars.Count}");
+                else
+                    Debug.LogWarning($"[BugJarPool] ConsumeJar called for jar not tracked in pool: {jar?.name}");
+            }
         }
         #endregion
 

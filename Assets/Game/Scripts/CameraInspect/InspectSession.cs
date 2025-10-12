@@ -1,10 +1,12 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
 using Bug;
 using BugCatching;
+using BugData;
 
 public class InspectSession
 {
@@ -43,6 +45,8 @@ public class InspectSession
     private bool isAnimating;
     private bool isReturning;
     private bool freezeDuringReturn;
+    private bool sealedByJar;
+    private bool sealExitScheduled;
 
     private float interactionRange = 100f;
     private LayerMask interactableLayer = ~0;
@@ -89,6 +93,9 @@ public class InspectSession
             onFinish?.Invoke();
             return;
         }
+
+        sealedByJar = false;
+        sealExitScheduled = false;
 
         cam = Camera.main ?? Object.FindFirstObjectByType<Camera>();
         if (cam != null) runner = cam.GetComponent<MonoBehaviour>();
@@ -193,8 +200,8 @@ public class InspectSession
             }
             else
             {
-                // Non-bug objects: only LMB hint
-                ShowInspectHints(false);
+                // Non-bug objects: show Cancel (RMB) + Flip (no Collect)
+                ShowInspectHints(true);
             }
         });
     }
@@ -212,21 +219,13 @@ public class InspectSession
         bool rmb = mouse != null && mouse.rightButton.wasPressedThisFrame;
 
 
-        if (rmb && targetBugAI != null)
-        {
-            // RMB can only enter collect; when collectMode is active, don't toggle it off
-            if (!isCollectMode) TryEnterCollectModeOrFallback();
-            return;
-        }
-
-
-        if (rmb && targetBugAI == null)
-        {
-            return;
-        }
-
-
         bool lmb = mouse != null && mouse.leftButton.wasPressedThisFrame;
+        // LMB starts Collect mode for bugs (if not already in Collect)
+        if (lmb && targetBugAI != null && !isCollectMode)
+        {
+            TryEnterCollectModeOrFallback();
+            return;
+        }
         if (_isBugSession && isCollectMode && TryJarDirectInteraction(lmb))
             return;
         if (lmb && !HandleInteraction())
@@ -313,34 +312,202 @@ public class InspectSession
 
     private void ClearHoveredObject()
     {
+        var jarInteractable = activeJar != null ? activeJar.GetInteractable() : null;
+        bool clearedJarHint = _isBugSession && isCollectMode && currentInteractable != null &&
+                              jarInteractable != null && ReferenceEquals(currentInteractable, jarInteractable);
+
         if (currentHoveredObject != null && currentInteractable != null)
             currentInteractable.OnHoverExit();
 
         currentHoveredObject = null;
         currentInteractable = null;
+
+        if (clearedJarHint)
+            UpdateCollectHintHover(false);
     }
 
     private bool TryJarDirectInteraction(bool lmb)
     {
-        if (activeJar == null) return false;
-        var io = activeJar.GetInteractable();
-        if (io == null || !io.isActiveAndEnabled) return false;
+        if (activeJar == null || !_isBugSession || !isCollectMode)
+            return false;
 
-        var obj = io.gameObject;
-        if (obj != currentHoveredObject)
+        var io = activeJar.GetInteractable();
+        var jarObject = io != null ? io.gameObject : null;
+        if (io == null || !io.isActiveAndEnabled)
+        {
+            if (currentHoveredObject != null && currentHoveredObject == jarObject)
+                ClearHoveredObject();
+            else
+                UpdateCollectHintHover(false);
+            return false;
+        }
+
+        if (cam == null) cam = Camera.main;
+        if (cam == null)
+            return false;
+
+        bool hoveringJar = false;
+        if (Mouse.current != null)
+        {
+            Vector2 pos = Mouse.current.position.ReadValue();
+            Ray ray = cam.ScreenPointToRay(pos);
+            if (Physics.Raycast(ray, out var hit, interactionRange, interactableLayer))
+            {
+                if (hit.collider.GetComponentInParent<BugJarTrap>() == activeJar)
+                {
+                    hoveringJar = true;
+                }
+                else
+                {
+                    var hitInteractable = hit.collider.GetComponentInParent<IInteractable>();
+                    if (ReferenceEquals(hitInteractable, io))
+                        hoveringJar = true;
+                }
+            }
+        }
+        else
+        {
+            hoveringJar = true;
+        }
+
+        if (!hoveringJar)
+        {
+            if (currentHoveredObject != null && currentHoveredObject == jarObject)
+                ClearHoveredObject();
+            else
+                UpdateCollectHintHover(false);
+            return false;
+        }
+
+        if (jarObject != currentHoveredObject)
         {
             ClearHoveredObject();
-            currentHoveredObject = obj;
+            currentHoveredObject = jarObject;
             currentInteractable = io;
             currentInteractable.OnHoverEnter();
         }
 
+        UpdateCollectHintHover(true);
+
         if (lmb)
         {
+            PrepareBugForSealing();
             io.OnInteract(cam);
+            if (activeJar != null && activeJar.GetState() == BugJarTrap.State.Sealing)
+            {
+                HandleJarSealed();
+            }
             return true;
         }
         return true;
+    }
+
+    private void PrepareBugForSealing()
+    {
+        if (!isCollectMode || activeJar == null || go == null)
+            return;
+
+        Transform jarTransform = activeJar.transform;
+        if (jarTransform == null)
+            return;
+
+        Vector3 localTarget = cameraController != null ? cameraController.CollectSealedBugOffset : Vector3.zero;
+        float duration = Mathf.Clamp(activeJar.FlyDuration * 0.4f, 0.05f, 0.4f);
+
+        if (activeFlyTween != null && activeFlyTween.IsActive())
+        {
+            activeFlyTween.Kill();
+            activeFlyTween = null;
+        }
+
+        // Parent to jar so it follows any jar animation during sealing
+        go.transform.SetParent(jarTransform, worldPositionStays: true);
+
+        activeFlyTween = DG.Tweening.DOTween.Sequence()
+            .Join(go.transform.DOLocalMove(localTarget, duration).SetEase(DG.Tweening.Ease.InOutSine))
+            .Join(go.transform.DOLocalRotateQuaternion(Quaternion.identity, duration).SetEase(DG.Tweening.Ease.InOutSine))
+            .OnComplete(() =>
+            {
+                if (go == null) return;
+                go.transform.localPosition = localTarget;
+                go.transform.localRotation = Quaternion.identity;
+            });
+    }
+
+    private void HandleJarSealed()
+    {
+        if (!isCollectMode) return;
+
+        isCollectMode = false;
+        collectRotationLocked = false;
+        sealedByJar = true;
+
+        if (activeJar != null)
+        {
+            activeJar.TriggerClose();
+            var io = activeJar.GetInteractable();
+            if (io != null)
+            {
+                io.SetCanInteract(false);
+            }
+        }
+
+        hasReturnOverride = false;
+
+        if (cameraController != null)
+        {
+            cameraController.ReturnHome(cameraController.returnHomeTime);
+        }
+        else if (cam != null)
+        {
+            if (camFlyRoutine != null && camFlyRoutine.IsActive()) camFlyRoutine.Kill();
+            camFlyRoutine = StartCamFly(savedCamPos, savedCamRot, savedCamFov, 0.25f);
+        }
+
+        if (_isBugSession)
+            MultiHintController.Instance?.Show(MultiHintController.PanelNames.RightMouse);
+        else
+            MultiHintController.Instance?.Show(MultiHintController.PanelNames.RightMouse, "InspectFlip");
+
+        ScheduleFinishAfterSeal();
+    }
+
+    private void ScheduleFinishAfterSeal()
+    {
+        if (sealExitScheduled)
+            return;
+
+        sealExitScheduled = true;
+
+        if (runner != null)
+        {
+            runner.StartCoroutine(FinishAfterSealRoutine());
+        }
+        else
+        {
+            FinishAfterSealImmediate();
+        }
+    }
+
+    private IEnumerator FinishAfterSealRoutine()
+    {
+        yield return null;
+        if (camFlyRoutine != null)
+        {
+            while (camFlyRoutine.IsActive() && camFlyRoutine.IsPlaying())
+            {
+                yield return null;
+            }
+        }
+        FinishAfterSealImmediate();
+    }
+
+    private void FinishAfterSealImmediate()
+    {
+        if (isReturning)
+            return;
+
+        EndInspectNow();
     }
 
     private DG.Tweening.Tween Fly(Transform t, Vector3 toPos, Quaternion toRot, float time, System.Action after)
@@ -364,6 +531,9 @@ public class InspectSession
         if (isReturning)
             return;
 
+        BugJarTrap jarForReturn = (isCollectMode && activeJar != null) ? activeJar : null;
+        bool wasCollectMode = isCollectMode;
+
         if (go == null)
         {
             CompleteInspectReturn();
@@ -383,22 +553,30 @@ public class InspectSession
         MultiHintController.Instance?.HideAll();
 
         Transform target = go.transform;
-        target.SetParent(originalParent, true);
+        if (!sealedByJar)
+            target.SetParent(originalParent, true);
 
-        // Decide where to return the bug: if collectMode is active and we started at focus>0,
+        // Decide where to return the bug: if the inspect session ended from collect mode,
         // return to jar table position (no offset); otherwise return to original.
         hasReturnOverride = false;
-        if (isCollectMode && activeJar != null)
+        if (wasCollectMode && jarForReturn != null)
         {
-            var table = activeJar.GetTablePosition();
-            Vector3 pos = table != null ? table.position : activeJar.transform.position;
-            Quaternion rot = table != null ? table.rotation : activeJar.transform.rotation;
+            var table = jarForReturn.GetTablePosition();
+            Vector3 pos = table != null ? table.position : jarForReturn.transform.position;
+            Quaternion rot = table != null ? table.rotation : jarForReturn.transform.rotation;
             returnOverridePos = pos;
             returnOverrideRot = rot;
             hasReturnOverride = true;
         }
 
         float returnTime = flyTime > 0f ? flyTime : 0f;
+
+        if (sealedByJar)
+        {
+            // Bug already resides inside the jar; skip return tween to original spot.
+            CompleteInspectReturn();
+            return;
+        }
 
         if (returnTime > 0f && runner != null)
         {
@@ -419,18 +597,21 @@ public class InspectSession
         if (go != null)
         {
             Transform target = go.transform;
-            target.SetParent(originalParent, true);
-            if (hasReturnOverride)
+            if (!sealedByJar)
             {
-                target.position = returnOverridePos;
-                target.rotation = returnOverrideRot;
+                target.SetParent(originalParent, true);
+                if (hasReturnOverride)
+                {
+                    target.position = returnOverridePos;
+                    target.rotation = returnOverrideRot;
+                }
+                else
+                {
+                    target.position = origPos;
+                    target.rotation = origRot;
+                }
+                target.localScale = origScale;
             }
-            else
-            {
-                target.position = origPos;
-                target.rotation = origRot;
-            }
-            target.localScale = origScale;
         }
 
         if (holdPointLocalPosOverridden && holdPoint != null)
@@ -440,7 +621,7 @@ public class InspectSession
         }
 
         isCollectMode = false;
-        if (activeJar != null)
+        if (!sealedByJar && activeJar != null)
         {
             var st = activeJar.GetState();
             if (st == BugJarTrap.State.AtTable)
@@ -448,9 +629,9 @@ public class InspectSession
             activeJar = null;
         }
 
-        if (rb) rb.isKinematic = false;
+        if (!sealedByJar && rb) rb.isKinematic = false;
 
-        if (parentColliders != null && selfColliders != null)
+        if (!sealedByJar && parentColliders != null && selfColliders != null)
         {
             foreach (var collider in parentColliders)
             {
@@ -459,7 +640,7 @@ public class InspectSession
             }
         }
 
-        if (targetBugAI != null)
+        if (targetBugAI != null && !sealedByJar)
             targetBugAI.DisableAI(false);
 
         MultiHintController.Instance?.HideAll();
@@ -486,6 +667,9 @@ public class InspectSession
         // Unsubscribe flip action
         InspectFlip.OnClicked -= OnFlipClicked;
         onFinish?.Invoke();
+
+        sealedByJar = false;
+        sealExitScheduled = false;
     }
 
     private void OnFlipClicked()
@@ -499,10 +683,25 @@ public class InspectSession
         if (MultiHintController.Instance == null)
             return;
 
-        if (includeRightMouse)
-            MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse, MultiHintController.PanelNames.RightMouse, "InspectFlip");
-        else
-            MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse, "InspectFlip");
+        if (_isBugSession)
+        {
+            if (isCollectMode)
+            {
+                // In collect mode hide Collect hint, keep Cancel (RMB)
+                MultiHintController.Instance.Show(MultiHintController.PanelNames.RightMouse);
+                return;
+            }
+
+            // Bug inspect: always show Collect (LMB); Cancel (RMB) optional when not in collect mode
+            if (includeRightMouse)
+                MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse, MultiHintController.PanelNames.RightMouse);
+            else
+                MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse);
+            return;
+        }
+
+        // Non-bug inspect: show Cancel (RMB) and Flip (no Collect)
+        MultiHintController.Instance.Show(MultiHintController.PanelNames.RightMouse, "InspectFlip");
     }
 
     private bool ShouldShowRightMouseHint()
@@ -542,23 +741,44 @@ public class InspectSession
         if (isCollectMode) return;
         isCollectMode = true;
 
-        // In collect mode, hide Collect (RMB) hint and keep only Put (LMB)
-        MultiHintController.Instance?.Show(MultiHintController.PanelNames.LeftMouse);
+        // In collect mode keep Cancel (RMB); Collect appears only when hovering the jar
+        if (_isBugSession)
+            UpdateCollectHintHover(false);
+        else
+            MultiHintController.Instance?.Show(MultiHintController.PanelNames.RightMouse, "InspectFlip");
+
         TrySummonJarToTable();
         // Trigger jar open animation immediately in collect mode
         if (activeJar != null)
         {
             activeJar.TriggerOpen();
-            // Pass dynamic Item to InteractableObject based on bug name (Items are under Assets/Items)
-            var registry = Object.FindFirstObjectByType<BugData.BugItemRegistry>();
-            if (registry != null)
+            var jarItem = activeJar.GetTargetItem();
+            if (jarItem != null)
             {
-                string bugName = go != null ? go.name.Replace("(Clone)", "").Trim() : string.Empty;
-                string variant = string.IsNullOrEmpty(bugName) ? string.Empty : $"{bugName}_Variant";
-                if (!string.IsNullOrEmpty(variant) && registry.TryGetItem(variant, out var item) && item != null)
+                activeJar.SetInteractableItem(jarItem);
+            }
+            else
+            {
+                var registry = BugItemRegistry.Instance;
+                if (registry != null)
                 {
-                    activeJar.SetInteractableItem(item);
+                    string bugKey = targetBugAI != null ? targetBugAI.GetBugType() : (go != null ? go.name : string.Empty);
+                    if (!string.IsNullOrEmpty(bugKey) && registry.TryGetItem(bugKey, out var item) && item != null)
+                    {
+                        activeJar.SetInteractableItem(item);
+                    }
+                    else if (!string.IsNullOrEmpty(bugKey) && Debug.isDebugBuild)
+                    {
+                        Debug.LogWarning($"[InspectSession] BugItemRegistry mapping not found for '{bugKey}'");
+                    }
                 }
+            }
+
+            // Ensure the jar's InteractableObject is allowed to interact in Collect mode
+            var io = activeJar.GetInteractable();
+            if (io != null)
+            {
+                io.SetCanInteract(true);
             }
 
             // Set override return position to jar's table target (no offset)
@@ -569,12 +789,12 @@ public class InspectSession
         }
         MoveCameraToCollectPose();
 
-        // Ensure focus level = 0 and clear focus stack
+        // Ensure focus level = 0 while in collect mode
         var flm = FocusLevelManager.Instance;
         if (flm != null)
         {
-            flm.ResetToStartingLevel();
-            if (flm.CurrentNestLevel != 0) flm.SetNestLevel(0);
+            if (flm.CurrentNestLevel != 0)
+                flm.SetNestLevel(0);
         }
 
         // After camera finishes moving, animate bug to jar target with offset, staying parented
@@ -599,12 +819,18 @@ public class InspectSession
         // Ensure the jar returns to its place when leaving collect mode
         if (activeJar != null)
         {
+            // Disallow interaction while leaving collect and close the jar lid
+            var io = activeJar.GetInteractable();
+            if (io != null)
+            {
+                io.SetCanInteract(false);
+            }
+            activeJar.TriggerClose();
             var st = activeJar.GetState();
             if (st == BugJarTrap.State.AtTable)
             {
                 activeJar.FlyBack();
             }
-            activeJar = null;
         }
 
         if (restoreCamera && cam != null)
@@ -675,6 +901,47 @@ public class InspectSession
 
 
 
+    private Item ResolveBugRegistryItem(GameObject bug, out string matchedKey)
+    {
+        matchedKey = null;
+        if (bug == null) return null;
+
+        var registry = BugItemRegistry.Instance;
+        if (registry == null) return null;
+
+        var candidates = new List<string>(4);
+        string bugName = bug.name;
+        if (!string.IsNullOrWhiteSpace(bugName))
+        {
+            candidates.Add(bugName);
+            string trimmed = bugName.Replace("(Clone)", "").Trim();
+            if (!string.Equals(trimmed, bugName, System.StringComparison.Ordinal))
+                candidates.Add(trimmed);
+        }
+
+        if (targetBugAI != null)
+        {
+            string bugType = targetBugAI.GetBugType();
+            if (!string.IsNullOrWhiteSpace(bugType))
+                candidates.Add(bugType);
+        }
+
+        var seen = new HashSet<string>(System.StringComparer.OrdinalIgnoreCase);
+        foreach (var candidate in candidates)
+        {
+            if (string.IsNullOrWhiteSpace(candidate)) continue;
+            if (!seen.Add(candidate)) continue;
+
+            if (registry.TryGetItem(candidate, out var item) && item != null)
+            {
+                matchedKey = candidate;
+                return item;
+            }
+        }
+
+        return null;
+    }
+
     private bool TryAcquireJar(out BugJarTrap jar)
     {
         jar = null;
@@ -710,9 +977,26 @@ public class InspectSession
         }
 
 
-        jar.SetTargetBug(go);
+        string matchedKey;
+        Item matchedItem = ResolveBugRegistryItem(go, out matchedKey);
+        jar.SetTargetBug(go, matchedItem, matchedKey);
         activeJar = jar;
         return true;
+    }
+
+    private void UpdateCollectHintHover(bool isHoveringJar)
+    {
+        if (!_isBugSession || !isCollectMode)
+            return;
+
+        var hints = MultiHintController.Instance;
+        if (hints == null)
+            return;
+
+        if (isHoveringJar)
+            hints.Show(MultiHintController.PanelNames.LeftMouse, MultiHintController.PanelNames.RightMouse);
+        else
+            hints.Show(MultiHintController.PanelNames.RightMouse);
     }
 
     private void TrySummonJarToTable()
@@ -727,6 +1011,8 @@ public class InspectSession
             activeJar = jar;
         }
 
+        activeJar.SetSuppressCollectHintOnSeal(true);
+
         Debug.Log($"[InspectSession] Target bug '{go.name}' set on jar. Flying jar to TABLE...");
         activeJar.FlyToTable();
     }
@@ -735,8 +1021,8 @@ public class InspectSession
     {
 
         isCollectMode = false;
-        // Keep LMB visible; do not clear all hints to avoid LMB disappearing
-        MultiHintController.Instance?.Show(MultiHintController.PanelNames.LeftMouse);
+        // Show LMB (Interact) and RMB (Cancel)
+        MultiHintController.Instance?.Show(MultiHintController.PanelNames.LeftMouse, MultiHintController.PanelNames.RightMouse);
         cameraController?.ExitAllFocus();
     }
 
@@ -785,13 +1071,3 @@ public class InspectSession
         return null;
     }
 }
-
-
-
-
-
-
-
-
-
-

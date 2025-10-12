@@ -6,6 +6,7 @@ using UnityEngine;
 public class TargetBugsRuntime : MonoBehaviour
 {
     public static TargetBugsRuntime Instance { get; private set; }
+    public static event Action<TargetBugsRuntime> InstanceChanged;
 
     public event Action TargetsChanged;
     public event Action BugsToSpawnChanged;
@@ -29,6 +30,7 @@ public class TargetBugsRuntime : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        InstanceChanged?.Invoke(this);
     }
 
 
@@ -89,5 +91,14 @@ public class TargetBugsRuntime : MonoBehaviour
 
         s = s.ToUpperInvariant();
         return s;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+            InstanceChanged?.Invoke(null);
+        }
     }
 }
