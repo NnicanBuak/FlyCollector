@@ -911,6 +911,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 394981536}
   m_CullTransparentMesh: 1
+--- !u!1 &482683014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 482683016}
+  - component: {fileID: 482683015}
+  m_Layer: 0
+  m_Name: EndGameResultUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &482683015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482683014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77764df6c444475c806ca92d748b60fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndGameResultUI
+  stateToggle: {fileID: 1749078017}
+  victoryStateName: Escape
+  wrongBugsStateName: Mismatch
+  timeoutStateName: Fail
+  outcomeKey: gameOutcome
+  totalCaughtKey: totalCaught
+  wrongCountKey: wrongCount
+--- !u!4 &482683016
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482683014}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &496129426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1659,9 +1710,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 899909f6c3edf8842acbdc823e9c462e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverBugsSummaryUI
-  slotsRoot: {fileID: 1389259989}
+  slotsRoot: {fileID: 0}
   slots:
-  - {fileID: 1749078017}
   - {fileID: 1299151893}
   - {fileID: 1567230194}
   - {fileID: 67133668}
@@ -4359,6 +4409,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1830984529}
+  - {fileID: 482683016}
   - {fileID: 671873312}
   - {fileID: 575260547}
   - {fileID: 555199108}

@@ -360,6 +360,7 @@ public sealed class GAManager : MonoBehaviour
     public void TrackNestLevelChange(int fromLevel, int toLevel, string objectName)
     {
         if (!enableAnalytics) return;
+        if (fromLevel == toLevel) return;
 
         GameAnalytics.NewDesignEvent($"Camera:NestLevel:{fromLevel}_to_{toLevel}", toLevel);
         if (!string.IsNullOrEmpty(objectName))

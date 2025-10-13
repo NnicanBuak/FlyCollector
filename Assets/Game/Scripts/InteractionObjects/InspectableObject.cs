@@ -241,22 +241,7 @@ public class InspectableObject : MonoBehaviour, IInspectable
     public void OnHoverEnter()
     {
         if (!canInspect) return;
-
-        // Check bug accessibility (if this is a bug)
-        if (_bugAI != null && !_bugAI.IsAccessible())
-        {
-            if (showDebugInfo)
-            {
-                Debug.Log($"[InspectableObject] Bug {gameObject.name} is not accessible at current focus level");
-            }
-            return;
-        }
-
-        if (showDebugInfo)
-        {
-            Debug.Log($"[InspectableObject] Наведение на {gameObject.name}");
-        }
-
+        
         if (useOutline && outline != null)
         {
             outline.enabled = true;
@@ -287,14 +272,6 @@ public class InspectableObject : MonoBehaviour, IInspectable
         {
             if (showDebugInfo)
                 Debug.LogWarning($"[InspectableObject] Инспекция отключена для {gameObject.name}");
-            return false;
-        }
-
-        // Check bug accessibility (if this is a bug)
-        if (_bugAI != null && !_bugAI.IsAccessible())
-        {
-            if (showDebugInfo)
-                Debug.LogWarning($"[InspectableObject] Bug {gameObject.name} is not accessible at current focus level");
             return false;
         }
 

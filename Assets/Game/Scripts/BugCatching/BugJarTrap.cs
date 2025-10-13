@@ -13,6 +13,11 @@ namespace BugCatching
         [Header("Positions")]
         [Tooltip("Target position on table where jar flies to")]
         [SerializeField] private Transform tablePosition;
+        
+        [Header("Attach")]
+        [Tooltip("Точка внутри банки для привязки жука (опционально)")]
+        [SerializeField] private Transform attachParent;
+        public Transform AttachParent => attachParent != null ? attachParent : transform;
 
         [Header("Animation")]
         [Tooltip("Time for jar to fly to/from table")]
@@ -730,6 +735,45 @@ namespace BugCatching
                 });
             while (flyTween != null && flyTween.IsActive())
                 yield return null;
+        }
+        public void AttachTargetBugToActiveJar()
+        {
+            if (targetBug == null)
+            {
+                Debug.LogWarning("[BugJarTrap] AttachTargetBugToActiveJar: targetBug == null");
+                return;
+            }
+
+            // 1) Определяем родителя
+            Transform parent = attachParent != null ? attachParent : transform;
+
+            // Попробуем взять активную банку из пула (если нужно — используйте ваш метод доступа)
+            // В текущем коде пула нет метода "Active", поэтому безопасно fallback на this.
+            // Если у вас есть свой метод получения активной банки — подставьте его тут.
+            if (BugJarPool.Instance != null)
+            {
+                // Пример: если вы добавите метод в пул:
+                // var active = BugJarPool.Instance.GetMostRecentBusyJar();
+                // if (active != null) parent = active.attachParent != null ? active.attachParent : active.transform;
+            }
+
+            // 2) Привязываем без изменения позиции/поворота
+            var t = targetBug.transform;
+            t.SetParent(parent, true); // worldPositionStays = true — позиция НЕ меняется
+
+            // 3) Отключаем поведение и физику (чтобы не убегал/не дрожал)
+            var ai = targetBug.GetComponent<BugAI>();
+            if (ai) ai.enabled = false;
+
+            var rb = targetBug.GetComponent<Rigidbody>();
+            if (rb)
+            {
+                rb.isKinematic = true;
+                rb.detectCollisions = false;
+            }
+
+            var cols = targetBug.GetComponentsInChildren<Collider>(true);
+            foreach (var c in cols) c.enabled = false;
         }
 
         private void ResetToIdle()

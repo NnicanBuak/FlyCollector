@@ -68,6 +68,21 @@ namespace BugCatching
         #endregion
 
         #region Public Methods
+        
+        public BugJarTrap GetAnyBusyJar()
+        {
+            // Если busyJars — HashSet, можно так:
+            foreach (var j in busyJars) return j;
+            return null;
+        }
+
+        public Transform GetActiveAttachParentOr(Transform fallback)
+        {
+            var jar = GetAnyBusyJar();
+            if (jar != null) return jar.AttachParent;
+            return fallback;
+        }
+
         public void DiscoverAllJars()
         {
             allJars.Clear();

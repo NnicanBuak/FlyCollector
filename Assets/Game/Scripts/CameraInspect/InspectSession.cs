@@ -404,40 +404,57 @@ public class InspectSession
 
     private void PrepareBugForSealing()
     {
-        if (!isCollectMode || activeJar == null || go == null)
+        if (!isCollectMode || go == null)
             return;
 
-        Transform jarTransform = activeJar.transform;
-        if (jarTransform == null)
-            return;
+        // Получаем активную банку без зависимости от поля activeJar
+        var jar = ResolveActiveJarFallback();
+        if (jar == null) return;
 
-        Vector3 localTarget = cameraController != null ? cameraController.CollectSealedBugOffset : Vector3.zero;
-        float duration = Mathf.Clamp(activeJar.FlyDuration * 0.4f, 0.05f, 0.4f);
+        // Внутренняя точка крепления
+        Transform jarAttach = ResolveAttachPoint(jar);
+        if (jarAttach == null) return;
 
+        float duration = Mathf.Clamp(jar.FlyDuration * 0.4f, 0.05f, 0.4f);
+
+        // Остановить предыдущий твин на жуке
         if (activeFlyTween != null && activeFlyTween.IsActive())
         {
             activeFlyTween.Kill();
             activeFlyTween = null;
         }
 
-        // Parent to jar so it follows any jar animation during sealing
-        go.transform.SetParent(jarTransform, worldPositionStays: true);
+        // Родим к AttachPoint, сохранив мировую позу для плавного долёта
+        go.transform.SetParent(jarAttach, worldPositionStays: true);
+
+        // Цель — центр AttachPoint в локе
+        Vector3 localTarget = Vector3.zero;
+        Quaternion localRotTarget = Quaternion.identity;
 
         activeFlyTween = DG.Tweening.DOTween.Sequence()
-            .Join(go.transform.DOLocalMove(localTarget, duration).SetEase(DG.Tweening.Ease.InOutSine))
-            .Join(go.transform.DOLocalRotateQuaternion(Quaternion.identity, duration).SetEase(DG.Tweening.Ease.InOutSine))
+            .Join(go.transform.DOLocalMove(localTarget, duration).SetEase(Ease.InOutSine))
+            .Join(go.transform.DOLocalRotateQuaternion(localRotTarget, duration).SetEase(Ease.InOutSine))
             .OnComplete(() =>
             {
                 if (go == null) return;
                 go.transform.localPosition = localTarget;
-                go.transform.localRotation = Quaternion.identity;
+                go.transform.localRotation = localRotTarget;
             });
+
+        // Погасим поведение/физику, чтобы не дёргался
+        var ai = go.GetComponent<BugAI>();
+        if (ai) ai.enabled = false;
+
+        var rb = go.GetComponent<Rigidbody>();
+        if (rb) { rb.isKinematic = true; rb.detectCollisions = false; }
+
+        foreach (var c in go.GetComponentsInChildren<Collider>(true)) c.enabled = false;
     }
 
     private void HandleJarSealed()
     {
         if (!isCollectMode) return;
-
+        
         isCollectMode = false;
         collectRotationLocked = false;
         sealedByJar = true;
@@ -456,7 +473,7 @@ public class InspectSession
 
         if (cameraController != null)
         {
-            cameraController.ReturnHome(cameraController.returnHomeTime);
+            cameraController.ReturnHomeFromCurrent(cameraController.returnHomeTime);
         }
         else if (cam != null)
         {
@@ -741,6 +758,8 @@ public class InspectSession
         if (isCollectMode) return;
         isCollectMode = true;
 
+        cameraController?.ExitAllFocus();
+
         // In collect mode keep Cancel (RMB); Collect appears only when hovering the jar
         if (_isBugSession)
             UpdateCollectHintHover(false);
@@ -802,13 +821,26 @@ public class InspectSession
         collectRotationLocked = false;
         if (camFlyRoutine != null)
         {
-            camFlyRoutine.OnComplete(() => { collectRotationLocked = true; StartBugCollectMovement(); });
+            camFlyRoutine.OnComplete(() =>
+            {
+                collectRotationLocked = true;
+
+                // <<< ПРИВЯЗЫВАЕМ ЖУКА К АКТИВНОЙ БАНКЕ БЕЗ СМЕНЫ ПОЗИЦИИ >>>
+                ParentBugToJarIfPossible(go.transform);
+
+                StartBugCollectMovement();
+            });
         }
         else
         {
             collectRotationLocked = true;
+
+            // <<< ПРИВЯЗЫВАЕМ ЖУКА К АКТИВНОЙ БАНКЕ >>>
+            ParentBugToJarIfPossible(go.transform);
+
             StartBugCollectMovement();
         }
+
     }
 
     private void ExitCollectMode(bool restoreCamera = true)
@@ -868,7 +900,7 @@ public class InspectSession
                 flm.SetNestLevel(0);
 
             // Use a fixed transform provided by CameraController (slower tween = 1.0s)
-            cameraController.FocusToPoint(cameraController.CollectModeCameraPose, allowReturn: true, flyTimeOverride: 1.0f);
+            cameraController.FocusToPoint(cameraController.CollectModeCameraPose, allowReturn: false, flyTimeOverride: 1.0f);
             // Create a local timing tween to signal completion after 1.0s
             if (camFlyRoutine != null && camFlyRoutine.IsActive()) camFlyRoutine.Kill();
             camFlyRoutine = DG.Tweening.DOTween.Sequence().AppendInterval(1.0f);
@@ -1023,7 +1055,6 @@ public class InspectSession
         isCollectMode = false;
         // Show LMB (Interact) and RMB (Cancel)
         MultiHintController.Instance?.Show(MultiHintController.PanelNames.LeftMouse, MultiHintController.PanelNames.RightMouse);
-        cameraController?.ExitAllFocus();
     }
 
     private Transform ResolveBugTablePosition(GameObject bugRoot)
@@ -1070,4 +1101,59 @@ public class InspectSession
 
         return null;
     }
+    private BugJarTrap ResolveActiveJarFallback()
+    {
+        // 1) если поле всё же заполнено — используем его
+        if (activeJar != null) return activeJar;
+
+        // 2) пробуем найти в сцене банки, которые уже на столе / в процессе запечатывания
+        var jars = Object.FindObjectsByType<BugJarTrap>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        BugJarTrap candidate = null;
+
+        // приоритет: Sealing/Sealed -> AtTable -> любой
+        foreach (var j in jars)
+            if (j != null && j.GetState() == BugJarTrap.State.Sealing) return j;
+        foreach (var j in jars)
+            if (j != null && j.GetState() == BugJarTrap.State.Sealed) return j;
+        foreach (var j in jars)
+            if (j != null && j.GetState() == BugJarTrap.State.AtTable) return j;
+
+        // fallback: вернём первый попавшийся, если вообще есть
+        if (jars != null && jars.Length > 0) candidate = jars[0];
+        return candidate;
+    }
+
+// Найти точку крепления внутри банки
+    private Transform ResolveAttachPoint(BugJarTrap jar)
+    {
+        if (jar == null) return null;
+        foreach (var t in jar.GetComponentsInChildren<Transform>(true))
+            if (t && t.name == "AttachPoint")
+                return t;
+        return jar.transform; // фоллбэк — корень банки
+    }
+    
+    private void ParentBugToJarIfPossible(Transform target)
+    {
+        if (target == null) return;
+
+        // Берём трансформ именно активной банки текущей сессии
+        Transform parent = (activeJar != null) ? activeJar.transform : null;
+        if (parent == null) return;
+
+        // Привязка без изменения позиции/поворота
+        target.SetParent(parent, true);
+
+        // Погасить логику/физику, чтобы не "дёргался"
+        var ai = target.GetComponent<BugAI>();
+        if (ai) ai.enabled = false;
+
+        var rb = target.GetComponent<Rigidbody>();
+        if (rb) { rb.isKinematic = true; rb.detectCollisions = false; }
+
+        var cols = target.GetComponentsInChildren<Collider>(true);
+        foreach (var c in cols) c.enabled = false;
+    }
+
+    
 }

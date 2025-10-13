@@ -66,7 +66,9 @@ public class BugList : MonoBehaviour
         {
             string rawId = ExtractId(lines[i]);
             if (string.IsNullOrEmpty(rawId)) continue;
-            string key   = TargetBugsRuntime.NormalizeKey(rawId);
+            string key   = BugKeyUtil.CanonicalizeKey(rawId);
+            if (string.IsNullOrEmpty(key)) continue;
+
             string title = lines[i + 1];
             string desc  = lines[i + 2];
 
@@ -75,7 +77,6 @@ public class BugList : MonoBehaviour
         }
 
 
-        for (int i = 0; i < allBugKeys.Count; i++) allBugKeys[i] = TargetBugsRuntime.NormalizeKey(allBugKeys[i]);
         var distinct = allBugKeys.Distinct().OrderBy(s => s).ToList();
         allBugKeys.Clear(); allBugKeys.AddRange(distinct);
 

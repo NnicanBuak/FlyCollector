@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,69 +24,48 @@ namespace Bug
         [SerializeField] private bool alwaysAccessible = false;
         #endregion
 
-        #region Properties
-        #endregion
-
-        #region Events
-        #endregion
-
-        #region Unity Lifecycle
+        #region State
         private NavMeshAgent agent;
         private Animator anim;
 
         private float nextRepathTime;
         private bool manuallyDisabled;
 
-        // Track spawn time for analytics
         private float spawnTime;
 
-        // Access zone management
-        private BugAccessZone currentZone;
-        private bool isAccessible = true; // Default accessible if not in any zone
+        // --- ЗОНЫ И ДОСТУП ---
+        private readonly HashSet<BugAccessZone> zones = new HashSet<BugAccessZone>();
+        private InspectableObject inspectable; // целевой флаг canInspect будет управляться отсюда
+        #endregion
 
+        #region Unity Lifecycle
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
             anim  = GetComponent<Animator>();
             spawnTime = Time.time;
+
+            inspectable = GetComponent<InspectableObject>();
+            if (inspectable == null)
+            {
+                Debug.LogWarning($"[BugAI] На {name} нет InspectableObject — управление canInspect работать не будет");
+            }
         }
 
         private void Start()
         {
-            // Check if we're inside any BugAccessZone at start
+            // Если жук уже стоит внутри зон на старте — зарегистрируемся
             CheckForAccessZone();
-        }
-
-        private void CheckForAccessZone()
-        {
-            // Find all BugAccessZones in scene and check if we're inside any
-            var zones = FindObjectsByType<BugAccessZone>(FindObjectsSortMode.None);
-            foreach (var zone in zones)
-            {
-                // Check if bug collider overlaps with zone collider
-                var zoneCollider = zone.GetComponent<Collider>();
-                var bugCollider = GetComponent<Collider>();
-
-                if (zoneCollider != null && bugCollider != null)
-                {
-                    if (zoneCollider.bounds.Intersects(bugCollider.bounds))
-                    {
-                        zone.RefreshBugs();
-                        break; // Only register with one zone
-                    }
-                }
-            }
+            RecomputeAndApplyCanInspect();
         }
 
         private void OnEnable()
         {
-
             EnsureAgentOnNavMesh();
         }
 
         private void Update()
         {
-
             if (!AgentReady() || manuallyDisabled)
             {
                 UpdateAnimator(0f);
@@ -102,64 +82,45 @@ namespace Bug
         }
         #endregion
 
-        #region Public Methods
-        /// <summary>
-        /// Get bug type identifier (GameObject name without "(Clone)" suffix)
-        /// Used for analytics and bug identification
-        /// </summary>
+        #region Gameplay API
         public string GetBugType()
         {
-            string name = gameObject.name;
-            // Remove "(Clone)" suffix added by Unity when instantiating
-            return name.Replace("(Clone)", "").Trim();
+            string n = gameObject.name;
+            return n.Replace("(Clone)", "").Trim();
         }
 
-        /// <summary>
-        /// Get time elapsed since bug was spawned (in seconds)
-        /// Used for analytics to track catch time
-        /// </summary>
         public float GetTimeSinceSpawn()
         {
             return Time.time - spawnTime;
         }
 
-        /// <summary>
-        /// Check if this bug is currently accessible for inspection/catching.
-        /// Returns true if bug is in accessible zone or alwaysAccessible is true.
-        /// </summary>
-        public bool IsAccessible()
-        {
-            return alwaysAccessible || isAccessible;
-        }
+        // ==== НОВОЕ: API для зон ====
 
-        /// <summary>
-        /// Set bug accessibility (called by BugAccessZone).
-        /// </summary>
-        public void SetAccessible(bool accessible)
-        {
-            isAccessible = accessible;
-        }
-
-        /// <summary>
-        /// Register bug entering an access zone.
-        /// </summary>
+        /// <summary>Жук вошёл в зону.</summary>
         public void RegisterAccessZone(BugAccessZone zone)
         {
-            currentZone = zone;
-            isAccessible = zone.IsAccessible;
+            if (zone == null) return;
+            if (zones.Add(zone))
+                RecomputeAndApplyCanInspect();
         }
 
-        /// <summary>
-        /// Unregister bug from access zone.
-        /// </summary>
+        /// <summary>Жук вышел из зоны.</summary>
         public void UnregisterAccessZone(BugAccessZone zone)
         {
-            if (currentZone == zone)
-            {
-                currentZone = null;
-                isAccessible = true; // Default accessible when not in any zone
-            }
+            if (zone == null) return;
+            if (zones.Remove(zone))
+                RecomputeAndApplyCanInspect();
         }
+
+        /// <summary>Зона сообщает: «моя доступность изменилась».</summary>
+        public void NotifyZoneAccessibilityChanged()
+        {
+            RecomputeAndApplyCanInspect();
+        }
+
+        // Оставляем для обратной совместимости (если где-то еще зовётся).
+        // Ничего не устанавливаем напрямую — просто пересчитываем.
+        public void SetAccessible(bool _ignored) => RecomputeAndApplyCanInspect();
 
         public void DisableAI(bool disable)
         {
@@ -173,11 +134,9 @@ namespace Bug
 
             if (agent)
             {
-                // Only stop agent if it's currently on NavMesh and enabled
                 if (agent.enabled && agent.isOnNavMesh)
-                {
                     agent.isStopped = true;
-                }
+
                 agent.enabled = false;
             }
 
@@ -188,15 +147,10 @@ namespace Bug
         {
             if (agent)
             {
-
                 AttachToNavMeshIfNeeded();
-
-
                 agent.enabled = true;
                 if (!agent.isOnNavMesh)
                     AttachToNavMeshIfNeeded();
-
-
                 agent.isStopped = false;
             }
 
@@ -205,7 +159,7 @@ namespace Bug
         }
         #endregion
 
-        #region Private Methods
+        #region Movement
         private void PickNewRandomPoint()
         {
             if (!AgentReady()) return;
@@ -215,18 +169,13 @@ namespace Bug
             random.y = origin.y;
 
             if (NavMesh.SamplePosition(random, out var hit, wanderRadius, NavMesh.AllAreas))
-            {
                 SetDestinationSafe(hit.position);
-            }
             else
-            {
                 nextRepathTime = Time.time + 0.5f;
-            }
         }
 
         private float EstimatePathLength(Vector3 target)
         {
-
             if (!AgentReady()) return 0f;
 
             var path = new NavMeshPath();
@@ -243,34 +192,23 @@ namespace Bug
         private void SetDestinationSafe(Vector3 pos)
         {
             if (!AgentReady()) return;
-
             if (!agent.SetDestination(pos))
-            {
                 nextRepathTime = Time.time + 0.3f;
-            }
             else
-            {
                 agent.isStopped = false;
-            }
         }
 
-        private bool AgentReady()
-        {
-
-            return agent && agent.enabled && agent.isOnNavMesh;
-        }
+        private bool AgentReady() => agent && agent.enabled && agent.isOnNavMesh;
 
         private void EnsureAgentOnNavMesh()
         {
             if (!agent) return;
-
             if (agent.enabled && !agent.isOnNavMesh)
                 AttachToNavMeshIfNeeded();
         }
 
         private void AttachToNavMeshIfNeeded()
         {
-
             if (NavMesh.SamplePosition(transform.position, out var hit, Mathf.Max(0.25f, reattachRadius), NavMesh.AllAreas))
             {
                 if (!agent.enabled) agent.enabled = true;
@@ -285,7 +223,47 @@ namespace Bug
         }
         #endregion
 
-        #region Gizmos
+        #region Zones → CanInspect
+        private void RecomputeAndApplyCanInspect()
+        {
+            // 1) агрегируем доступ по всем зонам (AND)
+            bool zonesAllow = true;
+            foreach (var z in zones)
+            {
+                if (z == null) continue;
+                if (!z.IsAccessible)
+                {
+                    zonesAllow = false;
+                    break;
+                }
+            }
+
+            // 2) учитываем alwaysAccessible
+            bool finalCanInspect = alwaysAccessible || zonesAllow;
+
+            // 3) толкаем в InspectableObject.canInspect
+            if (inspectable != null)
+                inspectable.SetInspectable(finalCanInspect);
+
+            // (опционально можно включать/выключать подсветку/интеракт-коллайдеры тут же)
+        }
+
+        private void CheckForAccessZone()
+        {
+            // Если при старте уже стоим в нескольких зонах — зарегистрируйтесь во всех
+            var zonesInScene = FindObjectsByType<BugAccessZone>(FindObjectsSortMode.None);
+            var bugCollider = GetComponent<Collider>();
+
+            foreach (var zone in zonesInScene)
+            {
+                var zoneCollider = zone ? zone.GetComponent<Collider>() : null;
+                if (zoneCollider != null && bugCollider != null)
+                {
+                    if (zoneCollider.bounds.Intersects(bugCollider.bounds))
+                        zone.RefreshBugs(); // это вызовет RegisterAccessZone(this) на нас
+                }
+            }
+        }
         #endregion
     }
 }

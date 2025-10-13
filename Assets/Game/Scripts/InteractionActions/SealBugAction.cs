@@ -68,13 +68,13 @@ public class SealBugAction : InteractionActionBase
         }
 
         var bug = jarTrap.GetTargetBug();
-        if (bug != null)
-        {
-            Vector3 localOffset = cameraController != null ? cameraController.CollectSealedBugOffset : Vector3.zero;
-            bug.transform.SetParent(jarTrap.transform, worldPositionStays: true);
-            bug.transform.localPosition = localOffset;
-            bug.transform.localRotation = Quaternion.identity;
-        }
+        // if (bug != null)
+        // {
+        //     Vector3 localOffset = cameraController != null ? cameraController.CollectSealedBugOffset : Vector3.zero;
+        //     bug.transform.SetParent(jarTrap.transform, worldPositionStays: true);
+        //     bug.transform.localPosition = localOffset;
+        //     bug.transform.localRotation = Quaternion.identity;
+        // }
 
         jarTrap.Seal();
 

@@ -259,7 +259,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &2535784523179467546
+--- !u!1 &3219604067505438516
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,48 +267,29 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9177784500688000444}
-  - component: {fileID: 4060057615284395905}
+  - component: {fileID: 6516215121118682666}
   m_Layer: 0
-  m_Name: PlayAudioAction
+  m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9177784500688000444
+--- !u!4 &6516215121118682666
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2535784523179467546}
+  m_GameObject: {fileID: 3219604067505438516}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000021855694, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6020812609730652473}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4060057615284395905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2535784523179467546}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0efc2059036e8974b8636783d9e0929a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayAudioAction
-  clip: {fileID: 8300000, guid: 106d154641a27a9408aca138804e974e, type: 3}
-  volume: 1
-  output: {fileID: 8258077167934287708}
-  waitUntilFinished: 0
-  randomizePitch: 0
-  pitchRange: {x: 1, y: 1}
 --- !u!1 &4268934223248235586
 GameObject:
   m_ObjectHideFlags: 0
@@ -528,10 +509,10 @@ Transform:
   - {fileID: 2963133751156183441}
   - {fileID: 628330591023794417}
   - {fileID: 8312370018789780646}
-  - {fileID: 9177784500688000444}
   - {fileID: 108263535484230663}
   - {fileID: 8492121125112433740}
   - {fileID: 2460418925311212123}
+  - {fileID: 6516215121118682666}
   m_Father: {fileID: 5644129556544054270}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5130576178271650115
@@ -640,8 +621,6 @@ MonoBehaviour:
   actions:
   - {fileID: 5197010423648672981}
   - {fileID: 632441495211405336}
-  - {fileID: 4060057615284395905}
-  - {fileID: 1860949756681701638}
   - {fileID: 2432730604764269038}
   - {fileID: 2596823945301952612}
   - {fileID: 2858282676142665752}
@@ -676,6 +655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BugJarTrap
   tablePosition: {fileID: 0}
+  attachParent: {fileID: 6516215121118682666}
   flyTime: 0.5
   animator: {fileID: 4598756182954182906}
   interactableObject: {fileID: 4702319020522500136}

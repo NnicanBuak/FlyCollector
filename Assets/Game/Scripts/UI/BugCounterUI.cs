@@ -1,4 +1,3 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -7,7 +6,8 @@ public class BugCounterUI : MonoBehaviour
     public static BugCounterUI Instance { get; private set; }
 
     [Header("UI")]
-    [SerializeField] private TextMeshProUGUI counterText;
+    // ← УБРАТЬ SerializeField, вместо этого получать автоматически
+    private TextMeshProUGUI counterText;
 
     [Header("Debug")]
     [SerializeField] private bool showDebug;
@@ -15,7 +15,6 @@ public class BugCounterUI : MonoBehaviour
     private bool subscribedToBugCounter;
     private bool subscribedToCaughtRuntime;
     private TargetBugsRuntime currentTargetRuntime;
-    private Coroutine initialRefreshRoutine;
 
     private void Awake()
     {
@@ -25,6 +24,26 @@ public class BugCounterUI : MonoBehaviour
             return;
         }
         Instance = this;
+    
+        // Автоматически получаем TextMeshProUGUI со своего объекта
+        counterText = GetComponent<TextMeshProUGUI>();
+    
+        // Если не нашли на том же объекте, ищем в дочерних
+        if (counterText == null)
+        {
+            counterText = GetComponentInChildren<TextMeshProUGUI>();
+        }
+    
+        // Проверка успешности
+        if (counterText == null)
+        {
+            Debug.LogError($"[BugCounterUI] TextMeshProUGUI component not found on {gameObject.name} or its children!");
+        }
+        else
+        {
+            if (showDebug)
+                Debug.Log($"[BugCounterUI] TextMeshProUGUI found on {counterText.gameObject.name}");
+        }
     }
 
     private void OnEnable()
@@ -43,20 +62,16 @@ public class BugCounterUI : MonoBehaviour
 
         TargetBugsRuntime.InstanceChanged += OnTargetRuntimeInstanceChanged;
         SubscribeTargetRuntime(TargetBugsRuntime.Instance);
+    }
 
+    private void Start()
+    {
+        // NOTE: Start() called after all Awake(), so singletons should be ready
         UpdateCounter();
-
-        initialRefreshRoutine = StartCoroutine(InitialRefresh());
     }
 
     private void OnDisable()
     {
-        if (initialRefreshRoutine != null)
-        {
-            StopCoroutine(initialRefreshRoutine);
-            initialRefreshRoutine = null;
-        }
-
         if (InventoryManager.Instance != null)
         {
             InventoryManager.Instance.InventoryChanged -= OnInventoryChangedCSharp;
@@ -71,34 +86,6 @@ public class BugCounterUI : MonoBehaviour
 
         TargetBugsRuntime.InstanceChanged -= OnTargetRuntimeInstanceChanged;
         UnsubscribeTargetRuntime();
-    }
-
-    private IEnumerator InitialRefresh()
-    {
-        const float timeout = 2f;
-        float elapsed = 0f;
-
-        while (elapsed < timeout)
-        {
-            if (TargetBugsRuntime.Instance != null &&
-                TargetBugsRuntime.Instance.Targets != null &&
-                TargetBugsRuntime.Instance.Targets.Count > 0)
-            {
-                UpdateCounter();
-                yield break;
-            }
-
-            // If target runtime not ready yet, at least show something meaningful from BugCounter.
-            if (TargetBugsRuntime.Instance == null && BugCounter.Instance != null && counterText != null)
-            {
-                counterText.text = BugCounter.Instance.MaxJars.ToString();
-            }
-
-            elapsed += Time.unscaledDeltaTime;
-            yield return null;
-        }
-
-        UpdateCounter();
     }
 
     private void OnBugCounterInstanceChanged(BugCounter counter)
@@ -163,6 +150,17 @@ public class BugCounterUI : MonoBehaviour
             runtime.TargetsChanged += UpdateCounter;
             runtime.BugsToSpawnChanged += UpdateCounter;
             currentTargetRuntime = runtime;
+
+            // NOTE: Check if data already set before subscription (race condition prevention)
+            if (runtime.Targets != null && runtime.Targets.Count > 0)
+            {
+                Debug.Log($"[BugCounterUI] SubscribeTargetRuntime: Targets already set ({runtime.Targets.Count}), calling UpdateCounter");
+                UpdateCounter();
+            }
+            else
+            {
+                Debug.Log($"[BugCounterUI] SubscribeTargetRuntime: Targets not set yet (runtime.Targets={(runtime.Targets == null ? "null" : runtime.Targets.Count.ToString())})");
+            }
         }
     }
 
@@ -197,10 +195,19 @@ public class BugCounterUI : MonoBehaviour
 
     public void UpdateCounter()
     {
+        Debug.Log($"[BugCounterUI] UpdateCounter called");
+
         int targetCount = 0;
         int correctCount = 0;
         int wrongCount = 0;
         bool usedRuntimeStats = false;
+
+        Debug.Log($"[BugCounterUI] TargetBugsRuntime.Instance={(TargetBugsRuntime.Instance != null ? "exists" : "null")}");
+
+        if (TargetBugsRuntime.Instance != null)
+        {
+            Debug.Log($"[BugCounterUI] TargetBugsRuntime.Instance.Targets={(TargetBugsRuntime.Instance.Targets == null ? "null" : TargetBugsRuntime.Instance.Targets.Count.ToString())}");
+        }
 
         if (TargetBugsRuntime.Instance != null &&
             TargetBugsRuntime.Instance.Targets != null &&
@@ -213,6 +220,8 @@ public class BugCounterUI : MonoBehaviour
                 CaughtBugsRuntime.Instance.GetStats(out _, out correctCount, out wrongCount);
                 usedRuntimeStats = true;
             }
+
+            Debug.Log($"[BugCounterUI] Using TargetBugsRuntime: targetCount={targetCount}, correctCount={correctCount}");
         }
 
         if (!usedRuntimeStats)
@@ -222,20 +231,16 @@ public class BugCounterUI : MonoBehaviour
                 targetCount = BugCounter.Instance.MaxJars;
                 correctCount = BugCounter.Instance.MaxJars - BugCounter.Instance.CurrentJars;
 
-                if (showDebug)
-                    Debug.Log($"[BugCounterUI] Fallback mode: using BugCounter (max={targetCount}, current={BugCounter.Instance.CurrentJars})");
-            }
-            else if (showDebug)
-            {
-                Debug.LogWarning("[BugCounterUI] Both TargetBugsRuntime and BugCounter are not available!");
+                Debug.Log($"[BugCounterUI] Fallback mode: using BugCounter (max={targetCount}, current={BugCounter.Instance.CurrentJars})");
             }
         }
 
         int remain = Mathf.Max(0, targetCount - correctCount);
+        Debug.Log($"[BugCounterUI] Setting text to {remain} (counterText={(counterText != null ? "exists" : "null")})");
+
         if (counterText != null) counterText.text = remain.ToString();
 
-        if (showDebug)
-            Debug.Log($"[BugCounterUI] target={targetCount}, correct={correctCount}, wrong={wrongCount} => remain={remain}");
+        Debug.Log($"[BugCounterUI] Final: target={targetCount}, correct={correctCount}, wrong={wrongCount} => remain={remain}");
     }
 
     public void DecrementCounter(int amount = 1)

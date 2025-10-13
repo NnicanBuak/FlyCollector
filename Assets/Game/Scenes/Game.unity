@@ -1633,7 +1633,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 452e01942b481ad47a82369ab145d1c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BugCounterUI
-  counterText: {fileID: 219312262}
   showDebug: 0
 --- !u!1 &219972728
 GameObject:
@@ -2083,6 +2082,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1032250844}
   - {fileID: 1697608512}
   - {fileID: 1131334745}
   m_Father: {fileID: 0}
@@ -2959,6 +2959,80 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331147865}
   m_Mesh: {fileID: 6332235791139400956, guid: be5fc3a693ff14a4ea9aeada83913ad6, type: 3}
+--- !u!1 &331656472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 331656473}
+  - component: {fileID: 331656475}
+  - component: {fileID: 331656474}
+  m_Layer: 0
+  m_Name: BugAccessZone (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &331656473
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331656472}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.79, z: -2.98}
+  m_LocalScale: {x: 12.81, y: 1.2069317, z: 3.99}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1930191123}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &331656474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331656472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76986329cfb347a408c7f584ff88b6c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bug.BugAccessZone
+  requiredFocusLevel: 0
+  zoneName: Bug Zone
+  autoSetupCollider: 1
+  autoRefresh: 1
+  refreshInterval: 1
+  showDebug: 0
+  gizmoColor: {r: 1, g: 0.5, b: 0, a: 0.3}
+  gizmoColorActive: {r: 0, g: 1, b: 0, a: 0.3}
+--- !u!65 &331656475
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331656472}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.139875, y: 1, z: 1}
+  m_Center: {x: -0.06993676, y: 0, z: -0.000000001013702}
 --- !u!1001 &341278163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3684,6 +3758,80 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1484838505911630161, guid: 13aed3045092cc6489473e3ba1bd368e, type: 3}
   m_PrefabInstance: {fileID: 1007632792}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &451489577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 451489578}
+  - component: {fileID: 451489579}
+  - component: {fileID: 451489580}
+  m_Layer: 0
+  m_Name: BugAccessZone (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &451489578
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451489577}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.29, y: 2.54, z: 2.87}
+  m_LocalScale: {x: 2, y: 3, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1930191123}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &451489579
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451489577}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.139875, y: 1, z: 1}
+  m_Center: {x: -0.06993676, y: 0, z: -0.000000001013702}
+--- !u!114 &451489580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451489577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76986329cfb347a408c7f584ff88b6c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bug.BugAccessZone
+  requiredFocusLevel: 2
+  zoneName: Bug Zone
+  autoSetupCollider: 1
+  autoRefresh: 1
+  refreshInterval: 1
+  showDebug: 0
+  gizmoColor: {r: 1, g: 0.5, b: 0, a: 0.3}
+  gizmoColorActive: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!1 &467107736
 GameObject:
   m_ObjectHideFlags: 0
@@ -4320,6 +4468,80 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0.11800001}
   m_TimeToStationary: 0.5
+--- !u!1 &520738844
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 520738845}
+  - component: {fileID: 520738846}
+  - component: {fileID: 520738847}
+  m_Layer: 0
+  m_Name: BugAccessZone (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &520738845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520738844}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 4.22, y: 2.25, z: 15.53}
+  m_LocalScale: {x: 2, y: 3, z: 3.99}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1930191123}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &520738846
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520738844}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.139875, y: 1, z: 1}
+  m_Center: {x: -0.06993676, y: 0, z: -0.000000001013702}
+--- !u!114 &520738847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520738844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76986329cfb347a408c7f584ff88b6c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bug.BugAccessZone
+  requiredFocusLevel: 2
+  zoneName: Bug Zone
+  autoSetupCollider: 1
+  autoRefresh: 1
+  refreshInterval: 1
+  showDebug: 0
+  gizmoColor: {r: 1, g: 0.5, b: 0, a: 0.3}
+  gizmoColorActive: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!1 &520762850
 GameObject:
   m_ObjectHideFlags: 0
@@ -4578,135 +4800,6 @@ MonoBehaviour:
   stateName: 
   minWait: 0
   maxWait: 0
---- !u!1 &541106279
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 541106281}
-  - component: {fileID: 541106280}
-  m_Layer: 0
-  m_Name: Audio Source
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &541106280
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 541106279}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 5df3aa8c7c55245498c120314739a1a6, type: 3}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &541106281
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 541106279}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1035871605}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &542597741
 GameObject:
   m_ObjectHideFlags: 0
@@ -9312,7 +9405,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1011322782}
   - component: {fileID: 1011322784}
-  - component: {fileID: 1011322783}
+  - component: {fileID: 1011322785}
   m_Layer: 0
   m_Name: BugAccessZone (2)
   m_TagString: Untagged
@@ -9335,26 +9428,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1930191123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1011322783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1011322781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76986329cfb347a408c7f584ff88b6c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bug.BugAccessZone
-  requiredFocusLevel: 1
-  zoneName: Bug Zone
-  autoSetupCollider: 1
-  autoRefresh: 1
-  refreshInterval: 1
-  showDebug: 0
-  gizmoColor: {r: 1, g: 0.5, b: 0, a: 0.3}
-  gizmoColorActive: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!65 &1011322784
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9376,6 +9449,26 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.139875, y: 1, z: 1}
   m_Center: {x: -0.06993676, y: 0, z: -0.000000001013702}
+--- !u!114 &1011322785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011322781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76986329cfb347a408c7f584ff88b6c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bug.BugAccessZone
+  requiredFocusLevel: 1
+  zoneName: Bug Zone
+  autoSetupCollider: 1
+  autoRefresh: 1
+  refreshInterval: 1
+  showDebug: 0
+  gizmoColor: {r: 1, g: 0.5, b: 0, a: 0.3}
+  gizmoColorActive: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!1 &1024036716
 GameObject:
   m_ObjectHideFlags: 0
@@ -9530,6 +9623,56 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 279b1ea2ff4f4274dbc26a17880d5db0, type: 3}
+--- !u!1 &1032250843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1032250844}
+  - component: {fileID: 1032250845}
+  m_Layer: 0
+  m_Name: LightPulseController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1032250844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032250843}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.5232754, y: 0.34203392, z: -0.72694224, w: 0.28416654}
+  m_LocalPosition: {x: -5.967062, y: 9.364551, z: 9.834888}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 243133672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1032250845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032250843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d14563e16f8943e3a17e59ccde707d04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightPulseController
+  mainLight: {fileID: 243133674}
+  glitchAudio: {fileID: 1697608511}
+  cooldownTimer: {fileID: 1242741899}
+  OnTick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1032289702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9617,7 +9760,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 541106281}
+  - {fileID: 1546121124}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1035871606
@@ -9638,47 +9781,11 @@ MonoBehaviour:
   startOnFirstInteraction: 0
   onMinutePassed:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 243133675}
-        m_TargetAssemblyTypeName: LightController, Assembly-CSharp
-        m_MethodName: TurnOff
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1697608511}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1242741899}
-        m_TargetAssemblyTypeName: CooldownTimer, Assembly-CSharp
-        m_MethodName: ResetTimer
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   onTimerStart:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 541106280}
+      - m_Target: {fileID: 1546121125}
         m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
         m_MethodName: Play
         m_Mode: 1
@@ -12803,6 +12910,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1286102753}
+  - component: {fileID: 1286102754}
   - component: {fileID: 1286102752}
   m_Layer: 0
   m_Name: Music
@@ -12822,11 +12930,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 3aaa1d20a4d417c40a447e95f0a402e5, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -12917,12 +13025,34 @@ Transform:
   m_GameObject: {fileID: 1286102751}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13052616, y: 0.00011307688, z: 0.000044586555, w: -0.9914449}
-  m_LocalPosition: {x: 95.77339, y: -2.996414, z: 14.593138}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1519289331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1286102754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286102751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d24204913784ac38f34e5d8148b7b76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioClipList
+  items:
+  - clip: {fileID: 8300000, guid: def2b38afb6e7f5459089115bcccc5f2, type: 3}
+    volume: 0.8
+    durationSeconds: 150
+  - clip: {fileID: 8300000, guid: 9e7a01467c0825b479c4d30d37d9af4a, type: 3}
+    volume: 1
+    durationSeconds: 150
+  loop: 0
+  playOnStart: 1
+  lookAhead: 0.2
 --- !u!1 &1293726833
 GameObject:
   m_ObjectHideFlags: 0
@@ -13317,6 +13447,80 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1345034587
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1345034588}
+  - component: {fileID: 1345034589}
+  - component: {fileID: 1345034590}
+  m_Layer: 0
+  m_Name: BugAccessZone (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1345034588
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345034587}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.22, y: 2.52, z: 3.82}
+  m_LocalScale: {x: 2, y: 3, z: 5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1930191123}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1345034589
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345034587}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.139875, y: 1, z: 1}
+  m_Center: {x: -0.06993676, y: 0, z: -0.000000001013702}
+--- !u!114 &1345034590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345034587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76986329cfb347a408c7f584ff88b6c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bug.BugAccessZone
+  requiredFocusLevel: 2
+  zoneName: Bug Zone
+  autoSetupCollider: 1
+  autoRefresh: 1
+  refreshInterval: 1
+  showDebug: 0
+  gizmoColor: {r: 1, g: 0.5, b: 0, a: 0.3}
+  gizmoColorActive: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!4 &1358150504 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5644129556544054270, guid: 279b1ea2ff4f4274dbc26a17880d5db0, type: 3}
@@ -15202,7 +15406,7 @@ MonoBehaviour:
   hoverUnavailableColor: {r: 1, g: 0, b: 0, a: 1}
   disableOutlineOnExit: 1
   audioSource: {fileID: 1755173570}
-  audioVolume: 1
+  audioVolume: 0.4
   hoverAvailableClip: {fileID: 0}
   hoverUnavailableClip: {fileID: 0}
   interactSuccessClip: {fileID: 8300000, guid: 02a53c0e84d13cb4a8e410432741df1e, type: 3}
@@ -15403,7 +15607,6 @@ Transform:
   - {fileID: 359004303}
   - {fileID: 1882461795}
   - {fileID: 9078251236985010684}
-  - {fileID: 1793422515}
   m_Father: {fileID: 949277271}
   m_LocalEulerAnglesHint: {x: 0, y: 56.964, z: 0}
 --- !u!95 &1492216868
@@ -15797,8 +16000,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1793422515}
   - {fileID: 1286102753}
-  - {fileID: 1546121124}
   - {fileID: 1104266969}
   - {fileID: 1879941013}
   m_Father: {fileID: 0}
@@ -15825,8 +16028,7 @@ MonoBehaviour:
   focusRotationSpeed: 2
   bugJarCatchController: {fileID: 619052902}
   collectModeCameraPose: {fileID: 1948066453}
-  collectBugOffset: {x: 0, y: 1.3, z: 0}
-  collectSealedBugOffset: {x: 0, y: 0.5, z: 0}
+  collectBugOffset: {x: 0, y: 0.1, z: 0.15}
   enableMouseFollow: 1
   mouseFollowAmount: 3
   mouseFollowSpeed: 3
@@ -15873,12 +16075,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546121123}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13052616, y: 0.00011307688, z: 0.000044586555, w: -0.9914449}
-  m_LocalPosition: {x: -0.30244353, y: -4.41426, z: 9.257885}
+  m_LocalRotation: {x: 0.022881625, y: -1.3096722e-10, z: -2.3646859e-11, w: 0.99973816}
+  m_LocalPosition: {x: -0.36, y: 0.70011425, z: -1.0828705}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1519289331}
+  m_Father: {fileID: 1035871605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1546121125
 AudioSource:
@@ -15893,7 +16095,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 5df3aa8c7c55245498c120314739a1a6, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -18776,7 +18978,7 @@ GameObject:
   - component: {fileID: 1793422515}
   - component: {fileID: 1793422516}
   m_Layer: 0
-  m_Name: Audio Source
+  m_Name: Otvertka Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18790,12 +18992,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793422514}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.13461599, y: -0.471154, z: 0.07308895, w: -0.8686487}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1492216867}
+  m_Father: {fileID: 1519289331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1793422516
 AudioSource:
@@ -18894,6 +19096,80 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1794995002
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1794995003}
+  - component: {fileID: 1794995004}
+  - component: {fileID: 1794995005}
+  m_Layer: 0
+  m_Name: BugAccessZone (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1794995003
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794995002}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0.52702993, z: 0, w: 0.8498467}
+  m_LocalPosition: {x: 8.53, y: 3.27, z: 15.4}
+  m_LocalScale: {x: 2, y: 3, z: 3.99}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1930191123}
+  m_LocalEulerAnglesHint: {x: 0, y: -63.61, z: 0}
+--- !u!65 &1794995004
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794995002}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.139875, y: 1, z: 1}
+  m_Center: {x: -0.06993676, y: 0, z: -0.000000001013702}
+--- !u!114 &1794995005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794995002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76986329cfb347a408c7f584ff88b6c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bug.BugAccessZone
+  requiredFocusLevel: 2
+  zoneName: Bug Zone
+  autoSetupCollider: 1
+  autoRefresh: 1
+  refreshInterval: 1
+  showDebug: 0
+  gizmoColor: {r: 1, g: 0.5, b: 0, a: 0.3}
+  gizmoColorActive: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!4 &1799122769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5644129556544054270, guid: 279b1ea2ff4f4274dbc26a17880d5db0, type: 3}
@@ -19978,6 +20254,11 @@ Transform:
   - {fileID: 240216479}
   - {fileID: 187651958}
   - {fileID: 1011322782}
+  - {fileID: 1345034588}
+  - {fileID: 1794995003}
+  - {fileID: 520738845}
+  - {fileID: 451489578}
+  - {fileID: 331656473}
   - {fileID: 1114630037}
   - {fileID: 1880388372}
   - {fileID: 1408130148}
@@ -22062,7 +22343,6 @@ GameObject:
   - component: {fileID: 8762457104204537096}
   - component: {fileID: 8762457104204537095}
   - component: {fileID: 8762457104204537097}
-  - component: {fileID: 8762457104204537098}
   m_Layer: 0
   m_Name: Terraruim23
   m_TagString: Untagged
@@ -22449,7 +22729,6 @@ GameObject:
   - component: {fileID: 8677534774102186012}
   - component: {fileID: 8677534774102186011}
   - component: {fileID: 8677534774102186013}
-  - component: {fileID: 8677534774102186014}
   m_Layer: 0
   m_Name: Terraruim21
   m_TagString: Untagged
@@ -23247,7 +23526,6 @@ GameObject:
   - component: {fileID: 8186628128386029942}
   - component: {fileID: 8186628128386029941}
   - component: {fileID: 8186628128386029943}
-  - component: {fileID: 8186628128386029944}
   m_Layer: 0
   m_Name: Terraruim25
   m_TagString: Untagged
@@ -24166,26 +24444,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.1154697, y: 5.78791, z: 6.4904075}
   m_Center: {x: 3.2323028e-10, y: 1.4640367, z: 2.1874688}
---- !u!114 &8186628128386029944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5372606805258690454}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76986329cfb347a408c7f584ff88b6c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bug.BugAccessZone
-  requiredFocusLevel: 2
-  zoneName: Bug Zone
-  autoSetupCollider: 1
-  autoRefresh: 1
-  refreshInterval: 1
-  showDebug: 0
-  gizmoColor: {r: 1, g: 0.5, b: 0, a: 0.3}
-  gizmoColorActive: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!1 &8266059220002587010
 GameObject:
   m_ObjectHideFlags: 0
@@ -24479,26 +24737,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.1154697, y: 2.11547, z: 5.9708776}
   m_Center: {x: -0.000001927729, y: -0.0000037884527, z: 1.9277035}
---- !u!114 &8677534774102186014
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2405895309796300246}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76986329cfb347a408c7f584ff88b6c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bug.BugAccessZone
-  requiredFocusLevel: 2
-  zoneName: Bug Zone
-  autoSetupCollider: 1
-  autoRefresh: 1
-  refreshInterval: 1
-  showDebug: 0
-  gizmoColor: {r: 1, g: 0.5, b: 0, a: 0.3}
-  gizmoColorActive: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!1 &8688719384412428169
 GameObject:
   m_ObjectHideFlags: 0
@@ -24513,7 +24751,6 @@ GameObject:
   - component: {fileID: 8846955001141012343}
   - component: {fileID: 8846955001141012342}
   - component: {fileID: 8846955001141012344}
-  - component: {fileID: 8846955001141012345}
   m_Layer: 0
   m_Name: Terraruim22
   m_TagString: Untagged
@@ -24653,26 +24890,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.1154716, y: 2.1154711, z: 5.0257707}
   m_Center: {x: -9.751311e-15, y: 2.4861501e-15, z: 1.4551476}
---- !u!114 &8762457104204537098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436499498072212238}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76986329cfb347a408c7f584ff88b6c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bug.BugAccessZone
-  requiredFocusLevel: 2
-  zoneName: Bug Zone
-  autoSetupCollider: 1
-  autoRefresh: 1
-  refreshInterval: 1
-  showDebug: 0
-  gizmoColor: {r: 1, g: 0.5, b: 0, a: 0.3}
-  gizmoColorActive: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!4 &8773315698347761858
 Transform:
   m_ObjectHideFlags: 0
@@ -24843,26 +25060,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.1154697, y: 7.844172, z: 11.523162}
   m_Center: {x: -1.9793486e-10, y: -0.14509001, z: 0.03439666}
---- !u!114 &8846955001141012345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8688719384412428169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76986329cfb347a408c7f584ff88b6c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Bug.BugAccessZone
-  requiredFocusLevel: 2
-  zoneName: Bug Zone
-  autoSetupCollider: 1
-  autoRefresh: 1
-  refreshInterval: 1
-  showDebug: 0
-  gizmoColor: {r: 1, g: 0.5, b: 0, a: 0.3}
-  gizmoColorActive: {r: 0, g: 1, b: 0, a: 0.3}
 --- !u!4 &8901127544832968973
 Transform:
   m_ObjectHideFlags: 0

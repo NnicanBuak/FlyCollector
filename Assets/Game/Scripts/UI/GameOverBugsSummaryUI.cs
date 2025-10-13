@@ -60,22 +60,28 @@ public class GameOverBugsSummaryUI : MonoBehaviour
 
     public void RefreshFromPersistent()
     {
-        int totalCaught = 0;
-        int wrong = 0;
-        int target = 0;
+        var summary = BugSummaryUtil.Build(preferInventory: true);
+        int target = summary.Targets?.Count ?? 0;
+        int totalCaught = summary.TotalCaught;
+        int wrong = summary.Wrong;
+        int correct = summary.Correct;
+        int missing = summary.Missing;
 
-        var gsm = GameSceneManager.Instance;
-        if (gsm != null)
+        // Fallback to persistent data only if runtime sources had nothing.
+        if (!summary.HasData)
         {
-            totalCaught = gsm.GetPersistentData<int>(totalCaughtKey, 0);
-            wrong = gsm.GetPersistentData<int>(wrongCountKey, 0);
+            var gsm = GameSceneManager.Instance;
+            if (gsm != null)
+            {
+                totalCaught = gsm.GetPersistentData<int>(totalCaughtKey, 0);
+                wrong = gsm.GetPersistentData<int>(wrongCountKey, 0);
+                if (TargetBugsRuntime.Instance != null && TargetBugsRuntime.Instance.Targets != null)
+                    target = TargetBugsRuntime.Instance.Targets.Count;
+
+                correct = Mathf.Clamp(totalCaught - wrong, 0, target > 0 ? target : int.MaxValue);
+                missing = Mathf.Max(0, target - correct);
+            }
         }
-
-        if (TargetBugsRuntime.Instance != null && TargetBugsRuntime.Instance.Targets != null)
-            target = TargetBugsRuntime.Instance.Targets.Count;
-
-        int correct = Mathf.Clamp(totalCaught - wrong, 0, target > 0 ? target : int.MaxValue);
-        int missing = Mathf.Max(0, target - correct);
 
         bool hasInfo = target > 0 || totalCaught > 0 || wrong > 0;
         if (!hasInfo && Debug.isDebugBuild)
@@ -87,8 +93,13 @@ public class GameOverBugsSummaryUI : MonoBehaviour
         }
 
         if (logInfo)
-            Debug.Log($"[GameOverBugsSummaryUI] target={target}, totalCaught={totalCaught}, wrong={wrong}, correct={correct}, missing={missing}");
-
+        {
+            string source = summary.HasData
+                ? (summary.UsedInventory ? "Inventory" : "CaughtBugsRuntime")
+                : "PersistentFallback";
+            Debug.Log($"[GameOverBugsSummaryUI] source={source}, target={target}, totalCaught={totalCaught}, wrong={wrong}, correct={correct}, missing={missing}");
+        }
+        
         Apply(correct, wrong, missing);
     }
 

@@ -32,10 +32,6 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 collectBugOffset = new Vector3(0f, 0.1f, 0.15f);
     public Vector3 CollectBugOffset => collectBugOffset;
 
-    [Tooltip("Local offset for bug position inside jar when sealing")]
-    [SerializeField] private Vector3 collectSealedBugOffset = new Vector3(0f, 0.05f, 0f);
-    public Vector3 CollectSealedBugOffset => collectSealedBugOffset;
-
     [Header("Mouse Follow")]
     [Tooltip("Enable camera rotation following mouse cursor")]
     public bool enableMouseFollow = true;
@@ -126,19 +122,6 @@ public class CameraController : MonoBehaviour
         pushSystem.Mode = pushMode;
         pushSystem.Button = pushButton;
         pushSystem.SetCooldown(pushCooldown);
-        
-        inspectManager.OnInspectEnded += () =>
-        {
-            InspectEnded?.Invoke();
-            // Return to Home only after bug inspection sessions
-            if (inspectManager != null && inspectManager.LastWasBug)
-            {
-                ReturnHome(returnHomeTime);
-            }
-        };
-
-        if (showDebugInfo)
-            Debug.Log($"[CameraController] Initialized OK. MaxDist: {maxDistance}");
     }
 
     void Start()
@@ -269,6 +252,13 @@ public class CameraController : MonoBehaviour
                 }
                 else if (inspectable != null && holdPoint != null)
                 {
+                    var go  = ((MonoBehaviour)inspectable).gameObject;
+                    var ins = go.GetComponent<InspectableObject>();
+                    if (ins != null && !ins.CanInspect())
+                    {
+                        return; // клик обработан, но без входа
+                    }
+                    
                     StartInspect(((MonoBehaviour)inspectable).gameObject);
                     handled = true;
                 }
@@ -377,6 +367,12 @@ public class CameraController : MonoBehaviour
 
     public void ReturnHome(float duration)
     {
+        if (isReturningHome)
+            return;
+        
+        isReturningHome = true;
+        cameraMoveTween?.Kill();
+        
         if (!homeSet || cam == null)
         {
             if (showDebugInfo)
@@ -400,6 +396,33 @@ public class CameraController : MonoBehaviour
            });
         if (!cam.orthographic)
             seq.Join(cam.DOFieldOfView(homeFov, t).SetEase(Ease.InOutSine));
+
+        cameraMoveTween = seq;
+    }
+    
+    public void ReturnHomeFromCurrent(float duration)
+    {
+        if (!homeSet || cam == null) return;
+        if (isReturningHome) return;
+        isReturningHome = true;
+
+        cameraMoveTween?.Kill();
+        // focusManager?.ClearPendingReturnUpdate?.Invoke();
+
+        var t = cam.transform;
+        var seq = DOTween.Sequence();
+        seq.Join(t.DOMove(homePos, duration).SetEase(Ease.InOutSine))
+            .Join(t.DORotateQuaternion(homeRot, duration).SetEase(Ease.InOutSine));
+        if (!cam.orthographic)
+            seq.Join(cam.DOFieldOfView(homeFov, duration).SetEase(Ease.InOutSine));
+
+        seq.OnComplete(() =>
+        {
+            isReturningHome = false;
+            t.position = homePos;
+            t.rotation = homeRot;
+            if (!cam.orthographic) cam.fieldOfView = homeFov;
+        });
 
         cameraMoveTween = seq;
     }

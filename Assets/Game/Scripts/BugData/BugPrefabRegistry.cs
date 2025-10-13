@@ -65,14 +65,46 @@ public class BugPrefabRegistry : ScriptableObject
     private static string Normalize(string s)
     {
         if (string.IsNullOrWhiteSpace(s)) return string.Empty;
-        s = s.Trim().ToLowerInvariant();
 
+        s = s.Trim();
+        s = s.Replace("(Clone)", string.Empty, StringComparison.OrdinalIgnoreCase).Trim();
+        s = s.Replace('\\', '/');
 
-        s = s.Replace("(clone)", "").Trim();
+        int slash = s.LastIndexOf('/');
+        if (slash >= 0 && slash < s.Length - 1)
+        {
+            s = s.Substring(slash + 1);
+        }
 
+        if (s.EndsWith(".prefab", StringComparison.OrdinalIgnoreCase))
+        {
+            s = s.Substring(0, s.Length - ".prefab".Length);
+        }
+        else if (s.EndsWith(".asset", StringComparison.OrdinalIgnoreCase))
+        {
+            s = s.Substring(0, s.Length - ".asset".Length);
+        }
 
-        int dot = s.LastIndexOf('.');
-        if (dot > 0) s = s.Substring(0, dot);
+        string suffix = string.Empty;
+        int underscore = s.IndexOf('_');
+        if (underscore >= 0)
+        {
+            suffix = s.Substring(underscore);
+            s = s.Substring(0, underscore);
+        }
+
+        string canonical = BugKeyUtil.CanonicalizeKey(s);
+        if (!string.IsNullOrEmpty(canonical))
+        {
+            s = canonical;
+        }
+
+        s = s.ToLowerInvariant();
+
+        if (!string.IsNullOrEmpty(suffix))
+        {
+            s += suffix.ToLowerInvariant();
+        }
 
         return s;
     }

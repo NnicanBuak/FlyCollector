@@ -24,7 +24,7 @@ public class CaughtBugsRuntime : MonoBehaviour
     public void RegisterCaught(string bugFileName)
     {
         if (string.IsNullOrWhiteSpace(bugFileName)) return;
-        var key = TargetBugsRuntime.NormalizeKey(bugFileName);
+        var key = BugKeyUtil.CanonicalizeKey(bugFileName);
         caught.Add(key);
         OnCaughtChanged?.Invoke();
     }

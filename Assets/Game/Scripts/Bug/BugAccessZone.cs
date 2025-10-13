@@ -183,7 +183,7 @@ namespace Bug
 
         private void UpdateBugAccessibility(BugAI bug)
         {
-            bug.SetAccessible(isAccessible);
+            bug.NotifyZoneAccessibilityChanged();
 
             if (showDebug)
             {

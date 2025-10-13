@@ -63,6 +63,7 @@ namespace BugData
 
         #region Unity Lifecycle
         private Dictionary<string, Entry> _map;
+        private Dictionary<Item, string> _itemToKey;
 
         void OnEnable()
         {
@@ -73,6 +74,7 @@ namespace BugData
         private void RebuildMap()
         {
             _map = new Dictionary<string, Entry>(StringComparer.OrdinalIgnoreCase);
+            _itemToKey = new Dictionary<Item, string>();
             foreach (var e in entries)
             {
                 if (e == null || string.IsNullOrWhiteSpace(e.key)) continue;
@@ -90,6 +92,15 @@ namespace BugData
                     {
                         _map[normalizedPrefabKey] = e;
                     }
+                }
+
+                if (e.item != null)
+                {
+                    string canonical = BugKeyUtil.CanonicalizeKey(e.key);
+                    if (string.IsNullOrEmpty(canonical))
+                        canonical = TargetBugsRuntime.NormalizeKey(e.key);
+                    if (!string.IsNullOrEmpty(canonical))
+                        _itemToKey[e.item] = canonical;
                 }
             }
         }
@@ -139,6 +150,19 @@ namespace BugData
             return _map.TryGetValue(Normalize(rawKey), out entry);
         }
 
+        public bool TryGetKey(Item item, out string key)
+        {
+            key = string.Empty;
+            EnsureInitialized();
+            if (item == null || _itemToKey == null) return false;
+            if (_itemToKey.TryGetValue(item, out var stored) && !string.IsNullOrEmpty(stored))
+            {
+                key = stored;
+                return true;
+            }
+            return false;
+        }
+
         public bool TryGetItem(string rawKey, out Item item)
         {
             item = null;
@@ -176,6 +200,23 @@ namespace BugData
                 int dot = s.LastIndexOf('.');
                 if (dot > 0) s = s.Substring(0, dot);
             }
+
+            string suffix = string.Empty;
+            int underscore = s.IndexOf('_');
+            if (underscore >= 0)
+            {
+                suffix = s.Substring(underscore);
+                s = s.Substring(0, underscore);
+            }
+
+            string canonical = BugKeyUtil.CanonicalizeKey(s);
+            if (!string.IsNullOrEmpty(canonical))
+            {
+                s = canonical.ToLowerInvariant();
+            }
+
+            if (!string.IsNullOrEmpty(suffix))
+                s += suffix;
 
             return s;
         }
