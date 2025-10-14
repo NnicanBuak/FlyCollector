@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -81,8 +80,6 @@ namespace Bug
 
         private void Start()
         {
-            anim.runtimeAnimatorController = animatorController;
-            // Если жук уже стоит внутри зон на старте — зарегистрируемся
             CheckForAccessZone();
             RecomputeAndApplyCanInspect();
         }

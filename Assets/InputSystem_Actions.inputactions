@@ -991,6 +991,74 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Editor",
+            "id": "d42f82f7-8ed6-4d70-a4b6-e0083159ce56",
+            "actions": [
+                {
+                    "name": "Victory",
+                    "type": "Button",
+                    "id": "52ea52f5-40f4-4d49-b93f-29e8f2871ece",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MissMatch",
+                    "type": "Button",
+                    "id": "cd70fc8a-8e1e-4093-85de-f8245f661323",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Fail",
+                    "type": "Button",
+                    "id": "0e97773f-f479-4292-bfea-8dd1561eba38",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "fafb8290-a9b0-4cd7-8ad8-0269f19216a3",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Victory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5369eee6-03a6-4fb2-aff2-bf18c2476f21",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MissMatch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f54754c2-4587-4a72-8f8f-989edd85d72a",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fail",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

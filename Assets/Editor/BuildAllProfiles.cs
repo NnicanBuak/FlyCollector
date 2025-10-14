@@ -20,9 +20,9 @@ namespace BuildTools
         // Map profile name to output path (e.g., "Windows Dev" -> "Builds/WindowsDev/MyGame-Dev.exe")
         static readonly Dictionary<string, string> OutputByProfileName = new Dictionary<string, string>
         {
-            {"Windows", "Platforms/Windows/FlyCollector-win/FlyCollector.exe"},
-            {"Web", "Platforms/Web/Build/"},
-            {"Linux", "Platforms/Linux/FlyCollector-linux/FlyCollector.x86_64"}
+            { "Windows", "Platforms/Windows/FlyCollector-win/FlyCollector.exe" },
+            { "Web", "Platforms/Web/Build/" },
+            { "Linux", "Platforms/Linux/FlyCollector-linux/FlyCollector.x86_64" }
         };
 
         // Map profile asset path to output path (more reliable if profile names change)
@@ -64,22 +64,29 @@ namespace BuildTools
 
                 PrepareDirectories(outPath);
 
+                // Activate the profile to initialize toolchain (e.g., for Linux IL2CPP)
+                BuildProfile.SetActiveBuildProfile(profile);
+
+                // Optional: If domain reload interrupts, uncomment and add build logic here
+                // EditorApplication.delayCall += () => { /* e.g., Trigger build after reload */ };
+
                 var options = new BuildPlayerWithProfileOptions
                 {
-                    buildProfile     = profile,
-                    locationPathName = outPath,
-                    options          = BuildOptions.None,
+                    buildProfile = profile,
+                    locationPathName = outPath, // Corrected: Use outPath here
+                    options = BuildOptions.None,
                 };
 
                 var start = DateTime.Now;
                 var report = BuildPipeline.BuildPlayer(options);
-                var took  = DateTime.Now - start;
+                var took = DateTime.Now - start;
 
                 switch (report.summary.result)
                 {
                     case BuildResult.Succeeded:
                         ok++;
-                        results.Add($"✅ {profile.name} → {outPath}  [{took:mm\\:ss}]  size: {(report.summary.totalSize/1048576f):0.0} MB");
+                        results.Add(
+                            $"✅ {profile.name} → {outPath}  [{took:mm\\:ss}]  size: {(report.summary.totalSize / 1048576f):0.0} MB");
                         break;
                     case BuildResult.Cancelled:
                         cancel++;
@@ -87,7 +94,8 @@ namespace BuildTools
                         break;
                     default:
                         fail++;
-                        results.Add($"❌ {profile.name} → {outPath}  [{took:mm\\:ss}]  ERRORS: {report.summary.totalErrors}");
+                        results.Add(
+                            $"❌ {profile.name} → {outPath}  [{took:mm\\:ss}]  ERRORS: {report.summary.totalErrors}");
                         break;
                 }
             }
@@ -189,20 +197,21 @@ namespace BuildTools
 
                 var options = new BuildPlayerWithProfileOptions
                 {
-                    buildProfile     = profile,
+                    buildProfile = profile,
                     locationPathName = versionedPath,
-                    options          = BuildOptions.None,
+                    options = BuildOptions.None,
                 };
 
                 var start = DateTime.Now;
                 var report = BuildPipeline.BuildPlayer(options);
-                var took  = DateTime.Now - start;
+                var took = DateTime.Now - start;
 
                 switch (report.summary.result)
                 {
                     case BuildResult.Succeeded:
                         ok++;
-                        var resultMsg = $"✅ {profile.name} → {versionedPath}  [{took:mm\\:ss}]  size: {(report.summary.totalSize/1048576f):0.0} MB";
+                        var resultMsg =
+                            $"✅ {profile.name} → {versionedPath}  [{took:mm\\:ss}]  size: {(report.summary.totalSize / 1048576f):0.0} MB";
 
                         // Archive successful build
                         var archivePath = CreateZipArchive(versionedPath, profile.name, version);
@@ -219,7 +228,8 @@ namespace BuildTools
 
                     default:
                         fail++;
-                        results.Add($"❌ {profile.name} → {versionedPath}  [{took:mm\\:ss}]  ERRORS: {report.summary.totalErrors}");
+                        results.Add(
+                            $"❌ {profile.name} → {versionedPath}  [{took:mm\\:ss}]  ERRORS: {report.summary.totalErrors}");
                         break;
                 }
             }
@@ -249,7 +259,8 @@ namespace BuildTools
             PlayerSettings.bundleVersion = versionString;
             PlayerSettings.Android.bundleVersionCode = version.ToVersionCode();
 
-            Debug.Log($"Updated PlayerSettings: bundleVersion={versionString}, Android.bundleVersionCode={version.ToVersionCode()}");
+            Debug.Log(
+                $"Updated PlayerSettings: bundleVersion={versionString}, Android.bundleVersionCode={version.ToVersionCode()}");
         }
 
         /// <summary>
@@ -338,7 +349,8 @@ namespace BuildTools
                     File.Delete(archivePath);
 
                 // Create ZIP archive
-                ZipFile.CreateFromDirectory(sourceDir, archivePath, System.IO.Compression.CompressionLevel.Optimal, false);
+                ZipFile.CreateFromDirectory(sourceDir, archivePath, System.IO.Compression.CompressionLevel.Optimal,
+                    false);
 
                 var archiveSize = new FileInfo(archivePath).Length / 1048576f;
                 Debug.Log($"Created archive: {archivePath} ({archiveSize:0.0} MB)");
@@ -404,6 +416,7 @@ namespace BuildTools
             {
                 message += $"• {name} ({size:0.0} MB)\n";
             }
+
             message += "\nOverwrite existing archives?";
 
             return EditorUtility.DisplayDialog(
