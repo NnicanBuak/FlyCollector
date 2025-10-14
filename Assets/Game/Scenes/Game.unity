@@ -3785,7 +3785,7 @@ Transform:
   m_GameObject: {fileID: 451489577}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.29, y: 2.54, z: 2.87}
+  m_LocalPosition: {x: -12.4, y: 2.54, z: 2.87}
   m_LocalScale: {x: 2, y: 3, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5281,6 +5281,117 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 557189469}
   m_Mesh: {fileID: 174699033039458043, guid: be5fc3a693ff14a4ea9aeada83913ad6, type: 3}
+--- !u!1 &559502392
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 559502393}
+  - component: {fileID: 559502396}
+  - component: {fileID: 559502395}
+  - component: {fileID: 559502394}
+  m_Layer: 3
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &559502393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559502392}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1890282163}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &559502394
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559502392}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &559502395
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559502392}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &559502396
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 559502392}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &572351693
 GameObject:
   m_ObjectHideFlags: 0
@@ -6513,7 +6624,7 @@ Transform:
   m_GameObject: {fileID: 716572440}
   serializedVersion: 2
   m_LocalRotation: {x: -0.6304622, y: 0.32018337, z: 0.32018334, w: 0.63046235}
-  m_LocalPosition: {x: 12.40626, y: 6.1376886, z: 13}
+  m_LocalPosition: {x: 12.40626, y: 6.1376886, z: 14.408507}
   m_LocalScale: {x: 0.46554372, y: 0.46554372, z: 0.46554375}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6585,7 +6696,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1, y: 1, z: 1.3840001}
+  m_Extents: {x: 2.89, y: 1, z: 1.3840001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -6759,7 +6870,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BugSpawner
   randomOffset: 4
-  maxSpawnCount: 2
+  maxSpawnCount: 5
   constrainToNavMesh: 1
   sampleMaxDistance: 2
   maxSampleTries: 10
@@ -7470,7 +7581,7 @@ Transform:
   m_GameObject: {fileID: 809769435}
   serializedVersion: 2
   m_LocalRotation: {x: -0.70710677, y: 0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 11.386594, y: 6.1376886, z: 13.683493}
+  m_LocalPosition: {x: 11.386594, y: 6.1376886, z: 15.092}
   m_LocalScale: {x: 0.46554375, y: 0.46554375, z: 0.46554375}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7542,7 +7653,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 1, y: 1, z: 1.3840001}
+  m_Extents: {x: 2, y: 1, z: 1.3840001}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -9670,6 +9781,25 @@ MonoBehaviour:
   mainLight: {fileID: 243133674}
   glitchAudio: {fileID: 1697608511}
   cooldownTimer: {fileID: 1242741899}
+  humAudio: {fileID: 1131334746}
+  humFadeOutDuration: 0.25
+  stopHumImmediately: 0
+  lightController: {fileID: 243133675}
+  useFlickerOnExternalOff: 1
+  flickerChaosDuration: 0.3
+  chaosMinInterval: 0.03
+  chaosMaxInterval: 0.12
+  chaosMinIntensity: 0.15
+  chaosMaxIntensity: 1
+  finalJerksCount: 3
+  jerkMinDuration: 0.05
+  jerkMaxDuration: 0.14
+  jerkMinGap: 0.04
+  jerkMaxGap: 0.12
+  jerkFlashIntensityMul: 1.2
+  jerkDipIntensity: 0.05
+  stutterHumOnFlicker: 1
+  humChaosDip: 0.35
   OnTick:
     m_PersistentCalls:
       m_Calls: []
@@ -12695,8 +12825,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c1ddedadfad51643b89ce0fdabc5ec1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CooldownTimer
-  duration: 10
-  startOnAwake: 1
+  duration: 2
+  startOnAwake: 0
   loop: 0
   OnTimerStart:
     m_PersistentCalls:
@@ -12910,8 +13040,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1286102753}
+  - component: {fileID: 1286102756}
   - component: {fileID: 1286102754}
   - component: {fileID: 1286102752}
+  - component: {fileID: 1286102755}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -13045,14 +13177,128 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AudioClipList
   items:
   - clip: {fileID: 8300000, guid: def2b38afb6e7f5459089115bcccc5f2, type: 3}
-    volume: 0.8
+    volume: 0.7
     durationSeconds: 150
   - clip: {fileID: 8300000, guid: 9e7a01467c0825b479c4d30d37d9af4a, type: 3}
     volume: 1
-    durationSeconds: 150
+    durationSeconds: 0
   loop: 0
   playOnStart: 1
   lookAhead: 0.2
+--- !u!82 &1286102755
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286102751}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1286102756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286102751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a64d37f9f304e9e921fdd6ea99e7d87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Audio.MusicOnTimer
+  timer: {fileID: 1035871606}
+  clipList: {fileID: 1286102754}
+  preLoopSource: {fileID: 1286102755}
+  preLoopClip: {fileID: 8300000, guid: def2b38afb6e7f5459089115bcccc5f2, type: 3}
+  playPreLoopOnStart: 1
 --- !u!1 &1293726833
 GameObject:
   m_ObjectHideFlags: 0
@@ -15282,6 +15528,7 @@ Transform:
   - {fileID: 442035223}
   - {fileID: 1755173569}
   - {fileID: 2007189225}
+  - {fileID: 1680886326}
   - {fileID: 899512202}
   m_Father: {fileID: 949277271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15360,8 +15607,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.9290152, y: 6, z: 6}
-  m_Center: {x: -0.46450758, y: -0.00000035762787, z: 0}
+  m_Size: {x: 2.9290156, y: 22.86021, z: 21.500168}
+  m_Center: {x: -0.4645076, y: 8.43011, z: 4.3056927}
 --- !u!114 &1477185077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15400,7 +15647,8 @@ MonoBehaviour:
   - {fileID: 899512203}
   actions:
   - {fileID: 2007189226}
-  failureActions: []
+  failureActions:
+  - {fileID: 1680886327}
   useOutline: 1
   hoverAvailableColor: {r: 1, g: 1, b: 1, a: 1}
   hoverUnavailableColor: {r: 1, g: 0, b: 0, a: 1}
@@ -17230,13 +17478,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1608501357}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 25.5, y: -25.8, z: 6.72}
+  m_LocalRotation: {x: -0.00000017881393, y: 0.776387, z: 0.63025653, w: -0.00000023841858}
+  m_LocalPosition: {x: 25.499998, y: -25.8, z: 7.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1890282163}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: -101.862, y: 0, z: 180}
 --- !u!1 &1619498235
 GameObject:
   m_ObjectHideFlags: 0
@@ -17887,6 +18135,57 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1680886325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1680886326}
+  - component: {fileID: 1680886327}
+  m_Layer: 0
+  m_Name: TryToggleLightAction
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1680886326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680886325}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: -271.9735, y: 12.351611, z: -23.44936}
+  m_LocalScale: {x: 20.003778, y: 2.389587, z: 2.389587}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1477185073}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1680886327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680886325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef31fb9a89d94ffbb3fe4874f1527064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InteractionActions.TryToggleLightAction
+  chance: 0.25
+  OnSuccess:
+    m_PersistentCalls:
+      m_Calls: []
+  OnFail:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1697608510
 GameObject:
   m_ObjectHideFlags: 0
@@ -19853,6 +20152,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1608501358}
+  - {fileID: 559502393}
   m_Father: {fileID: 949277271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1890282164

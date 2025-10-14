@@ -28,6 +28,7 @@ Material:
   - _COLORADDSUBDIFF_ON
   - _DISTORTION_ON
   - _EMISSION
+  - _FADING_ON
   - _RECEIVE_SHADOWS_OFF
   - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords:
@@ -51,10 +52,11 @@ Material:
     m_Floats:
     - _Blend: 2
     - _BlendModePreserveSpecular: 0
-    - _CameraFarFadeDistance: 8
-    - _CameraNearFadeDistance: 2
+    - _CameraFadingEnabled: 1
+    - _CameraFarFadeDistance: 100
+    - _CameraNearFadeDistance: 200
     - _Cull: 0
-    - _DistortionBlend: 0.1
+    - _DistortionBlend: 0.5
     - _DistortionEnabled: 1
     - _DstBlend: 1
     - _DstBlendAlpha: 1
@@ -68,6 +70,7 @@ Material:
     - _SrcBlend: 5
     m_Colors:
     - _BaseColor: {r: 0.37735847, g: 0.37735847, b: 0.37735847, a: 1}
+    - _CameraFadeParams: {r: 200, g: -0.01, b: 0, a: 0}
     - _Color: {r: 0.37735844, g: 0.37735844, b: 0.37735844, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
