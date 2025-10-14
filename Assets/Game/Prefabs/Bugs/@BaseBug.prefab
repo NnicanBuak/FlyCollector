@@ -105,7 +105,7 @@ Animator:
   m_GameObject: {fileID: 485363155668843469}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f0bd5f888b0cbbf4280db4d9b76e2a7b, type: 2}
+  m_Controller: {fileID: 9100000, guid: d9456daa6b55a4c42b9593a2ad04d054, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -229,6 +229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject
   wanderRadius: 10
   repathInterval: 1.5
+  animatorController: {fileID: 0}
   reattachRadius: 4
   alwaysAccessible: 0
   anim: {fileID: 2566393497383497847}

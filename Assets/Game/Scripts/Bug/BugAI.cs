@@ -5,10 +5,11 @@ using UnityEngine.AI;
 
 namespace Bug
 {
-    [RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
+    [RequireComponent(typeof(NavMeshAgent))]
     public class BugAI : MonoBehaviour
     {
         #region Serialized Fields
+
         [Header("Параметры перемещения")]
         [Tooltip("Радиус блуждания вокруг текущей позиции")]
         public float wanderRadius = 10f;
@@ -24,7 +25,7 @@ namespace Bug
         [Header("Access Control")]
         [Tooltip("Can this bug be inspected regardless of zone restrictions?")]
         [SerializeField] private bool alwaysAccessible = false;
-        
+
         [Header("Анимация")]
         [SerializeField] private Animator anim;
         [SerializeField] private string speedParam = "Speed";
@@ -33,15 +34,20 @@ namespace Bug
         private float movingThreshold = 0.05f;
         [SerializeField, Tooltip("Сглаживание Speed для Animator.SetFloat")]
         private float speedDamp = 0.1f;
-        
-        public Animator Anim { get => anim; set => anim = value; }
-        
+
+        public Animator Anim
+        {
+            get => anim;
+            set => anim = value;
+        }
+
         private Vector3 _lastPos;
         private float _lastSpeed;
 
         #endregion
 
         #region State
+
         private NavMeshAgent agent;
 
         private float nextRepathTime;
@@ -52,16 +58,18 @@ namespace Bug
         // --- ЗОНЫ И ДОСТУП ---
         private readonly HashSet<BugAccessZone> zones = new HashSet<BugAccessZone>();
         private InspectableObject inspectable; // целевой флаг canInspect будет управляться отсюда
+
         #endregion
 
         #region Unity Lifecycle
+
         private void Awake()
         {
             if (anim == null) anim = GetComponent<Animator>();
             if (agent == null) agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
             _lastPos = transform.position;
             agent = GetComponent<NavMeshAgent>();
-            anim  = GetComponent<Animator>();//dsodjisjdi
+            anim = GetComponent<Animator>(); //dsodjisjdi
             spawnTime = Time.time;
 
             inspectable = GetComponent<InspectableObject>();
@@ -98,13 +106,15 @@ namespace Bug
                 PickNewRandomPoint();
             }
 
-            
+
             float speed = ComputeCurrentSpeed();
             UpdateAnimator(speed);
         }
+
         #endregion
 
         #region Gameplay API
+
         public string GetBugType()
         {
             string n = gameObject.name;
@@ -149,7 +159,7 @@ namespace Bug
             if (disable) OnInspectStart();
             else OnInspectEnd();
         }
-        
+
         private float ComputeCurrentSpeed()
         {
             float speed = 0f;
@@ -183,7 +193,6 @@ namespace Bug
             return _lastSpeed;
         }
 
-        
         private void UpdateAnimator(float velocityMagnitude)
         {
             if (!anim) return;
@@ -198,7 +207,6 @@ namespace Bug
                       $"agentVel={(agent ? agent.velocity.magnitude : 0f):F3}  " +
                       $"desiredVel={(agent ? agent.desiredVelocity.magnitude : 0f):F3}");
         }
-
 
         public void OnInspectStart()
         {
@@ -227,11 +235,13 @@ namespace Bug
             }
 
             manuallyDisabled = false;
-            nextRepathTime   = Time.time + 0.1f;
+            nextRepathTime = Time.time + 0.1f;
         }
+
         #endregion
 
         #region Movement
+
         private void PickNewRandomPoint()
         {
             if (!AgentReady()) return;
@@ -281,15 +291,18 @@ namespace Bug
 
         private void AttachToNavMeshIfNeeded()
         {
-            if (NavMesh.SamplePosition(transform.position, out var hit, Mathf.Max(0.25f, reattachRadius), NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(transform.position, out var hit, Mathf.Max(0.25f, reattachRadius),
+                    NavMesh.AllAreas))
             {
                 if (!agent.enabled) agent.enabled = true;
                 agent.Warp(hit.position);
             }
         }
+
         #endregion
 
         #region Zones → CanInspect
+
         private void RecomputeAndApplyCanInspect()
         {
             // 1) агрегируем доступ по всем зонам (AND)
@@ -330,6 +343,7 @@ namespace Bug
                 }
             }
         }
+
         #endregion
     }
 }

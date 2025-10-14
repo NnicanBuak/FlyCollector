@@ -96,7 +96,7 @@ public sealed class GAManager : MonoBehaviour
 
         string outcomeStr = outcome.ToString();
         GameAnalytics.NewProgressionEvent(
-            outcome == GameOutcome.Victory ? GAProgressionStatus.Complete : GAProgressionStatus.Fail,
+            outcome == GameOutcome.Escaped ? GAProgressionStatus.Complete : GAProgressionStatus.Fail,
             "gameplay",
             "game_over",
             outcomeStr

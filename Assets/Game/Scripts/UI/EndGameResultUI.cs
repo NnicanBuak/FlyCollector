@@ -24,14 +24,14 @@ public class EndGameResultUI : MonoBehaviour
 
     private void Start()
     {
-        GameOutcome outcome = GameOutcome.Victory;
+        GameOutcome outcome = GameOutcome.Escaped;
         
         var summary = BugSummaryUtil.Build(preferInventory: true);
         
         var gsm = GameSceneManager.Instance;
         if (gsm != null && gsm.HasPersistentData(outcomeKey))
         {
-            outcome = gsm.GetPersistentData<GameOutcome>(outcomeKey, GameOutcome.Victory);
+            outcome = gsm.GetPersistentData<GameOutcome>(outcomeKey, GameOutcome.Escaped);
         }
 
         ApplyOutcome(outcome);
@@ -47,7 +47,7 @@ public class EndGameResultUI : MonoBehaviour
 
         string stateName = outcome switch
         {
-            GameOutcome.Victory   => victoryStateName,
+            GameOutcome.Escaped   => victoryStateName,
             GameOutcome.WrongBugs => wrongBugsStateName,
             GameOutcome.Timeout   => timeoutStateName,
             _ => victoryStateName
