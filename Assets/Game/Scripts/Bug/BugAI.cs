@@ -18,7 +18,7 @@ namespace Bug
 
         [Header("Надёжность NavMesh")]
         [Tooltip("Радиус поиска ближайшей точки NavMesh при возврате из инспекции/включении")]
-        [SerializeField] private AnimatorController animatorController;
+        [SerializeField] private RuntimeAnimatorController animatorController;
         public float reattachRadius = 2f;
 
         [Header("Access Control")]
