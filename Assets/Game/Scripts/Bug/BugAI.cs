@@ -22,11 +22,25 @@ namespace Bug
         [Header("Access Control")]
         [Tooltip("Can this bug be inspected regardless of zone restrictions?")]
         [SerializeField] private bool alwaysAccessible = false;
+        
+        [Header("Анимация")]
+        [SerializeField] private Animator anim;
+        [SerializeField] private string speedParam = "Speed";
+        [SerializeField] private string isMovingParam = "IsMoving";
+        [SerializeField, Tooltip("Порог, выше которого считаем, что движение есть")]
+        private float movingThreshold = 0.05f;
+        [SerializeField, Tooltip("Сглаживание Speed для Animator.SetFloat")]
+        private float speedDamp = 0.1f;
+        
+        public Animator Anim { get => anim; set => anim = value; }
+        
+        private Vector3 _lastPos;
+        private float _lastSpeed;
+
         #endregion
 
         #region State
         private NavMeshAgent agent;
-        private Animator anim;
 
         private float nextRepathTime;
         private bool manuallyDisabled;
@@ -41,6 +55,9 @@ namespace Bug
         #region Unity Lifecycle
         private void Awake()
         {
+            if (anim == null) anim = GetComponent<Animator>();
+            if (agent == null) agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            _lastPos = transform.position;
             agent = GetComponent<NavMeshAgent>();
             anim  = GetComponent<Animator>();
             spawnTime = Time.time;
@@ -78,7 +95,9 @@ namespace Bug
                 PickNewRandomPoint();
             }
 
-            UpdateAnimator(agent.velocity.magnitude);
+            
+            float speed = ComputeCurrentSpeed();
+            UpdateAnimator(speed);
         }
         #endregion
 
@@ -127,6 +146,56 @@ namespace Bug
             if (disable) OnInspectStart();
             else OnInspectEnd();
         }
+        
+        private float ComputeCurrentSpeed()
+        {
+            float speed = 0f;
+
+            // 1) Если есть валидный агент — пробуем его velocity
+            if (agent && agent.enabled && agent.isOnNavMesh)
+            {
+                // Часто agent.velocity == 0 в момент старта или при остановке торможением
+                float v = agent.velocity.magnitude;
+
+                // Если путь есть, но velocity≈0, используем desiredVelocity (частый кейс)
+                if (v < 0.01f && (agent.hasPath || !agent.isStopped))
+                    v = agent.desiredVelocity.magnitude;
+
+                speed = v;
+            }
+
+            // 2) Фолбэк: реальная скорость по дельте позиции (кейс root motion/ручного движения)
+            if (speed < 0.01f)
+            {
+                Vector3 delta = transform.position - _lastPos;
+                float dt = Mathf.Max(Time.deltaTime, 1e-5f);
+                float posSpeed = delta.magnitude / dt;
+                speed = Mathf.Max(speed, posSpeed);
+            }
+
+            _lastPos = transform.position;
+
+            // Немного сглаживания вручную, чтобы избежать дрожания флага
+            _lastSpeed = Mathf.Lerp(_lastSpeed, speed, 1f - Mathf.Exp(-Time.deltaTime / 0.05f));
+            return _lastSpeed;
+        }
+
+        
+        private void UpdateAnimator(float velocityMagnitude)
+        {
+            if (!anim) return;
+
+            anim.SetFloat(speedParam, velocityMagnitude, speedDamp, Time.deltaTime);
+
+            bool moving = velocityMagnitude > movingThreshold;
+
+            anim.SetBool(isMovingParam, moving);
+
+            Debug.Log($"[BugAI] speed={velocityMagnitude:F3}  moving={moving}  " +
+                      $"agentVel={(agent ? agent.velocity.magnitude : 0f):F3}  " +
+                      $"desiredVel={(agent ? agent.desiredVelocity.magnitude : 0f):F3}");
+        }
+
 
         public void OnInspectStart()
         {
@@ -214,12 +283,6 @@ namespace Bug
                 if (!agent.enabled) agent.enabled = true;
                 agent.Warp(hit.position);
             }
-        }
-
-        private void UpdateAnimator(float speed)
-        {
-            if (!anim) return;
-            anim.SetFloat("Speed", speed);
         }
         #endregion
 

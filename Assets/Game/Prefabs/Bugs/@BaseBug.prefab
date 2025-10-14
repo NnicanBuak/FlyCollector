@@ -229,8 +229,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InspectableObject
   wanderRadius: 10
   repathInterval: 1.5
-  reattachRadius: 2
+  reattachRadius: 4
   alwaysAccessible: 0
+  anim: {fileID: 2566393497383497847}
+  speedParam: Speed
+  isMovingParam: IsMoving
+  movingThreshold: 0.05
+  speedDamp: 0.1
 --- !u!114 &126234709955642314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +252,7 @@ MonoBehaviour:
   canInspect: 1
   inspectOnAwake: 0
   useCustomOrientation: 1
-  inspectRotation: {x: 0, y: 180, z: 0}
+  inspectRotation: {x: 0, y: 270, z: 0}
   relativeRotation: 0
   dynamicHoldPoint: 1
   distanceMultiplier: 1.5
