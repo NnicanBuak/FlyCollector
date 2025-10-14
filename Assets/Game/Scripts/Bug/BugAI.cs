@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Bug
 {
-    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
     public class BugAI : MonoBehaviour
     {
         #region Serialized Fields
@@ -17,6 +18,7 @@ namespace Bug
 
         [Header("Надёжность NavMesh")]
         [Tooltip("Радиус поиска ближайшей точки NavMesh при возврате из инспекции/включении")]
+        [SerializeField] private RuntimeAnimatorController animatorController;
         public float reattachRadius = 2f;
 
         [Header("Access Control")]
@@ -59,7 +61,7 @@ namespace Bug
             if (agent == null) agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
             _lastPos = transform.position;
             agent = GetComponent<NavMeshAgent>();
-            anim  = GetComponent<Animator>();
+            anim  = GetComponent<Animator>();//dsodjisjdi
             spawnTime = Time.time;
 
             inspectable = GetComponent<InspectableObject>();
@@ -71,6 +73,7 @@ namespace Bug
 
         private void Start()
         {
+            anim.runtimeAnimatorController = animatorController;
             // Если жук уже стоит внутри зон на старте — зарегистрируемся
             CheckForAccessZone();
             RecomputeAndApplyCanInspect();
@@ -151,7 +154,7 @@ namespace Bug
         {
             float speed = 0f;
 
-            // 1) Если есть валидный агент — пробуем его velocity
+            // 1) Если есть валидный агент — -пробуем его velocity
             if (agent && agent.enabled && agent.isOnNavMesh)
             {
                 // Часто agent.velocity == 0 в момент старта или при остановке торможением
