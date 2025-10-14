@@ -350,7 +350,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
+    rgba: 4278252543
   m_fontColor: {r: 1, g: 0.95294124, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -841,7 +841,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
+    rgba: 4278779722
   m_fontColor: {r: 0.2901961, g: 1, b: 0.03137255, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -977,7 +977,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &496129427
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1595,7 +1595,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
+    rgba: 4278779722
   m_fontColor: {r: 0.2901961, g: 1, b: 0.03137255, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2698,7 +2698,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190335
+    rgba: 4278252543
   m_fontColor: {r: 1, g: 0.95294124, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -3960,13 +3960,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UIStateToggle
   States:
   - StateName: Fail
-    Target: {fileID: 0}
+    Target: {fileID: 496129426}
     Show: 0
   - StateName: Mismatch
-    Target: {fileID: 0}
+    Target: {fileID: 2010376183}
     Show: 0
   - StateName: Escape
-    Target: {fileID: 0}
+    Target: {fileID: 1836223897}
     Show: 0
 --- !u!1 &1822739339
 GameObject:
