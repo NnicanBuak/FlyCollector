@@ -209,4 +209,16 @@ public class FocusSession
 
         return null;
     }
+    
+    public void ForceFinishWithoutReturn()
+    {
+        if (finished || cam == null) return;
+        entering = false;
+        exiting = false;
+        finished = true;
+
+        focusable?.OnFocusEnd();
+        onFinish?.Invoke();
+    }
+
 }

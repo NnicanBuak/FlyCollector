@@ -155,37 +155,59 @@ public class /**/CameraFocusManager
         return true;
     }
 
-    public IEnumerator ExitAllFocusCoroutine(System.Action<Vector3, Quaternion> updateReturnPosition)
+    public IEnumerator ExitAllFocusCoroutine(System.Action<Vector3, Quaternion> updateReturnPosition, bool skipReturnAnim = false)
     {
         while (focusStack.Count > 0)
         {
             var top = focusStack.Peek();
-            if (!top.IsAnimating)
-                top.RequestExit();
 
+            if (skipReturnAnim)
+            {
+                // мгновенно завершить вершину стека, не дожидаясь апдейтов
+                top.ForceFinishWithoutReturn();                           // помечает finished и вызывает onFinish :contentReference[oaicite:0]{index=0}
+                focusStack.Pop();
+
+                // откатываем уровень фокуса (как в обычной ветке) 
+                FocusLevelManager.Instance?.GoToPreviousLevel();           // логика сброса уровня у вас уже есть в корутине :contentReference[oaicite:1]{index=1}
+                // продолжаем цикл без yield
+                continue;
+            }
+            else
+            {
+                if (!top.IsAnimating)                                      // обычный путь: просим выйти и ждём кадр
+                    top.RequestExit();                                     // :contentReference[oaicite:2]{index=2}
+            }
+
+            // только для анимированного выхода
             yield return null;
 
             if (top.IsFinished() && focusStack.Count > 0)
             {
                 focusStack.Pop();
 
-
                 if (FocusLevelManager.Instance != null)
                 {
-                    FocusLevelManager.Instance.GoToPreviousLevel();
-                    if (showDebug)
-                        Debug.Log($"[CameraFocusManager] Restored nest level (ExitAll). Remaining: {focusStack.Count}");
+                    FocusLevelManager.Instance.GoToPreviousLevel();        // :contentReference[oaicite:3]{index=3}
                 }
             }
         }
 
-        pendingReturnPositionUpdate = false;
-
+        pendingReturnPositionUpdate = false;                               // :contentReference[oaicite:4]{index=4}
         if (cam != null && updateReturnPosition != null)
-        {
-            updateReturnPosition(cam.transform.position, cam.transform.rotation);
-        }
+            updateReturnPosition(cam.transform.position, cam.transform.rotation); // :contentReference[oaicite:5]{index=5}
     }
+    
+    public FocusSession PeekTop()
+    {
+        return focusStack.Count > 0 ? focusStack.Peek() : null;
+    }
+
+    public void ForceFinishTopWithoutReturn()
+    {
+        var top = PeekTop();
+        top?.ForceFinishWithoutReturn();
+    }
+
 
     public bool ShouldUpdateReturnPosition()
     {

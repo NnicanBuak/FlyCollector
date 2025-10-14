@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
@@ -74,7 +75,8 @@ public class CameraController : MonoBehaviour
     private CameraFocusManager focusManager;
     private CameraInspectManager inspectManager;
     private CameraHoverState hoverState;
-
+    
+    public CameraFocusManager FocusManager => focusManager;
 
     private Vector3 cameraReturnPos;
     private Quaternion cameraReturnRot;
@@ -86,6 +88,9 @@ public class CameraController : MonoBehaviour
     private float homeFov;
     private bool homeSet;
     private bool isReturningHome;
+    private bool homeLocked = false;
+
+    private void LockHomePose() => homeLocked = true;
 
 
     [System.Serializable]
@@ -150,7 +155,6 @@ public class CameraController : MonoBehaviour
     void Update()
     {
 
-        
         if (inspectManager.IsInspecting) 
         {
             // Exit inspect on RMB or ESC; LMB is used for collect inside InspectSession
@@ -278,6 +282,35 @@ public class CameraController : MonoBehaviour
             hoverState.ClearAll();
         }
     }
+    
+    public void SetHomePoseFromCurrent(bool force = false)
+    {
+        if (homeLocked && !force) { if (showDebugInfo) Debug.Log("[CameraController] Home locked; skip SetHomePoseFromCurrent"); return; }
+        if (cam == null) cam = Camera.main;
+        if (cam == null) return;
+
+        homePos = cam.transform.position;
+        homeRot = cam.transform.rotation;
+        homeFov = cam.orthographic ? 0f : cam.fieldOfView;
+        homeSet = true;
+
+        if (!force) LockHomePose(); // после первичной установки — сразу блок
+        if (showDebugInfo) Debug.Log($"[CameraController] Home pose set at {homePos}");
+    }
+
+    public void SetHomePose(Transform pose, bool force = false)
+    {
+        if (homeLocked && !force) { if (showDebugInfo) Debug.Log("[CameraController] Home locked; skip SetHomePose(pose)"); return; }
+        if (pose == null) { Debug.LogWarning("[CameraController] SetHomePose: pose is null"); return; }
+
+        homePos = pose.position;
+        homeRot = pose.rotation;
+        if (cam != null && !cam.orthographic) homeFov = cam.fieldOfView;
+        homeSet = true;
+
+        if (!force) LockHomePose();
+        if (showDebugInfo) Debug.Log($"[CameraController] Home pose set from transform {pose.name}");
+    }
 
     private void StartInteraction(GameObject target)
     {
@@ -293,7 +326,7 @@ public class CameraController : MonoBehaviour
 
     public void StartInspect(GameObject target)
     {
-        StartInspect(target, null);
+        StartInspect(target, () => InspectEnded?.Invoke());
     }
 
     public void StartInspect(GameObject target, System.Action onFinish)
@@ -313,16 +346,15 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public void ExitAllFocus()
+    public void ExitAllFocus(bool skipReturnAnim = false)
     {
         StartCoroutine(focusManager.ExitAllFocusCoroutine((pos, rot) =>
         {
             cameraReturnPos = pos;
             cameraReturnRot = rot;
             mouseFollow.UpdateBaseRotation();
-        }));
+        }, skipReturnAnim));
     }
-
 
     public void FocusToPoint(Transform point, bool allowReturn = true, float flyTimeOverride = -1f)
     {
@@ -364,67 +396,68 @@ public class CameraController : MonoBehaviour
         if (showDebugInfo)
             Debug.Log($"[CameraController] Home pose set from transform {pose.name}");
     }
-
-    public void ReturnHome(float duration)
-    {
-        if (isReturningHome)
-            return;
-        
-        isReturningHome = true;
-        cameraMoveTween?.Kill();
-        
-        if (!homeSet || cam == null)
-        {
-            if (showDebugInfo)
-                Debug.LogWarning("[CameraController] ReturnHome skipped: Home not set or camera missing");
-            return;
-        }
-
-        if (cameraMoveTween != null && cameraMoveTween.IsActive()) cameraMoveTween.Kill();
-
-        isReturningHome = true;
-        var t = Mathf.Max(0f, duration);
-
-        var seq = DOTween.Sequence();
-        seq.Join(cam.transform.DOMove(homePos, t).SetEase(Ease.InOutSine))
-           .Join(cam.transform.DORotateQuaternion(homeRot, t).SetEase(Ease.InOutSine))
-           .OnComplete(() =>
-           {
-               isReturningHome = false;
-               mouseFollow.UpdateBaseRotation();
-               UpdateReturnPosition();
-           });
-        if (!cam.orthographic)
-            seq.Join(cam.DOFieldOfView(homeFov, t).SetEase(Ease.InOutSine));
-
-        cameraMoveTween = seq;
-    }
-    
     public void ReturnHomeFromCurrent(float duration)
     {
         if (!homeSet || cam == null) return;
         if (isReturningHome) return;
         isReturningHome = true;
 
+        // Пауза фоллоу
+        bool paused = false;
+        if (mouseFollow != null) { mouseFollow.Pause(); paused = true; }
+
+        // Срубить конкурирующие твины
         cameraMoveTween?.Kill();
-        // focusManager?.ClearPendingReturnUpdate?.Invoke();
+        DOTween.Kill(cam.transform, complete: false);
+        DOTween.Kill(cam, complete: false);
 
         var t = cam.transform;
-        var seq = DOTween.Sequence();
+        var seq = DOTween.Sequence().SetId("CameraController.home").SetTarget(cam);
+
         seq.Join(t.DOMove(homePos, duration).SetEase(Ease.InOutSine))
             .Join(t.DORotateQuaternion(homeRot, duration).SetEase(Ease.InOutSine));
+
         if (!cam.orthographic)
             seq.Join(cam.DOFieldOfView(homeFov, duration).SetEase(Ease.InOutSine));
 
         seq.OnComplete(() =>
         {
-            isReturningHome = false;
-            t.position = homePos;
-            t.rotation = homeRot;
+            // Жёстко фиксируем финальные значения
+            t.SetPositionAndRotation(homePos, homeRot);
             if (!cam.orthographic) cam.fieldOfView = homeFov;
+
+            // Обновляем опорные значения и базу фоллоу на "дом"
+            cameraReturnPos = homePos;
+            cameraReturnRot = homeRot;
+            if (mouseFollow != null)
+            {
+                mouseFollow.RebaseTo(homeRot); // или UpdateBaseRotation(), если тебе так удобнее
+                mouseFollow.UpdateBaseRotation(); // синхронизация с текущим transform
+            }
+
+            if (paused) mouseFollow.Resume();
+            isReturningHome = false;
         });
 
         cameraMoveTween = seq;
+
+        // Нулевой duration — применяем мгновенно
+        if (duration <= 0f)
+        {
+            t.SetPositionAndRotation(homePos, homeRot);
+            if (!cam.orthographic) cam.fieldOfView = homeFov;
+
+            cameraReturnPos = homePos;
+            cameraReturnRot = homeRot;
+            if (mouseFollow != null)
+            {
+                mouseFollow.RebaseTo(homeRot);
+                mouseFollow.UpdateBaseRotation();
+            }
+
+            if (paused) mouseFollow.Resume();
+            isReturningHome = false;
+        }
     }
 }
 

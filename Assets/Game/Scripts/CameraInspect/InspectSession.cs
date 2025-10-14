@@ -51,7 +51,6 @@ public class InspectSession
     private float interactionRange = 100f;
     private LayerMask interactableLayer = ~0;
 
-
     private bool isCollectMode;
     private Vector3 savedCamPos;
     private Quaternion savedCamRot;
@@ -67,6 +66,7 @@ public class InspectSession
     private Vector3 returnOverridePos;
     private Quaternion returnOverrideRot;
 
+    private const string CamFlyTweenId = "InspectSession.camFly";
 
     public InspectSession(GameObject go, Transform holdPoint, float flyTime, System.Action onFinish)
     {
@@ -79,7 +79,8 @@ public class InspectSession
         keyboard = Keyboard.current;
     }
 
-    protected InspectSession(GameObject go, Transform holdPoint, float flyTime, System.Action onFinish, bool isBugSession)
+    protected InspectSession(GameObject go, Transform holdPoint, float flyTime, System.Action onFinish,
+        bool isBugSession)
         : this(go, holdPoint, flyTime, onFinish)
     {
         this._isBugSession = isBugSession;
@@ -122,7 +123,9 @@ public class InspectSession
         if (rb) rb.isKinematic = true;
 
         selfColliders = go.GetComponents<Collider>();
-        foreach (var c in selfColliders) if (c) c.enabled = true;
+        foreach (var c in selfColliders)
+            if (c)
+                c.enabled = true;
 
         parentColliders = go.GetComponentsInParent<Collider>(true);
         foreach (var c in parentColliders)
@@ -130,7 +133,12 @@ public class InspectSession
             if (c == null) continue;
             bool isSelf = false;
             for (int i = 0; i < selfColliders.Length; i++)
-                if (selfColliders[i] == c) { isSelf = true; break; }
+                if (selfColliders[i] == c)
+                {
+                    isSelf = true;
+                    break;
+                }
+
             if (!isSelf) c.enabled = false;
         }
 
@@ -206,37 +214,45 @@ public class InspectSession
         });
     }
 
-
     public void UpdateInput()
     {
         if (go == null) return;
         if (isAnimating || (typeof(InteractionFreeze) != null && InteractionFreeze.IsLocked)) return;
 
-        // Stop spinning for bugs only after camera tween completes in CollectMode
+        // вращение
         if (!(_isBugSession && isCollectMode && collectRotationLocked))
             HandleInspectRotationFollow();
 
         bool rmb = mouse != null && mouse.rightButton.wasPressedThisFrame;
-
-
         bool lmb = mouse != null && mouse.leftButton.wasPressedThisFrame;
-        // LMB starts Collect mode for bugs (if not already in Collect)
+
+        // <<< НОВОЕ: выход по ПКМ >>>
+        if (rmb)
+        {
+            // В CollectMode сначала корректно выходим из режима сбора (закроет банку/вернёт и т.п.).
+            if (isCollectMode)
+                ExitCollectMode();
+            else
+                EndInspectNow();
+
+            return;
+        }
+
+        // LMB: вход в CollectMode для жуков
         if (lmb && targetBugAI != null && !isCollectMode)
         {
             TryEnterCollectModeOrFallback();
             return;
         }
+
         if (_isBugSession && isCollectMode && TryJarDirectInteraction(lmb))
             return;
-        if (lmb && !HandleInteraction())
-        {
 
-        }
+        if (lmb && !HandleInteraction()) { }
         else
-        {
             HandleInteraction();
-        }
     }
+
 
     private void HandleInspectRotationFollow()
     {
@@ -273,7 +289,9 @@ public class InspectSession
         if (cam == null) cam = Camera.main;
         if (cam == null) return false;
 
-        Vector2 mp = Mouse.current != null ? Mouse.current.position.ReadValue() : new Vector2(Screen.width / 2f, Screen.height / 2f);
+        Vector2 mp = Mouse.current != null
+            ? Mouse.current.position.ReadValue()
+            : new Vector2(Screen.width / 2f, Screen.height / 2f);
         Ray ray = cam.ScreenPointToRay(mp);
         if (Physics.Raycast(ray, out var hit, interactionRange, interactableLayer))
         {
@@ -295,6 +313,7 @@ public class InspectSession
                     interactable.OnInteract(cam);
                     return true;
                 }
+
                 return true;
             }
             else
@@ -397,8 +416,10 @@ public class InspectSession
             {
                 HandleJarSealed();
             }
+
             return true;
         }
+
         return true;
     }
 
@@ -432,6 +453,8 @@ public class InspectSession
         Quaternion localRotTarget = Quaternion.identity;
 
         activeFlyTween = DG.Tweening.DOTween.Sequence()
+            .SetId(CamFlyTweenId)
+            .SetTarget(cam)
             .Join(go.transform.DOLocalMove(localTarget, duration).SetEase(Ease.InOutSine))
             .Join(go.transform.DOLocalRotateQuaternion(localRotTarget, duration).SetEase(Ease.InOutSine))
             .OnComplete(() =>
@@ -446,7 +469,11 @@ public class InspectSession
         if (ai) ai.enabled = false;
 
         var rb = go.GetComponent<Rigidbody>();
-        if (rb) { rb.isKinematic = true; rb.detectCollisions = false; }
+        if (rb)
+        {
+            rb.isKinematic = true;
+            rb.detectCollisions = false;
+        }
 
         foreach (var c in go.GetComponentsInChildren<Collider>(true)) c.enabled = false;
     }
@@ -454,7 +481,7 @@ public class InspectSession
     private void HandleJarSealed()
     {
         if (!isCollectMode) return;
-        
+
         isCollectMode = false;
         collectRotationLocked = false;
         sealedByJar = true;
@@ -516,13 +543,19 @@ public class InspectSession
                 yield return null;
             }
         }
+
         FinishAfterSealImmediate();
     }
 
     private void FinishAfterSealImmediate()
     {
-        if (isReturning)
-            return;
+        if (isReturning) return;
+
+        if (cam != null)
+        {
+            DG.Tweening.DOTween.Kill(CamFlyTweenId, complete: false);
+            DG.Tweening.DOTween.Kill(CamFlyTweenId, complete: false);
+        }
 
         EndInspectNow();
     }
@@ -532,16 +565,15 @@ public class InspectSession
         if (t == null) return null;
         // Kill previous fly tween if any
         if (activeFlyTween != null && activeFlyTween.IsActive()) activeFlyTween.Kill();
-        var seq = DG.Tweening.DOTween.Sequence();
+        var seq = DG.Tweening.DOTween.Sequence()
+            .SetId(CamFlyTweenId)
+            .SetTarget(cam);
         seq.Join(t.DOMove(toPos, time).SetEase(DG.Tweening.Ease.InOutSine))
-           .Join(t.DORotateQuaternion(toRot, time).SetEase(DG.Tweening.Ease.InOutSine))
-           .OnComplete(() => after?.Invoke());
+            .Join(t.DORotateQuaternion(toRot, time).SetEase(DG.Tweening.Ease.InOutSine))
+            .OnComplete(() => after?.Invoke());
         activeFlyTween = seq;
         return seq;
     }
-
-
-
 
     public void EndInspectNow()
     {
@@ -551,6 +583,23 @@ public class InspectSession
         BugJarTrap jarForReturn = (isCollectMode && activeJar != null) ? activeJar : null;
         bool wasCollectMode = isCollectMode;
 
+        if (wasCollectMode)
+        {
+            // игнорируем только возвратную анимацию при завершении инспекта
+            cameraController?.FocusManager?.ForceFinishTopWithoutReturn();
+
+            var flm = FocusLevelManager.Instance;
+            if (flm != null && flm.CurrentNestLevel != 0)
+                flm.SetNestLevel(0);
+
+            if (cam != null)
+            {
+                DG.Tweening.DOTween.Kill(CamFlyTweenId, complete: false);
+                DG.Tweening.DOTween.Kill(CamFlyTweenId, complete: false);
+            }
+        }
+
+
         if (go == null)
         {
             CompleteInspectReturn();
@@ -558,7 +607,7 @@ public class InspectSession
         }
 
         if (isCollectMode)
-            ExitCollectMode(!_isBugSession);
+            ExitCollectMode();
 
         isReturning = true;
         isAnimating = true;
@@ -573,8 +622,7 @@ public class InspectSession
         if (!sealedByJar)
             target.SetParent(originalParent, true);
 
-        // Decide where to return the bug: if the inspect session ended from collect mode,
-        // return to jar table position (no offset); otherwise return to original.
+        // … остальной код без изменений …
         hasReturnOverride = false;
         if (wasCollectMode && jarForReturn != null)
         {
@@ -590,7 +638,6 @@ public class InspectSession
 
         if (sealedByJar)
         {
-            // Bug already resides inside the jar; skip return tween to original spot.
             CompleteInspectReturn();
             return;
         }
@@ -627,6 +674,7 @@ public class InspectSession
                     target.position = origPos;
                     target.rotation = origRot;
                 }
+
                 target.localScale = origScale;
             }
         }
@@ -674,13 +722,6 @@ public class InspectSession
         // Clear override state
         hasReturnOverride = false;
 
-        if (_isBugSession)
-        {
-            var flm = FocusLevelManager.Instance;
-            if (flm != null && flm.CurrentNestLevel != 0)
-                flm.SetNestLevel(0);
-        }
-
         // Unsubscribe flip action
         InspectFlip.OnClicked -= OnFlipClicked;
         onFinish?.Invoke();
@@ -711,7 +752,8 @@ public class InspectSession
 
             // Bug inspect: always show Collect (LMB); Cancel (RMB) optional when not in collect mode
             if (includeRightMouse)
-                MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse, MultiHintController.PanelNames.RightMouse);
+                MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse,
+                    MultiHintController.PanelNames.RightMouse);
             else
                 MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse);
             return;
@@ -758,7 +800,7 @@ public class InspectSession
         if (isCollectMode) return;
         isCollectMode = true;
 
-        cameraController?.ExitAllFocus();
+        cameraController?.ExitAllFocus(true);
 
         // In collect mode keep Cancel (RMB); Collect appears only when hovering the jar
         if (_isBugSession)
@@ -781,7 +823,9 @@ public class InspectSession
                 var registry = BugItemRegistry.Instance;
                 if (registry != null)
                 {
-                    string bugKey = targetBugAI != null ? targetBugAI.GetBugType() : (go != null ? go.name : string.Empty);
+                    string bugKey = targetBugAI != null
+                        ? targetBugAI.GetBugType()
+                        : (go != null ? go.name : string.Empty);
                     if (!string.IsNullOrEmpty(bugKey) && registry.TryGetItem(bugKey, out var item) && item != null)
                     {
                         activeJar.SetInteractableItem(item);
@@ -806,6 +850,7 @@ public class InspectSession
             returnOverrideRot = table != null ? table.rotation : activeJar.transform.rotation;
             hasReturnOverride = true;
         }
+
         MoveCameraToCollectPose();
 
         // Ensure focus level = 0 while in collect mode
@@ -840,35 +885,20 @@ public class InspectSession
 
             StartBugCollectMovement();
         }
-
     }
 
-    private void ExitCollectMode(bool restoreCamera = true)
+    private void ExitCollectMode()
     {
         if (!isCollectMode) return;
         isCollectMode = false;
 
-        // Ensure the jar returns to its place when leaving collect mode
         if (activeJar != null)
         {
-            // Disallow interaction while leaving collect and close the jar lid
             var io = activeJar.GetInteractable();
-            if (io != null)
-            {
-                io.SetCanInteract(false);
-            }
+            if (io != null) io.SetCanInteract(false);
             activeJar.TriggerClose();
-            var st = activeJar.GetState();
-            if (st == BugJarTrap.State.AtTable)
-            {
+            if (activeJar.GetState() == BugJarTrap.State.AtTable)
                 activeJar.FlyBack();
-            }
-        }
-
-        if (restoreCamera && cam != null)
-        {
-            if (camFlyRoutine != null && camFlyRoutine.IsActive()) camFlyRoutine.Kill();
-            camFlyRoutine = StartCamFly(savedCamPos, savedCamRot, savedCamFov, 0.25f);
         }
 
         ShowInspectHints(ShouldShowRightMouseHint());
@@ -900,10 +930,13 @@ public class InspectSession
                 flm.SetNestLevel(0);
 
             // Use a fixed transform provided by CameraController (slower tween = 1.0s)
-            cameraController.FocusToPoint(cameraController.CollectModeCameraPose, allowReturn: false, flyTimeOverride: 1.0f);
+            cameraController.FocusToPoint(cameraController.CollectModeCameraPose, allowReturn: false,
+                flyTimeOverride: 1.0f);
             // Create a local timing tween to signal completion after 1.0s
             if (camFlyRoutine != null && camFlyRoutine.IsActive()) camFlyRoutine.Kill();
-            camFlyRoutine = DG.Tweening.DOTween.Sequence().AppendInterval(1.0f);
+            camFlyRoutine = DG.Tweening.DOTween.Sequence()
+                .SetId(CamFlyTweenId)
+                .SetTarget(cam).AppendInterval(1.0f);
             return;
         }
 
@@ -923,15 +956,15 @@ public class InspectSession
     {
         if (cam == null) return null;
         var t = cam.transform;
-        var seq = DG.Tweening.DOTween.Sequence();
+        var seq = DG.Tweening.DOTween.Sequence()
+            .SetId(CamFlyTweenId)
+            .SetTarget(cam);
         seq.Join(t.DOMove(pos, time).SetEase(DG.Tweening.Ease.InOutSine))
-           .Join(t.DORotateQuaternion(rot, time).SetEase(DG.Tweening.Ease.InOutSine));
+            .Join(t.DORotateQuaternion(rot, time).SetEase(DG.Tweening.Ease.InOutSine));
         if (!cam.orthographic)
             seq.Join(cam.DOFieldOfView(fov, time).SetEase(DG.Tweening.Ease.InOutSine));
         return seq;
     }
-
-
 
     private Item ResolveBugRegistryItem(GameObject bug, out string matchedKey)
     {
@@ -990,11 +1023,13 @@ public class InspectSession
             Debug.LogError("[InspectSession] BugCounter.Instance == null");
             return false;
         }
+
         if (!BugCounter.Instance.HasAnyJars)
         {
             Debug.LogWarning("[InspectSession] Нет доступных банок.");
             return false;
         }
+
         if (BugJarPool.Instance == null)
         {
             Debug.LogError("[InspectSession] BugJarPool.Instance == null");
@@ -1040,6 +1075,7 @@ public class InspectSession
                 FallbackNoJar();
                 return;
             }
+
             activeJar = jar;
         }
 
@@ -1051,10 +1087,10 @@ public class InspectSession
 
     private void FallbackNoJar()
     {
-
         isCollectMode = false;
         // Show LMB (Interact) and RMB (Cancel)
-        MultiHintController.Instance?.Show(MultiHintController.PanelNames.LeftMouse, MultiHintController.PanelNames.RightMouse);
+        MultiHintController.Instance?.Show(MultiHintController.PanelNames.LeftMouse,
+            MultiHintController.PanelNames.RightMouse);
     }
 
     private Transform ResolveBugTablePosition(GameObject bugRoot)
@@ -1075,6 +1111,7 @@ public class InspectSession
                 var val = f1.GetValue(mb) as Transform;
                 if (val != null) return val;
             }
+
             var f2 = type.GetField("TablePosition", flags);
             if (f2 != null && typeof(Transform).IsAssignableFrom(f2.FieldType))
             {
@@ -1088,6 +1125,7 @@ public class InspectSession
                 var val = p1.GetValue(mb, null) as Transform;
                 if (val != null) return val;
             }
+
             var p2 = type.GetProperty("TablePosition", flags);
             if (p2 != null && typeof(Transform).IsAssignableFrom(p2.PropertyType))
             {
@@ -1101,6 +1139,7 @@ public class InspectSession
 
         return null;
     }
+
     private BugJarTrap ResolveActiveJarFallback()
     {
         // 1) если поле всё же заполнено — используем его
@@ -1112,11 +1151,14 @@ public class InspectSession
 
         // приоритет: Sealing/Sealed -> AtTable -> любой
         foreach (var j in jars)
-            if (j != null && j.GetState() == BugJarTrap.State.Sealing) return j;
+            if (j != null && j.GetState() == BugJarTrap.State.Sealing)
+                return j;
         foreach (var j in jars)
-            if (j != null && j.GetState() == BugJarTrap.State.Sealed) return j;
+            if (j != null && j.GetState() == BugJarTrap.State.Sealed)
+                return j;
         foreach (var j in jars)
-            if (j != null && j.GetState() == BugJarTrap.State.AtTable) return j;
+            if (j != null && j.GetState() == BugJarTrap.State.AtTable)
+                return j;
 
         // fallback: вернём первый попавшийся, если вообще есть
         if (jars != null && jars.Length > 0) candidate = jars[0];
@@ -1132,7 +1174,7 @@ public class InspectSession
                 return t;
         return jar.transform; // фоллбэк — корень банки
     }
-    
+
     private void ParentBugToJarIfPossible(Transform target)
     {
         if (target == null) return;
@@ -1149,11 +1191,13 @@ public class InspectSession
         if (ai) ai.enabled = false;
 
         var rb = target.GetComponent<Rigidbody>();
-        if (rb) { rb.isKinematic = true; rb.detectCollisions = false; }
+        if (rb)
+        {
+            rb.isKinematic = true;
+            rb.detectCollisions = false;
+        }
 
         var cols = target.GetComponentsInChildren<Collider>(true);
         foreach (var c in cols) c.enabled = false;
     }
-
-    
 }

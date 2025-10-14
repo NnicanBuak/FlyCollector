@@ -9,6 +9,12 @@ public class CameraMouseFollow
     private Quaternion baseRotation;
     private bool baseRotationInitialized;
 
+    // NEW: пауза (реентерабельная)
+    private int pauseCount = 0;
+    public void Pause()  { pauseCount++; }
+    public void Resume() { if (pauseCount > 0) pauseCount--; }
+    public bool IsPaused => pauseCount > 0;
+
     public CameraMouseFollow(Camera camera, float mouseFollowAmount, float mouseFollowSpeed)
     {
         this.cam = camera;
@@ -31,8 +37,18 @@ public class CameraMouseFollow
         }
     }
 
+    // NEW: явный ребейз на заданный поворот (удобно после "домой")
+    public void RebaseTo(Quaternion rotation)
+    {
+        baseRotation = rotation;
+        baseRotationInitialized = true;
+    }
+
     public void Update(Mouse mouse)
     {
+        // NEW: если пауза — не трогаем камеру
+        if (IsPaused) return;
+
         if (!baseRotationInitialized || mouse == null || cam == null)
             return;
 
@@ -54,4 +70,4 @@ public class CameraMouseFollow
             mouseFollowSpeed * Time.deltaTime
         );
     }
-}
+} 
