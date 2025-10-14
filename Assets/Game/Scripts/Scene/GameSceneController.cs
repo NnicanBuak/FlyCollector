@@ -1,8 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public enum GameOutcome { Victory, WrongBugs, Timeout }
+public enum GameOutcome
+{
+    Escaped,
+    WrongBugs,
+    Timeout
+}
 
 public class GameSceneController : MonoBehaviour
 {
@@ -30,12 +36,22 @@ public class GameSceneController : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool showDebug = true;
 
+    //УДАЛИТЬ!
+    [SerializeField] private EditorInputBinder _editorInputBinder;
+    //УДАЛИТЬ!
+
     private bool isFinished;
 
     void Awake()
     {
         if (!gameTimer) gameTimer = GameTimer.Instance;
         if (!inventory) inventory = InventoryManager.Instance;
+
+        //УДАЛИТЬ!
+
+        _editorInputBinder.Ended += FinisGames;
+
+        //УДАЛИТЬ!
     }
 
     void OnEnable()
@@ -55,14 +71,10 @@ public class GameSceneController : MonoBehaviour
         CheckQuotaAndMaybeOpenExit();
     }
 
-
     void Start()
     {
-
         CheckQuotaAndMaybeOpenExit();
     }
-
-
 
     void OnTimerEnd()
     {
@@ -81,8 +93,6 @@ public class GameSceneController : MonoBehaviour
         if (finishWhenExitOpens) FinishUsingCurrentStats();
     }
 
-
-
     void CheckQuotaAndMaybeOpenExit()
     {
         int target = GetTargetCount();
@@ -92,14 +102,26 @@ public class GameSceneController : MonoBehaviour
         if (showDebug) Debug.Log($"[GameSceneController] Quota check: caught={caught}, target={target}");
     }
 
-
-
     void FinishUsingCurrentStats()
     {
         int wrong = ComputeWrongCount();
-        var outcome = (wrong > 0) ? GameOutcome.WrongBugs : GameOutcome.Victory;
+        var outcome = (wrong > 0) ? GameOutcome.WrongBugs : GameOutcome.Escaped;
         FinishGame(outcome);
     }
+
+//Удалить!!!
+    void FinisGames(GameOutcome outcome)
+    {
+        if (outcome == GameOutcome.Escaped)
+            FinishGame(outcome, 16, 0);
+
+        if (outcome == GameOutcome.WrongBugs)
+            FinishGame(outcome, 16, 16);
+
+        if (outcome == GameOutcome.Timeout)
+            FinishGame(outcome, 8, 0);
+    }
+//Удалить!!!
 
     void FinishGame(GameOutcome outcome, int? overrideCaught = null, int? wrongOverride = null)
     {
@@ -108,7 +130,7 @@ public class GameSceneController : MonoBehaviour
 
         int target = GetTargetCount();
         int caught = overrideCaught ?? GetCaughtCount();
-        int wrong  = wrongOverride ?? ComputeWrongCount();
+        int wrong = wrongOverride ?? ComputeWrongCount();
 
         if (showDebug)
             Debug.Log($"[GameSceneController] Finish → {outcome} | caught={caught}, wrong={wrong}, target={target}");
@@ -123,8 +145,6 @@ public class GameSceneController : MonoBehaviour
 
         GameSceneManager.Instance?.LoadScene(gameOverScene);
     }
-
-
 
     int GetTargetCount()
     {
@@ -156,12 +176,12 @@ public class GameSceneController : MonoBehaviour
                 if (s.item.itemType == bugItemType) count += s.quantity;
             }
         }
+
         return count;
     }
 
     int ComputeWrongCount()
     {
-
         if (TargetBugsRuntime.Instance && CaughtBugsRuntime.Instance)
         {
             var targetSet = new HashSet<string>(
@@ -174,6 +194,7 @@ public class GameSceneController : MonoBehaviour
                 var key = TargetBugsRuntime.NormalizeKey(c);
                 if (!targetSet.Contains(key)) wrong++;
             }
+
             return wrong;
         }
 
