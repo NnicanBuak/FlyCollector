@@ -10,7 +10,7 @@
       "hash": "bd69624335594f29eba0e78a68e6a70eb857f4b6"
     },
     "com.google.external-dependency-manager": {
-      "version": "file:C:/Users/Nnican/Downloads/com.google.external-dependency-manager-1.2.186(1).tgz",
+      "version": "file:com.google.external-dependency-manager-1.2.186(1).tgz",
       "depth": 0,
       "source": "local-tarball",
       "dependencies": {}
