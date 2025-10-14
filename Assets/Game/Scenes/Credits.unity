@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CreditsController
   fadeDuration: 0.6
   autoProceed: 1
-  autoProceedDelay: 7
+  autoProceedDelay: 10
   showCountdown: 0
   countdownLabel: {fileID: 0}
 --- !u!4 &80241646
@@ -316,11 +316,13 @@ MonoBehaviour:
     Sttrox
     <3
 
+    AndrewTray
+
+    comeinhome
+
     TambovGameStudio
 
-    AssOrTea
-
-    Peegun'
+    AssOrTea'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
   m_sharedMaterial: {fileID: 573025231327784991, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
