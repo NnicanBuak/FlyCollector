@@ -4,6 +4,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using System.Reflection;
 using UnityEngine;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
@@ -133,6 +135,7 @@ namespace BuildTools
 
 
             UpdatePlayerSettings(version);
+            UpdateGameAnalyticsSettings(version);
 
             var guids = AssetDatabase.FindAssets("t:BuildProfile");
             if (guids.Length == 0)
@@ -175,6 +178,9 @@ namespace BuildTools
                     options = BuildOptions.None,
                 };
 
+
+                ClearEditorConsole();
+
                 var start = DateTime.Now;
                 var report = BuildPipeline.BuildPlayer(options);
                 var took = DateTime.Now - start;
@@ -198,8 +204,14 @@ namespace BuildTools
 
                     default:
                         fail++;
+
+                        var errors = GetConsoleErrors();
+                        var errorText = errors != null && errors.Count > 0
+                            ? string.Join("\n---\n", errors.Take(20))
+                            : $"Build failed with {report.summary.totalErrors} errors (no console messages found).";
+
                         results.Add(
-                            $"❌ {profile.name} → {versionedPath}  [{took:mm\\:ss}]  ERRORS: {report.summary.totalErrors}");
+                            $"❌ {profile.name} → {versionedPath}  [{took:mm\\:ss}]  ERRORS: {report.summary.totalErrors}\n{errorText}");
                         break;
                 }
             }
@@ -220,6 +232,23 @@ namespace BuildTools
             }
         }
 
+        static void ClearEditorConsole()
+        {
+            try
+            {
+                var logEntriesType = Type.GetType("UnityEditor.LogEntries, UnityEditor");
+                if (logEntriesType == null)
+                    return;
+
+                var clearMethod = logEntriesType.GetMethod("Clear", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                clearMethod?.Invoke(null, null);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"Could not clear editor console: {ex.Message}");
+            }
+        }
+
         static void UpdatePlayerSettings(BuildVersion version)
         {
             var versionString = version.ToStringWithoutPrefix();
@@ -228,6 +257,75 @@ namespace BuildTools
 
             Debug.Log(
                 $"Updated PlayerSettings: bundleVersion={versionString}, Android.bundleVersionCode={version.ToVersionCode()}");
+        }
+
+
+        static void UpdateGameAnalyticsSettings(BuildVersion version)
+        {
+            try
+            {
+                var versionString = version.ToStringWithoutPrefix();
+                var settingsPath = Path.Combine("Assets", "Game", "Resources", "GameAnalytics", "Settings.asset");
+                if (!File.Exists(settingsPath))
+                {
+                    Debug.LogWarning($"GameAnalytics settings file not found at {settingsPath}");
+                    return;
+                }
+
+                var text = File.ReadAllText(settingsPath);
+
+
+                var pattern = new Regex(@"(?m)^(?<indent>\s*)Build:\s*\r?\n(?<list>(?:\s*-\s*.*\r?\n)*)");
+                var m = pattern.Match(text);
+                if (!m.Success)
+                {
+                    Debug.LogWarning("GameAnalytics.Settings.asset: no 'Build:' section found to update.");
+                    return;
+                }
+
+                var indent = m.Groups["indent"].Value;
+                var listText = m.Groups["list"].Value;
+
+
+                var count = 0;
+                if (!string.IsNullOrEmpty(listText))
+                {
+
+                    count = Regex.Matches(listText, @"(?m)^\s*-\s*.*$").Count;
+                }
+
+
+                if (count == 0)
+                    count = 1;
+
+
+                // Построим новую секцию с нужной версией
+                var newList = string.Empty;
+                for (int i = 0; i < count; i++)
+                {
+                    // используем тот же indent, что и у 'Build:' плюс два пробела для YAML списка
+                    var entryIndent = indent + "  ";
+                    newList += entryIndent + "- " + versionString + "\r\n";
+                }
+
+                var replacement = indent + "Build:\r\n" + newList;
+                var newText = pattern.Replace(text, replacement, 1);
+
+                if (newText != text)
+                {
+                    File.WriteAllText(settingsPath, newText);
+                    AssetDatabase.ImportAsset(settingsPath, ImportAssetOptions.ForceUpdate);
+                    Debug.Log($"Updated GameAnalytics.Settings.asset with Build={versionString}");
+                }
+                else
+                {
+                    Debug.Log($"GameAnalytics.Settings.asset did not require update (Build unchanged).");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Failed to update GameAnalytics Settings.asset: {ex.Message}");
+            }
         }
 
         static string InjectVersionIntoPath(string basePath, BuildVersion version)
@@ -300,8 +398,63 @@ namespace BuildTools
                     File.Delete(archivePath);
 
 
-                ZipFile.CreateFromDirectory(sourceDir, archivePath, System.IO.Compression.CompressionLevel.Optimal,
-                    false);
+                var fullSourceDir = Path.GetFullPath(sourceDir);
+                var allFiles = Directory.EnumerateFiles(fullSourceDir, "*", SearchOption.AllDirectories).ToList();
+                Debug.Log($"[Archive] Found {allFiles.Count} files under {fullSourceDir} (before filtering).");
+
+
+                var files = allFiles
+                    .Where(f => !f.Split(new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries)
+                        .Any(seg => string.Equals(seg, "DontShip", StringComparison.OrdinalIgnoreCase)))
+                    .ToList();
+
+                Debug.Log($"[Archive] {files.Count} files remain after filtering DontShip.");
+
+
+                if (files.Count == 0)
+                {
+                    var subdirs = Directory.GetDirectories(fullSourceDir);
+                    foreach (var sd in subdirs)
+                    {
+                        var nested = Directory.EnumerateFiles(sd, "*", SearchOption.AllDirectories).ToList();
+                        if (nested.Count > 0)
+                        {
+                            Debug.Log($"[Archive] Using nested directory {sd} as source (found {nested.Count} files).\n");
+                            fullSourceDir = sd;
+                            files = nested
+                                .Where(f => !f.Split(new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries)
+                                    .Any(seg => string.Equals(seg, "DontShip", StringComparison.OrdinalIgnoreCase)))
+                                .ToList();
+                            break;
+                        }
+                    }
+                }
+
+                int added = 0;
+                using (var zip = ZipFile.Open(archivePath, ZipArchiveMode.Create))
+                {
+                    foreach (var file in files)
+                    {
+                        var entryName = Path.GetRelativePath(fullSourceDir, file).Replace('\\', '/');
+                        zip.CreateEntryFromFile(file, entryName, System.IO.Compression.CompressionLevel.Optimal);
+                        added++;
+                    }
+                }
+
+                if (added == 0)
+                {
+                    Debug.LogWarning($"Archive at {archivePath} created but no files were added (source={fullSourceDir}). Deleting empty archive.");
+                    try
+                    {
+                        if (File.Exists(archivePath))
+                            File.Delete(archivePath);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.LogWarning($"Could not delete empty archive {archivePath}: {ex.Message}");
+                    }
+                    return string.Empty;
+                }
 
                 var archiveSize = new FileInfo(archivePath).Length / 1048576f;
                 Debug.Log($"Created archive: {archivePath} ({archiveSize:0.0} MB)");
@@ -312,6 +465,54 @@ namespace BuildTools
             {
                 Debug.LogError($"Failed to create archive for {buildPath}: {ex.Message}");
                 return string.Empty;
+            }
+        }
+
+
+        static List<string> GetConsoleErrors()
+        {
+            try
+            {
+                var result = new List<string>();
+                var logEntriesType = Type.GetType("UnityEditor.LogEntries, UnityEditor");
+                var logEntryType = Type.GetType("UnityEditor.LogEntry, UnityEditor");
+
+                if (logEntriesType == null || logEntryType == null)
+                    return result;
+
+                var getCount = logEntriesType.GetMethod("GetCount", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
+                var getEntry = logEntriesType.GetMethod("GetEntryInternal", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+
+                if (getCount == null || getEntry == null)
+                    return result;
+
+                int count = (int)getCount.Invoke(null, null);
+                var entry = Activator.CreateInstance(logEntryType);
+                var conditionField = logEntryType.GetField("condition", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                var stackTraceField = logEntryType.GetField("stackTrace", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+                var modeField = logEntryType.GetField("mode", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+
+                for (int i = 0; i < count; i++)
+                {
+                    var args = new[] { (object)i, entry };
+                    getEntry.Invoke(null, args);
+                    var mode = modeField?.GetValue(entry);
+
+                    int modeInt = mode is int mi ? mi : -1;
+                    if (modeInt == 2 || modeInt == 3 || modeInt == 4)
+                    {
+                        var cond = conditionField?.GetValue(entry) as string;
+                        var stack = stackTraceField?.GetValue(entry) as string;
+                        if (!string.IsNullOrEmpty(cond))
+                            result.Add(cond + "\n" + stack);
+                    }
+                }
+
+                return result;
+            }
+            catch
+            {
+                return new List<string>();
             }
         }
 

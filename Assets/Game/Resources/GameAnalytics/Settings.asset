@@ -32,8 +32,8 @@ MonoBehaviour:
   - 253bd6da655d33bb478aaa11d1532279808f9748
   - 458e76216438fd13a5032c285ca174be1e753058
   Build:
-  - 0.3
-  - 0.3
+    - 0.8.2
+    - 0.8.2
   SelectedPlatformOrganization:
   - Team7
   - 
