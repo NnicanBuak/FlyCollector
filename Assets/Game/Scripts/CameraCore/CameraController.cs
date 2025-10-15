@@ -65,6 +65,11 @@ public class CameraController : MonoBehaviour
     [Tooltip("Automatically capture Home pose on Start")] public bool autoSetHomeOnStart = true;
     [Tooltip("Time to return camera to Home pose")] public float returnHomeTime = 0.5f;
 
+    public void ThisDestroy()
+    {
+        Destroy(gameObject);
+    }
+    
 
     private Camera cam;
     private AudioSource audioSource;
@@ -444,6 +449,7 @@ public class CameraController : MonoBehaviour
         // Нулевой duration — применяем мгновенно
         if (duration <= 0f)
         {
+            Debug.LogError($"[CameraController] Starting instant return home to {homePos}");
             t.SetPositionAndRotation(homePos, homeRot);
             if (!cam.orthographic) cam.fieldOfView = homeFov;
 
@@ -460,7 +466,4 @@ public class CameraController : MonoBehaviour
         }
     }
 }
-
-
-
 

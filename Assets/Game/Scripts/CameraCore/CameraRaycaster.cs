@@ -8,6 +8,8 @@ public class CameraRaycaster
     private readonly LayerMask interactMask;
     private readonly bool showDebug;
 
+    private const float DebugDuration = 0.05f;
+
     public CameraRaycaster(Camera camera, float maxDistance, LayerMask interactMask, bool showDebug = false)
     {
         this.cam = camera;
@@ -15,7 +17,6 @@ public class CameraRaycaster
         this.interactMask = interactMask;
         this.showDebug = showDebug;
     }
-
 
     public RaycastHit? PerformRaycast(GameObject currentFocusedObject, out Ray ray)
     {
@@ -45,16 +46,37 @@ public class CameraRaycaster
                     validHit = hit;
                     break;
                 }
+
                 if (focusableOnHit != null && ((MonoBehaviour)focusableOnHit).gameObject != currentFocusedObject)
                 {
                     validHit = hit;
                     break;
                 }
+
                 continue;
             }
+
             validHit = hit;
             break;
         }
+
+#if UNITY_EDITOR
+        if (showDebug)
+        {
+            Vector3 endPoint = validHit.HasValue
+                ? validHit.Value.point
+                : ray.origin + ray.direction * maxDistance;
+
+            Debug.DrawLine(ray.origin, endPoint, validHit.HasValue ? Color.green : Color.red, DebugDuration);
+
+
+            if (validHit.HasValue)
+            {
+                var hit = validHit.Value;
+                Debug.DrawRay(hit.point, hit.normal * 0.25f, Color.cyan, DebugDuration);
+            }
+        }
+#endif
 
         return validHit;
     }

@@ -2986,7 +2986,7 @@ Transform:
   m_GameObject: {fileID: 331656472}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.79, z: -2.98}
+  m_LocalPosition: {x: 0.67, y: 3.79, z: -2.98}
   m_LocalScale: {x: 12.81, y: 1.2069317, z: 3.99}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16419,7 +16419,7 @@ MonoBehaviour:
   BugAIInspectedWhileFocused:
     m_PersistentCalls:
       m_Calls: []
-  showDebugInfo: 0
+  showDebugInfo: 1
   autoSetHomeOnStart: 1
   returnHomeTime: 0.5
 --- !u!1 &1546121123
@@ -18738,11 +18738,11 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 0
-  m_Extents: {x: 0.015, y: 0.014, z: 0.015}
+  m_Extents: {x: 0.017, y: 0.014, z: 0.017}
   m_MoveThreshold: 0.1
   m_Carve: 1
   m_CarveOnlyStationary: 1
-  m_Center: {x: -0.007, y: -0.006, z: -0.003}
+  m_Center: {x: -0.007, y: -0.006, z: -0.004}
   m_TimeToStationary: 0.5
 --- !u!1 &1751992355
 GameObject:

@@ -644,6 +644,11 @@ public class InspectSession
 
         if (returnTime > 0f && runner != null)
         {
+            if (activeJar != null)
+            {
+                cameraController.ReturnHomeFromCurrent(returnTime);
+            }
+
             Vector3 dstPos = hasReturnOverride ? returnOverridePos : origPos;
             Quaternion dstRot = hasReturnOverride ? returnOverrideRot : origRot;
             Fly(target, dstPos, dstRot, returnTime, CompleteInspectReturn);
@@ -705,8 +710,10 @@ public class InspectSession
             }
         }
 
-        if (targetBugAI != null && !sealedByJar)
-            targetBugAI.DisableAI(false);
+        if (targetBugAI != null && !sealedByJar){
+            targetBugAI.DisableAI(false); 
+            targetBugAI.enabled = true;
+        }
 
         MultiHintController.Instance?.HideAll();
 

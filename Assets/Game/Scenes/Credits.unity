@@ -819,7 +819,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CreditsScrollLoop
   content: {fileID: 1536964355}
   viewport: {fileID: 833519229}
-  pixelsPerSecond: 300
+  pixelsPerSecond: 200
   edgePadding: 50
   ease: 2
 --- !u!1 &1621808382

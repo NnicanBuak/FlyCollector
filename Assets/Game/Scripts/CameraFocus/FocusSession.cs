@@ -46,6 +46,7 @@ public class FocusSession
     {
         if (cam == null || focusRoot == null) return;
 
+        Debug.LogError($"[FocusSession] Starting focus movement to {focusRoot.name}");
 
         enterStartPos = cam.transform.position;
         enterStartRot = cam.transform.rotation;
