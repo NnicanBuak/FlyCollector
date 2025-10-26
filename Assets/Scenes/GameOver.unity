@@ -343,8 +343,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: YOU RAN AWAY
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
-  m_sharedMaterial: {fileID: 573025231327784991, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
+  m_sharedMaterial: {fileID: 841569278243512903, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -631,8 +631,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: YOU FAILED
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
-  m_sharedMaterial: {fileID: 573025231327784991, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
+  m_sharedMaterial: {fileID: 841569278243512903, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -834,8 +834,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: YOU TAKEN THE RIGHT BUGS WITH YOU
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
-  m_sharedMaterial: {fileID: 573025231327784991, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
+  m_sharedMaterial: {fileID: 841569278243512903, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -911,57 +911,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 394981536}
   m_CullTransparentMesh: 1
---- !u!1 &482683014
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 482683016}
-  - component: {fileID: 482683015}
-  m_Layer: 0
-  m_Name: EndGameResultUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &482683015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482683014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77764df6c444475c806ca92d748b60fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EndGameResultUI
-  stateToggle: {fileID: 1749078017}
-  victoryStateName: Escape
-  wrongBugsStateName: Mismatch
-  timeoutStateName: Fail
-  outcomeKey: gameOutcome
-  totalCaughtKey: totalCaught
-  wrongCountKey: wrongCount
---- !u!4 &482683016
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 482683014}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &496129426
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,13 +920,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 496129427}
+  - component: {fileID: 496129428}
   m_Layer: 5
   m_Name: Fail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &496129427
 RectTransform:
   m_ObjectHideFlags: 0
@@ -999,6 +949,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &496129428
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 496129426}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &500151704
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,8 +1550,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: YOU ESCAPED
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
-  m_sharedMaterial: {fileID: 573025231327784991, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
+  m_sharedMaterial: {fileID: 841569278243512903, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1731,6 +1693,8 @@ MonoBehaviour:
   rightStateName: Right
   wrongStateName: Wrong
   missingStateName: Skipped
+  minCorrectForVictory: 12
+  totalTargets: 16
   totalCaughtKey: totalCaught
   wrongCountKey: wrongCount
   logInfo: 0
@@ -1745,6 +1709,24 @@ MonoBehaviour:
   wrongAppearSound: {fileID: 8300000, guid: 0030a3f59280ef343afb300deed836e7, type: 3}
   skippedAppearSound: {fileID: 8300000, guid: 83e1d2b2009109948b32aab18f9fa950, type: 3}
   soundVolume: 0.2
+  rootCanvas: {fileID: 0}
+  resultStateToggle: {fileID: 1749078017}
+  victoryStateName: Escape
+  wrongBugsStateName: Mismatch
+  timeoutStateName: Fail
+  outcomeKey: gameOutcome
+  victoryLabel: {fileID: 1836223899}
+  wrongLabel: {fileID: 2010376185}
+  timeoutLabel: {fileID: 496129428}
+  labelAnimDuration: 0.35
+  labelAnimDelay: 0.12
+  labelEase: 27
+  labelStartScale: 1.08
+  labelStartYOffset: 18
+  resultAudioSource: {fileID: 0}
+  labelAppearClip: {fileID: 0}
+  labelVolume: 1
+  flipAxis: 0
 --- !u!4 &671873312
 Transform:
   m_ObjectHideFlags: 0
@@ -2691,8 +2673,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: YOU MAY HAVE PICKED THE WRONG BUGS OR YOU JUST A PITY COWARD
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
-  m_sharedMaterial: {fileID: 573025231327784991, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
+  m_sharedMaterial: {fileID: 841569278243512903, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3232,8 +3214,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: COLLECTOR HAS FIND YOU
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
-  m_sharedMaterial: {fileID: 573025231327784991, guid: 6b5aa1d6dd7bb2a4eadd3a37bfc70505, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
+  m_sharedMaterial: {fileID: 841569278243512903, guid: 9a4e709072da4364dbaacf883157cc3a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3961,13 +3943,13 @@ MonoBehaviour:
   States:
   - StateName: Fail
     Target: {fileID: 496129426}
-    Show: 0
+    Show: 1
   - StateName: Mismatch
     Target: {fileID: 2010376183}
-    Show: 0
+    Show: 1
   - StateName: Escape
     Target: {fileID: 1836223897}
-    Show: 0
+    Show: 1
 --- !u!1 &1822739339
 GameObject:
   m_ObjectHideFlags: 0
@@ -4097,13 +4079,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1836223898}
+  - component: {fileID: 1836223899}
   m_Layer: 5
   m_Name: Escape
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1836223898
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4125,6 +4108,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1836223899
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1836223897}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &1927115069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4255,13 +4250,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2010376184}
+  - component: {fileID: 2010376185}
   m_Layer: 5
   m_Name: Missmatch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2010376184
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4283,6 +4279,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &2010376185
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2010376183}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!224 &2106138781 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8645297000336792160, guid: 1ed2b0683c188bd40a0c0bdcc6d0b016, type: 3}
@@ -4409,7 +4417,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1830984529}
-  - {fileID: 482683016}
   - {fileID: 671873312}
   - {fileID: 575260547}
   - {fileID: 555199108}
