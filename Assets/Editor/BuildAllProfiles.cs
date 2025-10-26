@@ -405,7 +405,7 @@ namespace BuildTools
 
                 var files = allFiles
                     .Where(f => !f.Split(new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries)
-                        .Any(seg => string.Equals(seg, "DontShip", StringComparison.OrdinalIgnoreCase)))
+                        .Any(seg => seg.Contains("DontShip", StringComparison.OrdinalIgnoreCase) || seg.Contains("DoNotShip", StringComparison.OrdinalIgnoreCase)))
                     .ToList();
 
                 Debug.Log($"[Archive] {files.Count} files remain after filtering DontShip.");
@@ -413,7 +413,7 @@ namespace BuildTools
 
                 if (files.Count == 0)
                 {
-                    var subdirs = Directory.GetDirectories(fullSourceDir);
+                    var subdirs = Directory.GetDirectories(fullSourceDir).Where(sd => !(Path.GetFileName(sd).Contains("DontShip", StringComparison.OrdinalIgnoreCase) || Path.GetFileName(sd).Contains("DoNotShip", StringComparison.OrdinalIgnoreCase)));
                     foreach (var sd in subdirs)
                     {
                         var nested = Directory.EnumerateFiles(sd, "*", SearchOption.AllDirectories).ToList();
@@ -423,7 +423,7 @@ namespace BuildTools
                             fullSourceDir = sd;
                             files = nested
                                 .Where(f => !f.Split(new[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar }, StringSplitOptions.RemoveEmptyEntries)
-                                    .Any(seg => string.Equals(seg, "DontShip", StringComparison.OrdinalIgnoreCase)))
+                                    .Any(seg => seg.Contains("DontShip", StringComparison.OrdinalIgnoreCase) || seg.Contains("DoNotShip", StringComparison.OrdinalIgnoreCase)))
                                 .ToList();
                             break;
                         }

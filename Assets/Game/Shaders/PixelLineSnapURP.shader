@@ -118,10 +118,10 @@ Shader "Unlit/HandwriteLine_PSX"
                 float noiseValue = fbm(noiseCoord);
                 
                 // Смещаем перпендикулярно линии (по Y в экранных координатах)
+                // UV.y показывает, насколько мы далеко от центра линии
                 float perpOffset = (noiseValue - 0.5) * _WavyAmount * stepPx;
                 
-                // Добавляем небольшое смещение по обоим осям для "дрожания"
-                screen.x += perpOffset * 0.3;
+                // Применяем смещение только по Y
                 screen.y += perpOffset;
                 
                 // Теперь снэпим к сетке
