@@ -15,292 +15,216 @@ MonoBehaviour:
   m_TableCollectionName: color
   m_TableCollectionNameGuidString: 6c26658e183b22c428fcac66d8814951
   m_Entries:
-  - m_Id: 8850957656064
-    m_Key: color.red
+  - m_Id: 331198982250496
+    m_Key: red
     m_Metadata:
       m_Items: []
-  - m_Id: 8851028959232
-    m_Key: color.green
+  - m_Id: 331198982250497
+    m_Key: green
     m_Metadata:
       m_Items: []
-  - m_Id: 8851028959233
-    m_Key: color.blue
+  - m_Id: 331198982250498
+    m_Key: blue
     m_Metadata:
       m_Items: []
-  - m_Id: 8851028959234
-    m_Key: color.yellow
+  - m_Id: 331198982250499
+    m_Key: yellow
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153536
-    m_Key: color.orange
+  - m_Id: 331198982250500
+    m_Key: orange
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153537
-    m_Key: color.purple
+  - m_Id: 331198982250501
+    m_Key: purple
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153538
-    m_Key: color.pink
+  - m_Id: 331198982250502
+    m_Key: pink
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153539
-    m_Key: color.black
+  - m_Id: 331198982250503
+    m_Key: black
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153540
-    m_Key: color.white
+  - m_Id: 331198982250504
+    m_Key: white
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153541
-    m_Key: color.brown
+  - m_Id: 331198982250505
+    m_Key: brown
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153542
-    m_Key: color.gray
+  - m_Id: 331198982250506
+    m_Key: gray
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153543
-    m_Key: color.grey
+  - m_Id: 331198982250507
+    m_Key: grey
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153544
-    m_Key: color.gold
+  - m_Id: 331198982250508
+    m_Key: gold
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153545
-    m_Key: color.golden
+  - m_Id: 331198982250509
+    m_Key: golden
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153546
-    m_Key: color.silver
+  - m_Id: 331198986444800
+    m_Key: silver
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153547
-    m_Key: color.teal
+  - m_Id: 331198986444801
+    m_Key: teal
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153548
-    m_Key: color.emerald
+  - m_Id: 331198986444802
+    m_Key: emerald
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153549
-    m_Key: color.malachite
+  - m_Id: 331198986444803
+    m_Key: malachite
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153550
-    m_Key: color.iron
+  - m_Id: 331198986444804
+    m_Key: iron
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153551
-    m_Key: color.chromic
+  - m_Id: 331198986444805
+    m_Key: chromic
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153552
-    m_Key: color.ruby
+  - m_Id: 331198986444806
+    m_Key: ruby
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153553
-    m_Key: color.sapphire
+  - m_Id: 331198986444807
+    m_Key: sapphire
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153554
-    m_Key: color.bone
+  - m_Id: 331198986444808
+    m_Key: bone
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153555
-    m_Key: color.skeleton
+  - m_Id: 331198986444809
+    m_Key: skeleton
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153556
-    m_Key: color.lightskin
+  - m_Id: 331198986444810
+    m_Key: lightskin
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153557
-    m_Key: color.swamp-green
+  - m_Id: 354683238473728
+    m_Key: bronze
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153558
-    m_Key: color.light-red
+  - m_Id: 331198986444857
+    m_Key: darkgreen
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153559
-    m_Key: color.light-green
+  - m_Id: 354683343331347
+    m_Key: dark
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153560
-    m_Key: color.light-blue
+  - m_Id: 331198986444812
+    m_Key: light-red
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153561
-    m_Key: color.light-yellow
+  - m_Id: 331198986444813
+    m_Key: light-green
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153562
-    m_Key: color.light-orange
+  - m_Id: 331198986444814
+    m_Key: light-blue
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153563
-    m_Key: color.light-purple
+  - m_Id: 331198986444815
+    m_Key: light-yellow
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153564
-    m_Key: color.light-pink
+  - m_Id: 331198986444816
+    m_Key: light-orange
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153565
-    m_Key: color.light-brown
+  - m_Id: 331198986444817
+    m_Key: light-purple
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153566
-    m_Key: color.light-gray
+  - m_Id: 331198986444818
+    m_Key: light-pink
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153567
-    m_Key: color.light-grey
+  - m_Id: 331198986444819
+    m_Key: light-brown
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153568
-    m_Key: color.light-bronze
+  - m_Id: 331198986444820
+    m_Key: light-gray
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153569
-    m_Key: color.light-gold
+  - m_Id: 331198986444821
+    m_Key: light-grey
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153570
-    m_Key: color.light-teal
+  - m_Id: 331198986444822
+    m_Key: light-bronze
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153571
-    m_Key: color.dark-red
+  - m_Id: 331198986444823
+    m_Key: light-gold
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153572
-    m_Key: color.dark-green
+  - m_Id: 331198986444824
+    m_Key: light-teal
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153573
-    m_Key: color.dark-blue
+  - m_Id: 331198986444825
+    m_Key: dark-red
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153574
-    m_Key: color.dark-yellow
+  - m_Id: 331198986444826
+    m_Key: dark-green
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153575
-    m_Key: color.dark-orange
+  - m_Id: 331198986444827
+    m_Key: dark-blue
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153576
-    m_Key: color.dark-purple
+  - m_Id: 331198986444828
+    m_Key: dark-yellow
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153577
-    m_Key: color.dark-pink
+  - m_Id: 331198986444829
+    m_Key: dark-orange
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153578
-    m_Key: color.dark-brown
+  - m_Id: 331198986444830
+    m_Key: dark-purple
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153579
-    m_Key: color.dark-gray
+  - m_Id: 331198986444831
+    m_Key: dark-pink
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153580
-    m_Key: color.dark-grey
+  - m_Id: 331198986444832
+    m_Key: dark-brown
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153581
-    m_Key: color.dark-teal
+  - m_Id: 331198986444833
+    m_Key: dark-gray
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153582
-    m_Key: color.dark-iron
+  - m_Id: 331198986444834
+    m_Key: dark-grey
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153583
-    m_Key: color.deep-red
+  - m_Id: 331198986444835
+    m_Key: dark-teal
     m_Metadata:
       m_Items: []
-  - m_Id: 8851033153584
-    m_Key: color.deep-blue
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851033153585
-    m_Key: color.deep-green
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347840
-    m_Key: color.deep-teal
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347841
-    m_Key: color.deep-yellow
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347842
-    m_Key: color.deep-purple
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347843
-    m_Key: color.deep-gold
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347844
-    m_Key: color.white-blue
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347845
-    m_Key: color.white-pink
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347846
-    m_Key: color.white-purple
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347847
-    m_Key: color.white-teal
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347848
-    m_Key: color.white-green
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347849
-    m_Key: color.white-yellow
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347850
-    m_Key: color.grey-yellow
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347851
-    m_Key: color.blue-purple
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347852
-    m_Key: color.red-orange
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347853
-    m_Key: color.orange-green
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347854
-    m_Key: color.teal-brown
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347855
-    m_Key: color.purple-yellow
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347856
-    m_Key: color.chromic-pink
-    m_Metadata:
-      m_Items: []
-  - m_Id: 8851037347857
-    m_Key: color.darkgreen
+  - m_Id: 331198986444836
+    m_Key: dark-iron
     m_Metadata:
       m_Items: []
   m_Metadata:
