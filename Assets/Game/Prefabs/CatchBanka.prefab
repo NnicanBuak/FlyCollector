@@ -546,7 +546,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5644129556544054270}
-  - component: {fileID: 6961388695510671391}
   - component: {fileID: 7477343996550121499}
   - component: {fileID: 4702319020522500136}
   - component: {fileID: 338619026196249599}
@@ -576,14 +575,6 @@ Transform:
   - {fileID: 6020812609730652473}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6961388695510671391
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7160988490707360541}
-  m_Mesh: {fileID: 8731368865191290264, guid: aacc852301c50cd4ba2c7717d88853e6, type: 3}
 --- !u!114 &7477343996550121499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -662,6 +653,8 @@ MonoBehaviour:
   flyToTableSound: {fileID: 8300000, guid: 106d154641a27a9408aca138804e974e, type: 3}
   flyBackSound: {fileID: 8300000, guid: 106d154641a27a9408aca138804e974e, type: 3}
   sealSound: {fileID: 8300000, guid: 106d154641a27a9408aca138804e974e, type: 3}
+  correctBugSound: {fileID: 8300000, guid: 7fb15c3bcc1de0b4598e875f37ab3e9c, type: 3}
+  incorrectBugSound: {fileID: 8300000, guid: 5b7703b8b8aef0b4aa7f246057cdb7bb, type: 3}
   soundVolume: 1
   showDebug: 0
 --- !u!208 &2758373985213584860

@@ -1,29 +1,9 @@
 fileFormatVersion: 2
-guid: f565bddcea09a774f86903280727027d
+guid: 71a9e87cf5486a24f8027f003e89c413
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: BANKA
-    second: {fileID: 2100000, guid: 6833ab194fd23db4d87d022a1c85fde9, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: BULB
-    second: {fileID: 2100000, guid: ebd8ea5252e186b499fd48e2a0963b68, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: GRADIENTPALLETE
-    second: {fileID: 2100000, guid: 65b6cc0e2a129de45bcdb47e4331b89e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: KRISHKA
-    second: {fileID: 2100000, guid: 9c0a3f8ba23eff8438bcd89c39625deb, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -50,7 +30,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
