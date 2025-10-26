@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
-using Bug;
+using Game.Scripts.Bug;
 
 public class InspectableObject : MonoBehaviour, IInspectable
 {
@@ -22,10 +22,13 @@ public class InspectableObject : MonoBehaviour, IInspectable
     [Tooltip("Начальная ротация объекта при инспекции (в градусах)")] [SerializeField]
     private Vector3 inspectRotation = Vector3.zero;
 
-    [Tooltip("Применить ротацию относительно текущего поворота объекта")] [SerializeField]
-    private bool relativeRotation = false;
+    [Tooltip("Всегда поворачивать объект лицом к камере при инспекции")]
+    public bool faceCamera = false;
 
-    [Header("Динамическое позиционирование")]
+    [Tooltip("Ось объекта, которая должна смотреть на камеру")]
+    public Vector3 facingAxis = Vector3.forward;
+
+    [Header("Динамическое позиционирова���ие")]
     [Tooltip("Автоматически настраивать расстояние до камеры в зависимости от размера объекта")]
     [SerializeField]
     private bool dynamicHoldPoint = false;
@@ -56,13 +59,13 @@ public class InspectableObject : MonoBehaviour, IInspectable
     [Header("Опциональный Outline")] [Tooltip("Включать ли outline при наведении")] [SerializeField]
     private bool useOutline = true;
 
-    [Tooltip("Outline компонент (оставьте пустым для автопоиска)")] [SerializeField]
+    [Tooltip("Outline компон��нт (оставьте пустым для автопоиска)")] [SerializeField]
     private Outline manualOutline;
 
     [SerializeField] private Color hoverOutlineColor = Color.white;
 
     [Header("Audio (optional)")]
-    [Tooltip("AudioSource для воспроизведения звуков (оставьте пустым для автопоиска или PlayClipAtPoint)")]
+    [Tooltip("AudioSource для воспроизведения звуков (остав��те пустым для автопоиска или PlayClipAtPoint)")]
     [SerializeField] private AudioSource audioSource;
 
     [Tooltip("Громкость звуков инспекции")]
@@ -106,6 +109,17 @@ public class InspectableObject : MonoBehaviour, IInspectable
     private bool _agentWasStopped;
     private bool _agentUpdatePosWas;
     private bool _agentUpdateRotWas;
+
+    // Flip state management for bugs
+    private Quaternion _originalRotation;
+    private bool _flipStateApplied = false;
+
+    [Header("Flip State")]
+    [Tooltip("Сохранять состояние переворота после завершения инспекции")]
+    [SerializeField] private bool persistFlipState = false;
+    
+    [Tooltip("Текущее состояние переворота")]
+    [SerializeField] private bool isFlipped = false;
 
     void Awake()
     {
@@ -196,7 +210,7 @@ public class InspectableObject : MonoBehaviour, IInspectable
             outline = manualOutline;
             if (showDebugInfo)
             {
-                Debug.Log($"[InspectableObject] Использован ручно назначенный Outline на {outline.gameObject.name}");
+                Debug.Log($"[InspectableObject] Исполь��ован ручно назначенный Outline на {outline.gameObject.name}");
             }
         }
         else
@@ -233,7 +247,7 @@ public class InspectableObject : MonoBehaviour, IInspectable
         {
             if (showDebugInfo)
             {
-                Debug.LogWarning($"[InspectableObject] Outline не найден для {gameObject.name}, но useOutline включен");
+                Debug.LogWarning($"[InspectableObject] Outline не найден дл�� {gameObject.name}, но useOutline включен");
             }
         }
     }
@@ -378,6 +392,19 @@ public class InspectableObject : MonoBehaviour, IInspectable
                 Debug.Log($"[InspectableObject] Отключено {childColliders.Length} коллайдеров детей");
             }
         }
+
+
+        // Сохраняем оригинальную ротацию жука, если это жук
+        if (isBug && !persistFlipState)
+        {
+            _originalRotation = transform.rotation;
+            _flipStateApplied = false;
+
+            if (showDebugInfo)
+            {
+                Debug.Log($"[InspectableObject] ��ригинальная ��отация сохранена для {gameObject.name}: {_originalRotation}");
+            }
+        }
     }
 
 
@@ -390,6 +417,41 @@ public class InspectableObject : MonoBehaviour, IInspectable
 
         PlayAudio(inspectEndClip);
 
+        // Убираем установку позиции здесь - она теперь происходит в InspectSessionCore после анимации полета
+
+        if (disableAI && navMeshAgent != null && navMeshAgentWasEnabled)
+        {
+            navMeshAgent.enabled = true;
+            StartCoroutine(RestoreNavMeshAgentState());
+        }
+
+        if (_bugAI != null && _agent != null && _agentStateCached)
+        {
+            _agent.enabled = true;
+            _agent.Warp(transform.position);
+            _agent.updatePosition = _agentUpdatePosWas;
+            _agent.updateRotation = _agentUpdateRotWas;
+        }
+
+        // Включаем collectMode автоматически при focusLevel = 0
+        CameraController cameraController = FindFirstObjectByType<CameraController>();
+        if (cameraController != null && cameraController.FocusManager != null && cameraController.FocusManager.IsAtZeroFocus)
+        {
+            cameraController.CollectModeCameraPose.gameObject.SetActive(true);
+            if (showDebugInfo)
+            {
+                Debug.Log("[InspectableObject] collectMode включен автоматически после завершения инспекции.");
+            }
+        }
+
+
+        // Если это жук и включено сохранение flip состояния, применяем переворот к оригинальному объекту
+        if (isBug && persistFlipState && isFlipped)
+        {
+            // Сохраняем текущее flip состояние, применяя его к оригинальной ротации
+            _originalRotation = transform.rotation; // Используем о��игинальную ротацию как базу
+            ApplyFlipToObject(true); // Применяем flip к объекту в мире
+        }
 
         if (disableAI && navMeshAgent != null && navMeshAgentWasEnabled)
         {
@@ -455,6 +517,18 @@ public class InspectableObject : MonoBehaviour, IInspectable
                 Debug.Log($"[InspectableObject] Включено {childColliders.Length} коллайдеров детей обратно");
             }
         }
+
+
+        // Восстанавливаем ротацию жука, если это жук
+        if (isBug && persistFlipState && _flipStateApplied)
+        {
+            transform.rotation = _originalRotation;
+
+            if (showDebugInfo)
+            {
+                Debug.Log($"[InspectableObject] Ротация жука восстановлена для {gameObject.name}: {transform.rotation}");
+            }
+        }
     }
 
 
@@ -502,14 +576,7 @@ public class InspectableObject : MonoBehaviour, IInspectable
             return transform.rotation;
         }
 
-        if (relativeRotation)
-        {
-            return transform.rotation * Quaternion.Euler(inspectRotation);
-        }
-        else
-        {
-            return Quaternion.Euler(inspectRotation);
-        }
+        return Quaternion.Euler(inspectRotation);
     }
 
     public bool UsesCustomOrientation()
@@ -517,6 +584,15 @@ public class InspectableObject : MonoBehaviour, IInspectable
         return useCustomOrientation;
     }
 
+    public bool ShouldFaceCamera()
+    {
+        return faceCamera;
+    }
+
+    public Vector3 GetFacingAxis()
+    {
+        return facingAxis;
+    }
 
     public bool UsesDynamicHoldPoint()
     {
@@ -604,11 +680,10 @@ public class InspectableObject : MonoBehaviour, IInspectable
         hoverOutlineColor = color;
     }
 
-    public void SetInspectOrientation(Vector3 rotation, bool relative = false)
+    public void SetInspectOrientation(Vector3 rotation)
     {
         useCustomOrientation = true;
         inspectRotation = rotation;
-        relativeRotation = relative;
     }
 
 
@@ -623,7 +698,7 @@ public class InspectableObject : MonoBehaviour, IInspectable
 
             if (showDebugInfo)
             {
-                Debug.Log($"[InspectableObject] Outline установлен вручную для {gameObject.name}");
+                Debug.Log($"[InspectableObject] Outline устано��лен вручную для {gameObject.name}");
             }
         }
     }
@@ -652,13 +727,147 @@ public class InspectableObject : MonoBehaviour, IInspectable
         }
     }
 
+    // Методы для управления flip состоянием
+    public bool IsFlipped() => isFlipped;
+    
+    public void SetFlipState(bool flipped)
+    {
+        if (isFlipped == flipped) return;
+        
+        isFlipped = flipped;
+        
+        if (isBug && persistFlipState)
+        {
+            ApplyFlipToObject(flipped);
+        }
+        
+        if (showDebugInfo)
+        {
+            Debug.Log($"[InspectableObject] Flip состоя��ие изменено для {gameObject.name}: {flipped}");
+        }
+    }
+    
+    private void ApplyFlipToObject(bool flip)
+    {
+        if (!isBug) return;
+        
+        if (flip && !_flipStateApplied)
+        {
+            // Сохраняем оригинальную ротацию перед переворотом
+            if (!_flipStateApplied)
+            {
+                _originalRotation = transform.rotation;
+            }
+            
+            // Поворачиваем ж��ка на 180 градусов по Y
+            transform.rotation = _originalRotation * Quaternion.Euler(0f, 180f, 0f);
+            
+            // Отключаем NavMesh и BugAI
+            DisableBugMovement();
+            
+            // Включаем анимацию IsWalkable на true пока перевернут
+            if (animator != null && animator.enabled)
+            {
+                animator.SetBool("IsWalkable", true);
+            }
+            
+            _flipStateApplied = true;
+            
+            if (showDebugInfo)
+            {
+                Debug.Log($"[InspectableObject] Жук {gameObject.name} перевернут. NavMesh и BugAI отключены.");
+            }
+        }
+        else if (!flip && _flipStateApplied)
+        {
+            // Возвращаем оригинальную ротацию
+            transform.rotation = _originalRotation;
+            
+            // Восстанавливаем NavMesh и BugAI
+            EnableBugMovement();
+            
+            // Отключаем анимацию IsWalkable
+            if (animator != null && animator.enabled)
+            {
+                animator.SetBool("IsWalkable", false);
+            }
+            
+            _flipStateApplied = false;
+            
+            if (showDebugInfo)
+            {
+                Debug.Log($"[InspectableObject] Жук {gameObject.name} возвращен в нормальное состояние. NavMesh и BugAI восстановлены.");
+            }
+        }
+    }
+    
+    private void DisableBugMovement()
+    {
+        if (!isBug) return;
+        
+        // Отключаем NavMeshAgent
+        if (_agent != null && _agent.enabled)
+        {
+            if (_agent.isOnNavMesh)
+            {
+                _agent.isStopped = true;
+                _agent.ResetPath();
+            }
+            _agent.enabled = false;
+        }
+        
+        // Отключаем BugAI
+        if (_bugAI != null)
+        {
+            _bugAI.enabled = false;
+        }
+        
+        if (showDebugInfo)
+        {
+            Debug.Log($"[InspectableObject] Движение жука {gameObject.name} отключено (flip state)");
+        }
+    }
+    
+    private void EnableBugMovement()
+    {
+        if (!isBug) return;
+        
+        // Включаем NavMeshAgent
+        if (_agent != null)
+        {
+            _agent.enabled = true;
+            
+            // Убеждаемся, что жук на NavMesh
+            if (!_agent.isOnNavMesh)
+            {
+                NavMeshHit hit;
+                if (NavMesh.SamplePosition(transform.position, out hit, 2.0f, NavMesh.AllAreas))
+                {
+                    transform.position = hit.position;
+                    _agent.Warp(hit.position);
+                }
+            }
+            
+            _agent.isStopped = false;
+        }
+        
+        // Включаем BugAI
+        if (_bugAI != null)
+        {
+            _bugAI.enabled = true;
+        }
+        
+        if (showDebugInfo)
+        {
+            Debug.Log($"[InspectableObject] Движение жука {gameObject.name} восстановлено (flip state)");
+        }
+    }
+
     void OnDrawGizmosSelected()
     {
         if (!useCustomOrientation) return;
 
-        Quaternion targetRot = relativeRotation
-            ? transform.rotation * Quaternion.Euler(inspectRotation)
-            : Quaternion.Euler(inspectRotation);
+        Quaternion targetRot = Quaternion.Euler(inspectRotation);
 
         Gizmos.matrix = Matrix4x4.TRS(transform.position, targetRot, Vector3.one);
 

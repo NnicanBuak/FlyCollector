@@ -1,0 +1,311 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: color_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 6c26658e183b22c428fcac66d8814951, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 8850957656064
+    m_Localized: RED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851028959232
+    m_Localized: GREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851028959233
+    m_Localized: BLUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851028959234
+    m_Localized: YELLOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153536
+    m_Localized: ORANGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153537
+    m_Localized: PURPLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153538
+    m_Localized: PINK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153539
+    m_Localized: BLACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153540
+    m_Localized: WHITE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153541
+    m_Localized: BROWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153542
+    m_Localized: GRAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153543
+    m_Localized: GREY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153544
+    m_Localized: GOLD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153545
+    m_Localized: GOLDEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153546
+    m_Localized: SILVER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153547
+    m_Localized: TEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153548
+    m_Localized: EMERALD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153549
+    m_Localized: MALACHITE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153550
+    m_Localized: IRON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153551
+    m_Localized: CHROMIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153552
+    m_Localized: RUBY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153553
+    m_Localized: SAPPHIRE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153554
+    m_Localized: BONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153555
+    m_Localized: SKELETON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153556
+    m_Localized: LIGHTSKIN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153557
+    m_Localized: SWAMP-GREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153558
+    m_Localized: LIGHT-RED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153559
+    m_Localized: LIGHT-GREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153560
+    m_Localized: LIGHT-BLUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153561
+    m_Localized: LIGHT-YELLOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153562
+    m_Localized: LIGHT-ORANGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153563
+    m_Localized: LIGHT-PURPLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153564
+    m_Localized: LIGHT-PINK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153565
+    m_Localized: LIGHT-BROWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153566
+    m_Localized: LIGHT-GRAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153567
+    m_Localized: LIGHT-GREY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153568
+    m_Localized: LIGHT-BRONZE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153569
+    m_Localized: LIGHT-GOLD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153570
+    m_Localized: LIGHT-TEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153571
+    m_Localized: DARK-RED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153572
+    m_Localized: DARK-GREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153573
+    m_Localized: DARK-BLUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153574
+    m_Localized: DARK-YELLOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153575
+    m_Localized: DARK-ORANGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153576
+    m_Localized: DARK-PURPLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153577
+    m_Localized: DARK-PINK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153578
+    m_Localized: DARK-BROWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153579
+    m_Localized: DARK-GRAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153580
+    m_Localized: DARK-GREY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153581
+    m_Localized: DARK-TEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153582
+    m_Localized: DARK-IRON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153583
+    m_Localized: DEEP-RED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153584
+    m_Localized: DEEP-BLUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153585
+    m_Localized: DEEP-GREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347840
+    m_Localized: DEEP-TEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347841
+    m_Localized: DEEP-YELLOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347842
+    m_Localized: DEEP-PURPLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347843
+    m_Localized: DEEP-GOLD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347844
+    m_Localized: WHITE-BLUE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347845
+    m_Localized: WHITE-PINK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347846
+    m_Localized: WHITE-PURPLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347847
+    m_Localized: WHITE-TEAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347848
+    m_Localized: WHITE-GREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347849
+    m_Localized: WHITE-YELLOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347850
+    m_Localized: GREY-YELLOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347851
+    m_Localized: BLUE-PURPLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347852
+    m_Localized: RED-ORANGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347853
+    m_Localized: ORANGE-GREEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347854
+    m_Localized: TEAL-BROWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347855
+    m_Localized: PURPLE-YELLOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347856
+    m_Localized: CHROMIC-PINK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347857
+    m_Localized: DARK-GREEN
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

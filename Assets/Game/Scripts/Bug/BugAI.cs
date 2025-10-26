@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Bug
+namespace Game.Scripts.Bug
 {
     [RequireComponent(typeof(NavMeshAgent))]
     public class BugAI : MonoBehaviour
@@ -18,15 +18,24 @@ namespace Bug
 
         [Header("Надёжность NavMesh")]
         [Tooltip("Радиус поиска ближайшей точки NavMesh при возврате из инспекции/включении")]
-        [SerializeField] private RuntimeAnimatorController animatorController;
         public float reattachRadius = 2f;
+
+        [Header("Скорость")]
+        [Tooltip("Обычная скорость движения")]
+        public float normalSpeed = 3.5f;
+
+        [Tooltip("Скорость на NavMesh Link")]
+        public float linkSpeed = 10f;
+
+        [Tooltip("Скорость поворота (градусы в секунду)")]
+        public float turnSpeed = 360f;
 
         [Header("Access Control")]
         [Tooltip("Can this bug be inspected regardless of zone restrictions?")]
         [SerializeField] private bool alwaysAccessible = false;
 
         [Header("Анимация")]
-        [SerializeField] private Animator anim;
+        [SerializeField] private Animator _anim;
         [SerializeField] private string speedParam = "Speed";
         [SerializeField] private string isMovingParam = "IsMoving";
         [SerializeField, Tooltip("Порог, выше которого считаем, что движение есть")]
@@ -36,8 +45,8 @@ namespace Bug
 
         public Animator Anim
         {
-            get => anim;
-            set => anim = value;
+            get => _anim;
+            set => _anim = value;
         }
 
         private Vector3 _lastPos;
@@ -47,16 +56,16 @@ namespace Bug
 
         #region State
 
-        private NavMeshAgent agent;
+        private NavMeshAgent _agent;
 
-        private float nextRepathTime;
-        private bool manuallyDisabled;
+        private float _nextRepathTime;
+        private bool _manuallyDisabled;
 
-        private float spawnTime;
+        private float _spawnTime;
 
         // --- ЗОНЫ И ДОСТУП ---
-        private readonly HashSet<BugAccessZone> zones = new HashSet<BugAccessZone>();
-        private InspectableObject inspectable; // целевой флаг canInspect будет управляться отсюда
+        private readonly HashSet<BugAccessZone> _zones = new HashSet<BugAccessZone>();
+        private InspectableObject _inspectable; // целевой флаг canInspect будет управляться отсюда
 
         #endregion
 
@@ -64,22 +73,45 @@ namespace Bug
 
         private void Awake()
         {
-            if (anim == null) anim = GetComponent<Animator>();
-            if (agent == null) agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            _agent = GetComponent<NavMeshAgent>();
+            // Отключаем автоматическое вращение, чтобы контролировать его вручную
+            _agent.updateRotation = false;
+            if (_anim == null) _anim = GetComponentInChildren<Animator>();
             _lastPos = transform.position;
-            agent = GetComponent<NavMeshAgent>();
-            anim = GetComponent<Animator>(); //dsodjisjdi
-            spawnTime = Time.time;
+            _spawnTime = Time.time;
 
-            inspectable = GetComponent<InspectableObject>();
-            if (inspectable == null)
+            _inspectable = GetComponent<InspectableObject>();
+            if (_inspectable == null)
             {
-                Debug.LogWarning($"[BugAI] На {name} нет InspectableObject — управление canInspect работать не будет");
+                // Удален Debug.LogWarning для очистки дебаг сообщений
             }
+
+            ValidateAnimatorParameters();
+        }
+
+        private void ValidateAnimatorParameters()
+        {
+            if (!_anim || !_anim.runtimeAnimatorController) return;
+
+            bool hasSpeed = HasAnimatorParameter(speedParam, AnimatorControllerParameterType.Float);
+            bool hasIsMoving = HasAnimatorParameter(isMovingParam, AnimatorControllerParameterType.Bool);
+        }
+
+        private bool HasAnimatorParameter(string paramName, AnimatorControllerParameterType paramType)
+        {
+            if (!_anim || !_anim.runtimeAnimatorController) return false;
+            
+            foreach (var param in _anim.parameters)
+            {
+                if (param.name == paramName && param.type == paramType)
+                    return true;
+            }
+            return false;
         }
 
         private void Start()
         {
+            _agent.speed = normalSpeed;
             CheckForAccessZone();
             RecomputeAndApplyCanInspect();
         }
@@ -91,21 +123,38 @@ namespace Bug
 
         private void Update()
         {
-            if (!AgentReady() || manuallyDisabled)
+            if (!AgentReady() || _manuallyDisabled)
             {
                 UpdateAnimator(0f);
                 return;
             }
 
-            if (Time.time >= nextRepathTime)
+            if (Time.time >= _nextRepathTime)
             {
-                nextRepathTime = Time.time + repathInterval;
+                _nextRepathTime = Time.time + repathInterval;
                 PickNewRandomPoint();
             }
 
+            // Устанавливаем скорость в зависимости от того, на NavMesh Link ли мы
+            if (_agent.isOnOffMeshLink)
+            {
+                _agent.speed = linkSpeed;
+            }
+            else
+            {
+                _agent.speed = normalSpeed;
+            }
 
             float speed = ComputeCurrentSpeed();
             UpdateAnimator(speed);
+
+            // Ручной поворот к направлению движения
+            if (_agent && _agent.enabled && !_manuallyDisabled && _agent.velocity.sqrMagnitude > 0.01f)
+            {
+                Vector3 moveDir = _agent.velocity.normalized;
+                Quaternion targetRot = Quaternion.LookRotation(moveDir);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, turnSpeed * Time.deltaTime);
+            }
         }
 
         #endregion
@@ -120,7 +169,7 @@ namespace Bug
 
         public float GetTimeSinceSpawn()
         {
-            return Time.time - spawnTime;
+            return Time.time - _spawnTime;
         }
 
         // ==== НОВОЕ: API для зон ====
@@ -129,7 +178,7 @@ namespace Bug
         public void RegisterAccessZone(BugAccessZone zone)
         {
             if (zone == null) return;
-            if (zones.Add(zone))
+            if (_zones.Add(zone))
                 RecomputeAndApplyCanInspect();
         }
 
@@ -137,7 +186,7 @@ namespace Bug
         public void UnregisterAccessZone(BugAccessZone zone)
         {
             if (zone == null) return;
-            if (zones.Remove(zone))
+            if (_zones.Remove(zone))
                 RecomputeAndApplyCanInspect();
         }
 
@@ -147,9 +196,9 @@ namespace Bug
             RecomputeAndApplyCanInspect();
         }
 
-        // Оставляем для обратной совместимости (если где-то еще зовётся).
+        // Оставляем для ��братной совместимости (если где-то еще зовётся).
         // Ничего не устанавливаем напрямую — просто пересчитываем.
-        public void SetAccessible(bool _ignored) => RecomputeAndApplyCanInspect();
+        public void SetAccessible(bool ignored) => RecomputeAndApplyCanInspect();
 
         public void DisableAI(bool disable)
         {
@@ -162,14 +211,14 @@ namespace Bug
             float speed = 0f;
 
             // 1) Если есть валидный агент — -пробуем его velocity
-            if (agent && agent.enabled && agent.isOnNavMesh)
+            if (_agent && _agent.enabled && _agent.isOnNavMesh)
             {
                 // Часто agent.velocity == 0 в момент старта или при остановке торможением
-                float v = agent.velocity.magnitude;
+                float v = _agent.velocity.magnitude;
 
                 // Если путь есть, но velocity≈0, используем desiredVelocity (частый кейс)
-                if (v < 0.01f && (agent.hasPath || !agent.isStopped))
-                    v = agent.desiredVelocity.magnitude;
+                if (v < 0.01f && (_agent.hasPath || !_agent.isStopped))
+                    v = _agent.desiredVelocity.magnitude;
 
                 speed = v;
             }
@@ -192,29 +241,38 @@ namespace Bug
 
         private void UpdateAnimator(float velocityMagnitude)
         {
-            if (!anim) return;
+            if (!_anim || !_anim.enabled || !_anim.runtimeAnimatorController) 
+            {
+                // Удален Debug.LogWarning для очистки дебаг сообщений
+                return;
+            }
 
-            anim.SetFloat(speedParam, velocityMagnitude, speedDamp, Time.deltaTime);
+            // Проверяем существование параметров перед установкой
+            if (HasAnimatorParameter(speedParam, AnimatorControllerParameterType.Float))
+            {
+                _anim.SetFloat(speedParam, velocityMagnitude, speedDamp, Time.deltaTime);
+            }
 
             bool moving = velocityMagnitude > movingThreshold;
+            
+            if (HasAnimatorParameter(isMovingParam, AnimatorControllerParameterType.Bool))
+            {
+                _anim.SetBool(isMovingParam, moving);
+            }
 
-            anim.SetBool(isMovingParam, moving);
-
-            Debug.Log($"[BugAI] speed={velocityMagnitude:F3}  moving={moving}  " +
-                      $"agentVel={(agent ? agent.velocity.magnitude : 0f):F3}  " +
-                      $"desiredVel={(agent ? agent.desiredVelocity.magnitude : 0f):F3}");
+            // Удален Debug.Log для производительности
         }
 
         public void OnInspectStart()
         {
-            manuallyDisabled = true;
+            _manuallyDisabled = true;
 
-            if (agent)
+            if (_agent)
             {
-                if (agent.enabled && agent.isOnNavMesh)
-                    agent.isStopped = true;
+                if (_agent.enabled && _agent.isOnNavMesh)
+                    _agent.isStopped = true;
 
-                agent.enabled = false;
+                _agent.enabled = false;
             }
 
             UpdateAnimator(0f);
@@ -222,17 +280,17 @@ namespace Bug
 
         public void OnInspectEnd()
         {
-            if (agent)
+            if (_agent)
             {
                 AttachToNavMeshIfNeeded();
-                agent.enabled = true;
-                if (!agent.isOnNavMesh)
+                _agent.enabled = true;
+                if (!_agent.isOnNavMesh)
                     AttachToNavMeshIfNeeded();
-                agent.isStopped = false;
+                _agent.isStopped = false;
             }
 
-            manuallyDisabled = false;
-            nextRepathTime = Time.time + 0.1f;
+            _manuallyDisabled = false;
+            _nextRepathTime = Time.time + 0.1f;
         }
 
         #endregion
@@ -250,39 +308,24 @@ namespace Bug
             if (NavMesh.SamplePosition(random, out var hit, wanderRadius, NavMesh.AllAreas))
                 SetDestinationSafe(hit.position);
             else
-                nextRepathTime = Time.time + 0.5f;
-        }
-
-        private float EstimatePathLength(Vector3 target)
-        {
-            if (!AgentReady()) return 0f;
-
-            var path = new NavMeshPath();
-            if (!agent.CalculatePath(target, path) || path.status == NavMeshPathStatus.PathInvalid)
-                return 0f;
-
-            float len = 0f;
-            var c = path.corners;
-            for (int i = 1; i < c.Length; i++)
-                len += Vector3.Distance(c[i - 1], c[i]);
-            return len;
+                _nextRepathTime = Time.time + 0.5f;
         }
 
         private void SetDestinationSafe(Vector3 pos)
         {
             if (!AgentReady()) return;
-            if (!agent.SetDestination(pos))
-                nextRepathTime = Time.time + 0.3f;
+            if (!_agent.SetDestination(pos))
+                _nextRepathTime = Time.time + 0.3f;
             else
-                agent.isStopped = false;
+                _agent.isStopped = false;
         }
 
-        private bool AgentReady() => agent && agent.enabled && agent.isOnNavMesh;
+        private bool AgentReady() => _agent && _agent.enabled && _agent.isOnNavMesh;
 
         private void EnsureAgentOnNavMesh()
         {
-            if (!agent) return;
-            if (agent.enabled && !agent.isOnNavMesh)
+            if (!_agent) return;
+            if (_agent.enabled && !_agent.isOnNavMesh)
                 AttachToNavMeshIfNeeded();
         }
 
@@ -291,8 +334,8 @@ namespace Bug
             if (NavMesh.SamplePosition(transform.position, out var hit, Mathf.Max(0.25f, reattachRadius),
                     NavMesh.AllAreas))
             {
-                if (!agent.enabled) agent.enabled = true;
-                agent.Warp(hit.position);
+                if (!_agent.enabled) _agent.enabled = true;
+                _agent.Warp(hit.position);
             }
         }
 
@@ -304,7 +347,7 @@ namespace Bug
         {
             // 1) агрегируем доступ по всем зонам (AND)
             bool zonesAllow = true;
-            foreach (var z in zones)
+            foreach (var z in _zones)
             {
                 if (z == null) continue;
                 if (!z.IsAccessible)
@@ -318,15 +361,15 @@ namespace Bug
             bool finalCanInspect = alwaysAccessible || zonesAllow;
 
             // 3) толкаем в InspectableObject.canInspect
-            if (inspectable != null)
-                inspectable.SetInspectable(finalCanInspect);
+            if (_inspectable != null)
+                _inspectable.SetInspectable(finalCanInspect);
 
             // (опционально можно включать/выключать подсветку/интеракт-коллайдеры тут же)
         }
 
         private void CheckForAccessZone()
         {
-            // Если при старте уже стоим в нескольких зонах — зарегистрируйтесь во всех
+            // Если при старт�� уже стоим в нескольких зонах — зарегистрируйтесь во всех
             var zonesInScene = FindObjectsByType<BugAccessZone>(FindObjectsSortMode.None);
             var bugCollider = GetComponent<Collider>();
 
@@ -344,3 +387,4 @@ namespace Bug
         #endregion
     }
 }
+

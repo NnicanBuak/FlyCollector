@@ -1,89 +1,165 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
-using Game.Scripts.Localization;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
+using TMPro;
 
 namespace Game.Scripts.Localization
 {
-    public class LocalizationSelector : MonoBehaviour
+    [RequireComponent(typeof(TMP_Dropdown))]
+    public class LanguageSelector : MonoBehaviour
     {
-        [SerializeField] private Dropdown dropdown;
+        [Header("References")]
+        [SerializeField] private TMP_Dropdown dropdown;
+
+        [Header("Options")]
+        [Tooltip("Использовать нативные имена CultureInfo (например, \"Русский (Россия)\"). " +
+                 "Если выключить — будет использоваться LocaleName или код.")]
+        [SerializeField] private bool useNativeNames = true;
+
+        [Tooltip("Ключ для сохранения выбранного языка в PlayerPrefs.")]
         [SerializeField] private string saveKey = "Localization.Language";
 
-        private TextAsset[] _localeFiles;
+        private List<Locale> _locales;
 
         private void Awake()
         {
-            if (dropdown == null) dropdown = GetComponent<Dropdown>();
+            if (dropdown == null)
+                dropdown = GetComponent<TMP_Dropdown>();
 
-            // Загружаем все таблицы локалей из Resources/Localization/strings и сортируем по имени
-            _localeFiles = Resources.LoadAll<TextAsset>("Localization/strings").OrderBy(t => t.name).ToArray();
-
-            if (_localeFiles == null || _localeFiles.Length == 0)
+            if (dropdown == null)
             {
-                Debug.LogWarning("LocalizationSelector: no locale files found in Resources/Localization/strings");
-                // fallback: оставляем существующий dropdown (если есть) и пытаемся восстановить по строке
-                var savedNameFallback = PlayerPrefs.GetString(saveKey, "");
-                if (!string.IsNullOrEmpty(savedNameFallback))
-                {
-                    // если сервис уже доступен — установим
-                    var svc = LocalizationService.Instance;
-                    if (svc != null) svc.SetLocale(savedNameFallback);
-                }
-                return;
-            }
-
-            // Заполним опции Dropdown отображаемыми именами (используем имя файла как код локали)
-            dropdown.options = _localeFiles.Select(t => new Dropdown.OptionData(t.name)).ToList();
-
-            // Выберем значение по сохранённой строке
-            var savedLocale = PlayerPrefs.GetString(saveKey, "");
-            int index = 0;
-            if (!string.IsNullOrEmpty(savedLocale))
-            {
-                for (int i = 0; i < _localeFiles.Length; i++)
-                {
-                    if (string.Equals(_localeFiles[i].name, savedLocale, System.StringComparison.OrdinalIgnoreCase))
-                    {
-                        index = i;
-                        break;
-                    }
-                }
-            }
-
-            dropdown.value = index;
-            dropdown.onValueChanged.AddListener(OnLanguageChanged);
-
-            // Инициализируем сервис текущим значением (если доступен)
-            var initial = _localeFiles[index].name;
-            var svcInit = LocalizationService.Instance;
-            if (svcInit != null)
-                svcInit.SetLocale(initial);
-        }
-
-        private void OnLanguageChanged(int index)
-        {
-            if (_localeFiles == null || index < 0 || index >= _localeFiles.Length) return;
-
-            var locale = _localeFiles[index].name;
-            PlayerPrefs.SetString(saveKey, locale);
-            PlayerPrefs.Save();
-
-            // Уведомляем сервис
-            try
-            {
-                var svc = LocalizationService.Instance;
-                if (svc != null) svc.SetLocale(locale);
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogWarning($"LocalizationSelector: failed to notify LocalizationService: {ex.Message}");
+                Debug.LogError("LanguageSelector: TMP_Dropdown не найден!");
+                enabled = false;
             }
         }
 
-        private void OnDestroy()
+        private void OnEnable()
         {
-            dropdown.onValueChanged.RemoveListener(OnLanguageChanged);
+            StartCoroutine(InitializeLocalizationRoutine());
+        }
+
+        private IEnumerator InitializeLocalizationRoutine()
+        {
+            // Ждём инициализации локализации
+            var initOp = LocalizationSettings.InitializationOperation;
+            if (!initOp.IsDone)
+            {
+                yield return initOp;
+            }
+
+            // Получаем доступ к локалям после инициализации
+            if (LocalizationSettings.AvailableLocales == null)
+            {
+                Debug.LogError("LanguageSelector: AvailableLocales is null. Проверьте настройки локализации.");
+                yield break;
+            }
+
+            _locales = LocalizationSettings.AvailableLocales.Locales;
+            
+            if (_locales == null || _locales.Count == 0)
+            {
+                Debug.LogWarning("LanguageSelector: Нет доступных локалей. Проверьте Localization Settings > Available Locales.");
+                dropdown.ClearOptions();
+                yield break;
+            }
+
+            BuildOptions();
+            dropdown.RefreshShownValue();
+
+            // Восстановить сохранённый выбор (если есть)
+            if (PlayerPrefs.HasKey(saveKey))
+            {
+                var savedCode = PlayerPrefs.GetString(saveKey);
+                var saved = FindByCode(savedCode);
+                if (saved != null)
+                    LocalizationSettings.SelectedLocale = saved;
+            }
+
+            // Проставить текущий индекс без вызова событий
+            var currentLocale = LocalizationSettings.SelectedLocale;
+            var currentIndex = GetIndexByCode(currentLocale?.Identifier.Code);
+            dropdown.SetValueWithoutNotify(currentIndex);
+
+            // Подписки
+            dropdown.onValueChanged.AddListener(OnDropdownChanged);
+            LocalizationSettings.SelectedLocaleChanged += OnSelectedLocaleChanged;
+        }
+
+        private void OnDisable()
+        {
+            if (dropdown != null)
+                dropdown.onValueChanged.RemoveListener(OnDropdownChanged);
+
+            LocalizationSettings.SelectedLocaleChanged -= OnSelectedLocaleChanged;
+        }
+
+        private void BuildOptions()
+        {
+            dropdown.ClearOptions();
+            var options = new List<TMP_Dropdown.OptionData>(_locales.Count);
+
+            foreach (var loc in _locales)
+            {
+                string label;
+                if (useNativeNames)
+                {
+                    // Используем нативное имя языка из CultureInfo
+                    var culture = loc.Identifier.CultureInfo;
+                    label = culture != null ? culture.NativeName : loc.LocaleName;
+                }
+                else
+                {
+                    // Используем короткий код языка в верхнем регистре (EN, RU)
+                    label = loc.Identifier.Code.Split('-')[0].ToUpperInvariant();
+                }
+                
+                options.Add(new TMP_Dropdown.OptionData(label));
+            }
+
+            dropdown.AddOptions(options);
+        }
+
+        private Locale FindByCode(string code)
+        {
+            if (string.IsNullOrEmpty(code)) return null;
+            return _locales.FirstOrDefault(l => l.Identifier.Code == code);
+        }
+
+        private int GetIndexByCode(string code)
+        {
+            if (string.IsNullOrEmpty(code)) return 0;
+
+            for (int i = 0; i < _locales.Count; i++)
+            {
+                if (_locales[i].Identifier.Code == code)
+                    return i;
+            }
+            return 0;
+        }
+
+        private void OnDropdownChanged(int index)
+        {
+            if (index < 0 || index >= _locales.Count) return;
+
+            var chosen = _locales[index];
+
+            if (LocalizationSettings.SelectedLocale == null ||
+                LocalizationSettings.SelectedLocale.Identifier.Code != chosen.Identifier.Code)
+            {
+                LocalizationSettings.SelectedLocale = chosen;
+                PlayerPrefs.SetString(saveKey, chosen.Identifier.Code);
+                PlayerPrefs.Save();
+            }
+        }
+
+        private void OnSelectedLocaleChanged(Locale newLocale)
+        {
+            var ix = GetIndexByCode(newLocale?.Identifier.Code);
+            dropdown.SetValueWithoutNotify(ix);
+            dropdown.RefreshShownValue();
         }
     }
 }

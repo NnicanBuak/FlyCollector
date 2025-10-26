@@ -1,0 +1,1292 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: bugs_ru
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: ru
+  m_SharedData: {fileID: 11400000, guid: 26ccc157afd2947459be5b6ef6a88e53, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 6608036814848
+    m_Localized: "Cicada magna pede (\u043D\u0435\u0431\u0435\u0441\u043D\u044B\u0439
+      \u0436\u0443\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814849
+    m_Localized: "\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0436\u0451\u043B\u0442\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814850
+    m_Localized: "Cicada magna pede (\u0442\u0440\u043E\u043F\u0438\u0447\u0435\u0441\u043A\u0438\u0439
+      \u043E\u0445\u043E\u0442\u043D\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814851
+    m_Localized: "\u0432\u0435\u0441\u044C \u0436\u0443\u043A \u0437\u0435\u043B\u0451\u043D\u044B\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814852
+    m_Localized: "Cicada magna pede (\u043B\u0435\u0441\u043D\u043E\u0439 \u0436\u0438\u0442\u0435\u043B\u044C)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814853
+    m_Localized: "\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u043E-\u0437\u0435\u043B\u0451\u043D\u043E\u0435
+      \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814854
+    m_Localized: "Cicada magna pede (\u043A\u0440\u0438\u0441\u0442\u0430\u043B\u044C\u043D\u044B\u0439
+      \u0436\u0443\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814855
+    m_Localized: "\u0441\u0438\u043D\u0435-\u0431\u0435\u043B\u043E\u0435 \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814856
+    m_Localized: "La Regina Semiramide (\u0441\u0432\u044F\u0442\u0430\u044F)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814857
+    m_Localized: "\u0441\u0438\u043D\u0438\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0436\u0451\u043B\u0442\u043E\u0435 \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814858
+    m_Localized: "La Regina Semiramide (\u043A\u0440\u0430\u0441\u043D\u0430\u044F
+      \u0442\u043E\u0447\u043A\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814859
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0433\u043E\u043B\u0443\u0431\u043E\u0435 \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814860
+    m_Localized: "La Regina Semiramide (\u0440\u0435\u0436\u0438\u043C \u043F\u043E\u043F\u0443\u0433\u0430\u0439)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814861
+    m_Localized: "\u0442\u043E\u043B\u0441\u0442\u044B\u0435 \u043E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0441\u0438\u043D\u0438\u0439 \u0446\u0435\u043D\u0442\u0440"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814862
+    m_Localized: "La Regina Semiramide (\u0434\u0440\u0435\u0432\u0435\u0441\u043D\u0430\u044F
+      \u0431\u0430\u0431\u0443\u0438\u043D\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814863
+    m_Localized: "\u0431\u0435\u043B\u044B\u0435 \u043D\u043E\u0433\u0438, \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F \u0438 \u0433\u043E\u043B\u043E\u0432\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814864
+    m_Localized: "La Regina Semiramide (\u043D\u043E\u0447\u043D\u043E\u0435 \u0436\u0435\u043B\u0430\u043D\u0438\u0435)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814865
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u043A\u0440\u0430\u0441\u043D\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u0430
+      \u0438 \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814866
+    m_Localized: "Aranea Cancri Armatae (\u043E\u0431\u0435\u0437\u044C\u044F\u043D\u0438\u0439
+      \u0441\u0442\u0438\u043B\u044C)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814867
+    m_Localized: "\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0435 \u043D\u043E\u0433\u0438,
+      \u0441\u0435\u0440\u043E-\u0436\u0451\u043B\u0442\u0430\u044F \u0448\u043B\u044F\u043F\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814868
+    m_Localized: "Aranea Cancri Armatae (\u0440\u044B\u0431\u0430-\u043A\u043B\u043E\u0443\u043D)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814869
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435 \u043D\u043E\u0433\u0438,
+      \u043E\u0440\u0430\u043D\u0436\u0435\u0432\u043E\u0435 \u0442\u0435\u043B\u043E,
+      \u0431\u0438\u0440\u044E\u0437\u043E\u0432\u0430\u044F \u0448\u043B\u044F\u043F\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814870
+    m_Localized: "Aranea Cancri Armatae (\u0430\u0440\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439
+      \u0442\u043E\u0432\u0430\u0440\u0438\u0449)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814871
+    m_Localized: "\u0442\u0451\u043C\u043D\u043E-\u0441\u0438\u043D\u0438\u0435 \u043D\u043E\u0433\u0438,
+      \u0431\u0435\u043B\u043E-\u0441\u0438\u043D\u044F\u044F \u0448\u043B\u044F\u043F\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814872
+    m_Localized: "Aranea Cancri Armatae (\u0431\u0435\u0437\u0443\u043C\u043D\u044B\u0439
+      \u0430\u043F\u0435\u043B\u044C\u0441\u0438\u043D)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814873
+    m_Localized: "\u0442\u0451\u043C\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0435
+      \u043D\u043E\u0433\u0438, \u043E\u0440\u0430\u043D\u0436\u0435\u0432\u043E-\u0437\u0435\u043B\u0451\u043D\u0430\u044F
+      \u0448\u043B\u044F\u043F\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814874
+    m_Localized: "Aranea Cancri Armatae (\u0431\u0435\u043B\u043E\u0441\u043D\u0435\u0436\u043A\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814875
+    m_Localized: "\u0432\u0435\u0441\u044C \u0436\u0443\u043A \u0431\u0435\u043B\u044B\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814876
+    m_Localized: "Un insecto timido (\u043A\u043E\u0440\u0430\u0431\u0435\u043B\u044C\u0449\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814877
+    m_Localized: "\u0447\u0451\u0440\u043D\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u0430,
+      \u0431\u0435\u043B\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F, \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0435
+      \u0430\u043D\u0442\u0435\u043D\u043D\u044B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814878
+    m_Localized: "Un insecto timido (\u0444\u0440\u0443\u043A\u0442\u043E\u0432\u0430\u044F
+      \u0442\u0430\u0440\u0435\u043B\u043A\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814879
+    m_Localized: "\u0437\u0435\u043B\u0451\u043D\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u0430,
+      \u043E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0440\u043E\u0437\u043E\u0432\u044B\u0435 \u0430\u043D\u0442\u0435\u043D\u043D\u044B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814880
+    m_Localized: "Un insecto timido (\u0441\u0432\u0435\u0442\u043B\u044F\u0447\u043E\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814881
+    m_Localized: "\u044F\u0440\u043A\u043E-\u0436\u0451\u043B\u0442\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u0430,
+      \u0440\u043E\u0437\u043E\u0432\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0433\u043E\u043B\u0443\u0431\u044B\u0435 \u0430\u043D\u0442\u0435\u043D\u043D\u044B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814882
+    m_Localized: "Un insecto timido (\u0442\u0435\u043D\u0435\u0432\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u043D\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814883
+    m_Localized: "\u0441\u0438\u043D\u0438\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u0430,
+      \u0437\u0435\u043B\u0451\u043D\u044B\u0435 \u0430\u043D\u0442\u0435\u043D\u043D\u044B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814884
+    m_Localized: "Un insecto timido (\u0431\u043E\u0433-\u0436\u0443\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814885
+    m_Localized: "\u0432\u0435\u0441\u044C \u0436\u0443\u043A \u0431\u0435\u043B\u044B\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814886
+    m_Localized: "Vesparum cornua (\u0442\u043E\u043A\u0441\u0438\u0447\u043D\u044B\u0435
+      \u043E\u0442\u0445\u043E\u0434\u044B)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814887
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u043E-\u0437\u0435\u043B\u0451\u043D\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0441\u0435\u0440\u044B\u0435 \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814888
+    m_Localized: "Vesparum cornua (\u0441\u0432\u044F\u0442\u0430\u044F)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814889
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0436\u0451\u043B\u0442\u043E\u0435
+      \u0438 \u0441\u0432\u0435\u0442\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0441\u0435\u0440\u044B\u0435 \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814890
+    m_Localized: "Vesparum cornua (\u043A\u0435\u043D\u0442\u0430\u0432\u0440)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814891
+    m_Localized: "\u0442\u0451\u043C\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0442\u0451\u043C\u043D\u043E-\u0440\u043E\u0437\u043E\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0433\u043E\u043B\u0443\u0431\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814892
+    m_Localized: "Vesparum cornua (\u0431\u043E\u0433-\u0436\u0443\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814893
+    m_Localized: "\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0435 \u0433\u043B\u0430\u0437\u0430,
+      \u0441\u0432\u0435\u0442\u043B\u0430\u044F \u043A\u043E\u0436\u0430, \u0441\u0435\u0440\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009152
+    m_Localized: "Vesparum cornua (\u0440\u043E\u0437\u043E\u0432\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009153
+    m_Localized: "\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u043E-\u0440\u043E\u0437\u043E\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0433\u043E\u043B\u0443\u0431\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009154
+    m_Localized: "Duplex cadaver-esus beetle (\u043C\u0451\u0440\u0442\u0432\u044B\u0439
+      \u0430\u043F\u0435\u043B\u044C\u0441\u0438\u043D)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009155
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u043E-\u043E\u0440\u0430\u043D\u0436\u0435\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009156
+    m_Localized: "Duplex cadaver-esus beetle (\u0430\u0440\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439
+      \u0442\u043E\u0432\u0430\u0440\u0438\u0449)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009157
+    m_Localized: "\u0433\u043E\u043B\u0443\u0431\u043E\u0435 \u0438 \u0442\u0451\u043C\u043D\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009158
+    m_Localized: "Duplex cadaver-esus beetle (\u0428\u0438\u0432\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009159
+    m_Localized: "\u0442\u0451\u043C\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u043E\u0435
+      \u0438 \u0442\u0451\u043C\u043D\u043E-\u0441\u0438\u043D\u0435\u0435 \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009160
+    m_Localized: "Duplex cadaver-esus beetle (\u043B\u044F\u0433\u0443\u0448\u0430\u0447\u0438\u0439
+      \u041B\u0435\u0441\u0442\u0435\u0440)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009161
+    m_Localized: "\u043E\u0440\u0430\u043D\u0436\u0435\u0432\u043E-\u0438\u0437\u0443\u043C\u0440\u0443\u0434\u043D\u043E\u0435
+      \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009162
+    m_Localized: "Duplex cadaver-esus beetle (\u041F\u0440\u043E\u043C\u0435\u0442\u0435\u0439)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009163
+    m_Localized: "\u043A\u0440\u0430\u0441\u043D\u043E-\u0441\u0438\u043D\u0435\u0435
+      \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009164
+    m_Localized: "Cantharum cellularum est (\u0440\u043E\u0437\u043E\u0432\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009165
+    m_Localized: "\u0437\u043E\u043B\u043E\u0442\u0430\u044F \u0448\u043B\u044F\u043F\u0430,
+      \u0440\u043E\u0437\u043E\u0432\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0435
+      \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009166
+    m_Localized: "Cantharum cellularum est (\u043A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u043A\u0438\u0439
+      \u0441\u0442\u0440\u0430\u0436)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009167
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0437\u0435\u043B\u0451\u043D\u0430\u044F
+      \u0448\u043B\u044F\u043F\u0430, \u0431\u0435\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0435
+      \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009168
+    m_Localized: "Cantharum cellularum est (\u0431\u0435\u0437\u0443\u043C\u043D\u044B\u0439
+      \u0430\u043F\u0435\u043B\u044C\u0441\u0438\u043D)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009169
+    m_Localized: "\u043E\u0440\u0430\u043D\u0436\u0435\u0432\u043E-\u0437\u0435\u043B\u0451\u043D\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0431\u0438\u0440\u044E\u0437\u043E\u0432\u043E-\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u0430\u044F
+      \u0448\u043B\u044F\u043F\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009170
+    m_Localized: "Cantharum cellularum est (\u043F\u0443\u0448\u0438\u0441\u0442\u044B\u0439
+      \u043A\u0440\u043E\u043B\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009171
+    m_Localized: "\u0440\u043E\u0437\u043E\u0432\u043E-\u0431\u0435\u043B\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0431\u0438\u0440\u044E\u0437\u043E\u0432\u0430\u044F
+      \u0448\u043B\u044F\u043F\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009172
+    m_Localized: "Cantharum cellularum est (\u0441\u0432\u044F\u0442\u0430\u044F)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009173
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0435
+      \u0438 \u0431\u0435\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0436\u0451\u043B\u0442\u0430\u044F \u0448\u043B\u044F\u043F\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009174
+    m_Localized: "Culex turtur (\u0431\u043E\u043B\u043E\u0442\u043D\u044B\u0439
+      \u043A\u043E\u0440\u043E\u043B\u044C)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009175
+    m_Localized: "\u0437\u0435\u043B\u0451\u043D\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0431\u0435\u043B\u0430\u044F \u0448\u043B\u044F\u043F\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009176
+    m_Localized: "Culex turtur (\u0430\u043D\u0434\u0435\u0440\u0434\u043E\u0433)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009177
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0436\u0451\u043B\u0442\u044B\u0435
+      \u0438 \u0437\u0435\u043B\u0451\u043D\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0431\u0435\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u0430\u044F \u0448\u043B\u044F\u043F\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009178
+    m_Localized: "Culex turtur (\u0442\u0435\u043D\u0435\u0432\u043E\u0439 \u0441\u0442\u0440\u0430\u043D\u043D\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009179
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u043E-\u0436\u0451\u043B\u0442\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0441\u0438\u043D\u044F\u044F \u0448\u043B\u044F\u043F\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009180
+    m_Localized: "Culex turtur (\u0421\u0442\u0435\u0444\u0430\u043D\u043E)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009181
+    m_Localized: "\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u0430\u044F \u0448\u043B\u044F\u043F\u0430,
+      \u0441\u0438\u043D\u0435-\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009182
+    m_Localized: "Culex turtur (\u043C\u0441\u0442\u0438\u0442\u0435\u043B\u044C)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009183
+    m_Localized: "\u0431\u0435\u043B\u0430\u044F \u0448\u043B\u044F\u043F\u0430,
+      \u0436\u0443\u043A \u0432 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C
+      \u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009184
+    m_Localized: "Lepus Volant (\u043E\u0441\u043D\u043E\u0432\u043D\u043E\u0439
+      \u043A\u0440\u043E\u043B\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009185
+    m_Localized: "\u0432\u0435\u0441\u044C \u0436\u0443\u043A \u0431\u0435\u043B\u044B\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009186
+    m_Localized: "Lepus Volant (\u043B\u0435\u0434\u044F\u043D\u043E\u0439 \u043A\u0440\u043E\u043B\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009187
+    m_Localized: "\u0432\u0435\u0441\u044C \u0436\u0443\u043A \u0441\u0438\u043D\u0438\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009188
+    m_Localized: "Lepus Volant (\u0442\u0435\u043D\u0435\u0432\u043E\u0439 \u0442\u0438\u0440\u0430\u043D)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009189
+    m_Localized: "\u0436\u0443\u043A \u0432 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C
+      \u0442\u0451\u043C\u043D\u043E-\u0441\u0438\u043D\u0438\u0439, \u043A\u0440\u0430\u0441\u043D\u043E-\u043E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009190
+    m_Localized: "Lepus Volant (\u041B\u0443\u043A\u0430\u0440\u0438\u0441)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009191
+    m_Localized: "\u0441\u0438\u043D\u0438\u0435 \u0443\u0448\u0438, \u043A\u0440\u0430\u0441\u043D\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009192
+    m_Localized: "Lepus Volant (\u044E\u043D\u0430\u044F \u0447\u0435\u0440\u0435\u043F\u0430\u0445\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009193
+    m_Localized: "\u0436\u0443\u043A \u0432 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C
+      \u0441\u0432\u0435\u0442\u043B\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0439,
+      \u0441\u0438\u043D\u0438\u0439 \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009194
+    m_Localized: "Volare Umbrella (\u0441\u0430\u043B\u0430\u0442)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009195
+    m_Localized: "\u0437\u0435\u043B\u0451\u043D\u043E-\u0431\u0435\u043B\u044B\u0439
+      \u0446\u0435\u043D\u0442\u0440, \u0433\u043E\u043B\u0443\u0431\u043E\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009196
+    m_Localized: "Volare Umbrella (\u043A\u043E\u0440\u043E\u043B\u0435\u0432\u0441\u043A\u0438\u0439
+      \u0441\u0438\u043D\u0438\u0439)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009197
+    m_Localized: "\u0437\u043E\u043B\u043E\u0442\u043E\u0439 \u0446\u0435\u043D\u0442\u0440,
+      \u0441\u0438\u043D\u0438\u0439 \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009198
+    m_Localized: "Volare Umbrella (\u0442\u0440\u043E\u043F\u0438\u0447\u0435\u0441\u043A\u0438\u0439
+      \u043E\u0445\u043E\u0442\u043D\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009199
+    m_Localized: "\u0447\u0451\u0440\u043D\u043E-\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0439
+      \u0446\u0435\u043D\u0442\u0440, \u0441\u0432\u0435\u0442\u043B\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009200
+    m_Localized: "Volare Umbrella (\u0441\u0432\u044F\u0442\u0430\u044F)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009201
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0439
+      \u0438 \u0441\u0432\u0435\u0442\u043B\u043E-\u0436\u0451\u043B\u0442\u044B\u0439
+      \u0446\u0435\u043D\u0442\u0440, \u043E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009202
+    m_Localized: "Volare Umbrella (\u0445\u0430\u043C\u0435\u043B\u0435\u043E\u043D)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009203
+    m_Localized: "\u0431\u0435\u043B\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0439
+      \u0446\u0435\u043D\u0442\u0440, \u0441\u0432\u0435\u0442\u043B\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009204
+    m_Localized: "Sciurus culex (\u043A\u0440\u043E\u043B\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009205
+    m_Localized: "\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u043E\u0435 \u0442\u0435\u043B\u043E,
+      \u0441\u0435\u0440\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009206
+    m_Localized: "Sciurus culex (\u0430\u0440\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439
+      \u0442\u043E\u0432\u0430\u0440\u0438\u0449)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009207
+    m_Localized: "\u0441\u0438\u043D\u0435-\u0431\u0435\u043B\u043E\u0435 \u0442\u0435\u043B\u043E,
+      \u0441\u0438\u043D\u044F\u044F \u0442\u043E\u0447\u043A\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009208
+    m_Localized: "Sciurus culex (\u0431\u043E\u043B\u043E\u0442\u043D\u044B\u0439
+      \u0445\u0440\u0430\u043D\u0438\u0442\u0435\u043B\u044C)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009209
+    m_Localized: "\u0431\u0435\u043B\u043E-\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u043E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009210
+    m_Localized: "Sciurus culex (\u043C\u0430\u0433\u043C\u0430-\u0436\u0443\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203456
+    m_Localized: "\u043E\u0440\u0430\u043D\u0436\u0435\u0432\u043E\u0435 \u0442\u0435\u043B\u043E,
+      \u0440\u043E\u0437\u043E\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0431\u0435\u043B\u0430\u044F \u0442\u043E\u0447\u043A\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203457
+    m_Localized: "Sciurus culex (\u0442\u0440\u044E\u043A\u0430\u0447)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203458
+    m_Localized: "\u0440\u043E\u0437\u043E\u0432\u043E\u0435 \u0442\u0435\u043B\u043E,
+      \u0436\u0443\u043A \u0432 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C
+      \u0438\u0437\u0443\u043C\u0440\u0443\u0434\u043D\u044B\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203459
+    m_Localized: "Regia Vesparum (\u0448\u043E\u043A\u043E\u043B\u0430\u0434\u043A\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203460
+    m_Localized: "\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u043E-\u0440\u043E\u0437\u043E\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203461
+    m_Localized: "Regia Vesparum (\u0431\u0435\u043B\u043E\u0441\u043D\u0435\u0436\u043A\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203462
+    m_Localized: "\u0432\u0435\u0441\u044C \u0436\u0443\u043A \u0431\u0435\u043B\u044B\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203463
+    m_Localized: "Regia Vesparum (\u0431\u0430\u0431\u0443\u0438\u043D)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203464
+    m_Localized: "\u0437\u0435\u043B\u0451\u043D\u043E-\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0442\u0451\u043C\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203465
+    m_Localized: "Regia Vesparum (\u0431\u043E\u0433-\u0436\u0443\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203466
+    m_Localized: "\u0431\u0435\u043B\u043E-\u0437\u0435\u043B\u0451\u043D\u043E\u0435
+      \u0438 \u0441\u0432\u0435\u0442\u043B\u043E-\u0436\u0451\u043B\u0442\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0431\u0435\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203467
+    m_Localized: "Regia Vesparum (\u0440\u043E\u0437\u043E\u0432\u044B\u0439 \u043F\u0435\u0440\u0441\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203468
+    m_Localized: "\u0440\u043E\u0437\u043E\u0432\u043E-\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0440\u043E\u0437\u043E\u0432\u044B\u0435 \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203469
+    m_Localized: "Aranea Caprae (\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0439
+      \u043C\u0441\u0442\u0438\u0442\u0435\u043B\u044C)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203470
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0441\u0438\u043D\u0438\u0435 \u0440\u043E\u0433\u0430, \u0436\u0451\u043B\u0442\u044B\u0435
+      \u0430\u043D\u0442\u0435\u043D\u043D\u044B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203471
+    m_Localized: "Aranea Caprae (\u0433\u043E\u043B\u0443\u0431\u043E\u0439 \u0431\u0440\u0438\u043B\u043B\u0438\u0430\u043D\u0442)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203472
+    m_Localized: "\u0436\u0443\u043A \u0432 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C
+      \u0433\u043E\u043B\u0443\u0431\u043E\u0439 \u0438 \u0441\u0432\u0435\u0442\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203473
+    m_Localized: "Aranea Caprae (\u043F\u0430\u0443\u043A\u043E-\u0441\u0438\u043D\u0438\u0439)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203474
+    m_Localized: "\u0437\u0435\u043B\u0451\u043D\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0441\u0438\u043D\u0438\u0435 \u0438 \u0431\u0435\u043B\u044B\u0435 \u0440\u043E\u0433\u0430,
+      \u043C\u0430\u043B\u0430\u0445\u0438\u0442\u043E\u0432\u044B\u0435 \u0430\u043D\u0442\u0435\u043D\u043D\u044B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203475
+    m_Localized: "Aranea Caprae (\u0445\u0430\u043C\u0435\u043B\u0435\u043E\u043D)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203476
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442, \u043C\u0430\u043B\u0430\u0445\u0438\u0442\u043E\u0432\u044B\u0435
+      \u0430\u043D\u0442\u0435\u043D\u043D\u044B, \u0445\u0440\u043E\u043C\u043E\u0432\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203477
+    m_Localized: "Aranea Caprae (\u0434\u0440\u0435\u043D-\u0430\u043D\u0433\u0435\u043B)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203478
+    m_Localized: "\u0440\u043E\u0437\u043E\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0442\u0451\u043C\u043D\u043E-\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435
+      \u0438 \u0442\u0451\u043C\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0435
+      \u0440\u043E\u0433\u0430, \u043E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0435
+      \u0430\u043D\u0442\u0435\u043D\u043D\u044B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203479
+    m_Localized: "Struthio culex (\u0443\u0433\u0430\u0441\u0430\u044E\u0449\u0430\u044F
+      \u0437\u0432\u0435\u0437\u0434\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203480
+    m_Localized: "\u0436\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435 \u043D\u043E\u0433\u0438"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203481
+    m_Localized: "Struthio culex (\u043A\u0438\u0431\u0435\u0440-\u0438\u043C\u043F\u0435\u0440\u0438\u044F)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203482
+    m_Localized: "\u0442\u0451\u043C\u043D\u043E-\u0436\u0435\u043B\u0435\u0437\u043D\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442, \u0442\u0451\u043C\u043D\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0435
+      \u043D\u043E\u0433\u0438"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203483
+    m_Localized: "Struthio culex (\u0431\u043E\u043B\u043E\u0442\u043D\u044B\u0439
+      \u0437\u0432\u0435\u0440\u044C)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203484
+    m_Localized: "\u0431\u043E\u043B\u043E\u0442\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u043C\u0430\u043B\u0430\u0445\u0438\u0442\u043E\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203485
+    m_Localized: "Struthio culex (\u0430\u043D\u0433\u0435\u043B-\u0445\u0430\u043C\u0435\u043B\u0435\u043E\u043D)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203486
+    m_Localized: "\u0445\u0440\u043E\u043C\u043E\u0432\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0436\u0443\u043A \u0432 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C
+      \u0431\u0435\u043B\u044B\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203487
+    m_Localized: "Struthio culex (\u0441\u0442\u0435\u043F\u043D\u043E\u0439 \u0432\u043E\u043B\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203488
+    m_Localized: "\u0431\u0435\u043B\u043E\u0435 \u0442\u0435\u043B\u043E, \u0433\u043E\u043B\u0443\u0431\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203489
+    m_Localized: "Stultus magnus cimex est (\u0422\u0430\u043D\u043E\u0441)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203490
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0433\u043E\u043B\u0443\u0431\u043E\u0435 \u0442\u0435\u043B\u043E, \u0437\u043E\u043B\u043E\u0442\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203491
+    m_Localized: "Stultus magnus cimex est (\u0442\u0435\u043D\u0435\u0432\u043E\u0439
+      \u0441\u0442\u0440\u0430\u043D\u043D\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203492
+    m_Localized: "\u0441\u0438\u043D\u0438\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0441\u0438\u043D\u0435\u0435 \u0442\u0435\u043B\u043E, \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203493
+    m_Localized: "Stultus magnus cimex est (\u0441\u0430\u043F\u0444\u0438\u0440)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203494
+    m_Localized: "\u0442\u0451\u043C\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442, \u0436\u0443\u043A \u0432 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C
+      \u0441\u0438\u043D\u0438\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203495
+    m_Localized: "Stultus magnus cimex est (\u0442\u0440\u043E\u043F\u0438\u0447\u0435\u0441\u043A\u0438\u0439
+      \u043E\u0445\u043E\u0442\u043D\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203496
+    m_Localized: "\u0436\u0443\u043A \u0432 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C
+      \u0441\u0432\u0435\u0442\u043B\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0439,
+      \u0442\u0451\u043C\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203497
+    m_Localized: "Stultus magnus cimex est (\u0448\u043E\u043A\u043E\u043B\u0430\u0434\u043A\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203498
+    m_Localized: "\u0440\u043E\u0437\u043E\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u043E\u0435 \u0442\u0435\u043B\u043E,
+      \u0436\u0435\u043B\u0435\u0437\u043D\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203499
+    m_Localized: "Scarabaeus exanimatio (\u043A\u043E\u0440\u043E\u043B\u0435\u0432\u0430
+      \u043F\u0447\u0451\u043B)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203500
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u043E\u0440\u0430\u043D\u0436\u0435\u0432\u043E-\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0433\u043E\u043B\u0443\u0431\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203501
+    m_Localized: "Scarabaeus exanimatio (\u043B\u043E\u043C\u0430\u0442\u0435\u043B\u044C
+      \u0441\u043D\u043E\u0432)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203502
+    m_Localized: "\u0431\u0435\u043B\u043E-\u0440\u043E\u0437\u043E\u0432\u043E-\u0436\u0435\u043B\u0435\u0437\u043D\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0431\u0435\u043B\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203503
+    m_Localized: "Scarabaeus exanimatio (\u043B\u044F\u0433\u0443\u0448\u0430\u0447\u0438\u0439
+      \u041B\u0435\u0441\u0442\u0435\u0440)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203504
+    m_Localized: "\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u043E-\u0431\u0435\u043B\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203505
+    m_Localized: "Scarabaeus exanimatio (\u0445\u0430\u043C\u0435\u043B\u0435\u043E\u043D)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203506
+    m_Localized: "\u0445\u0440\u043E\u043C\u043E\u0432\u043E\u0435 \u0442\u0435\u043B\u043E,
+      \u0441\u0432\u0435\u0442\u043B\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0435
+      \u043D\u043E\u0433\u0438"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203507
+    m_Localized: "Scarabaeus exanimatio (\u0442\u0435\u043D\u0435\u0432\u043E\u0439
+      \u0441\u0442\u0440\u0430\u043D\u043D\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203508
+    m_Localized: "\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u043E-\u0442\u0451\u043C\u043D\u043E-\u0441\u0438\u043D\u0435\u0435
+      \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203509
+    m_Localized: "Bulla beetle (\u0441\u0442\u0435\u043F\u043D\u043E\u0439 \u0432\u043E\u043B\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203510
+    m_Localized: "\u0433\u043E\u043B\u0443\u0431\u043E\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0442\u0451\u043C\u043D\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u043E\u0440\u0430\u043D\u0436\u0435\u0432\u0430\u044F
+      \u0433\u043E\u043B\u043E\u0432\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203511
+    m_Localized: "Bulla beetle (\u0441\u0432\u044F\u0442\u0430\u044F)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203512
+    m_Localized: "\u0442\u0451\u043C\u043D\u043E-\u0441\u0438\u043D\u0438\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0441\u0432\u0435\u0442\u043B\u043E-\u0436\u0451\u043B\u0442\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u043C\u0430\u043B\u0430\u0445\u0438\u0442\u043E\u0432\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203513
+    m_Localized: "Bulla beetle (\u0444\u0435\u0440\u043C\u0435\u0440)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203514
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442, \u0431\u0435\u043B\u043E-\u043E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203515
+    m_Localized: "Bulla beetle (\u043B\u044F\u0433\u0443\u0448\u0430\u0447\u0438\u0439
+      \u041B\u0435\u0441\u0442\u0435\u0440)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203516
+    m_Localized: "\u0436\u0443\u043A \u0432 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C
+      \u0437\u0435\u043B\u0451\u043D\u044B\u0439, \u0441\u0432\u0435\u0442\u043B\u043E-\u0431\u0440\u043E\u043D\u0437\u043E\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203517
+    m_Localized: "Bulla beetle (\u043A\u0438\u0431\u0435\u0440-\u0441\u0442\u0430\u043B\u043A\u0435\u0440)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203518
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442, \u0442\u0451\u043C\u043D\u043E-\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203519
+    m_Localized: "Circulus Beetle (\u0431\u0430\u0437\u043E\u0432\u044B\u0439)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203520
+    m_Localized: "\u0441\u0438\u043D\u0438\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0437\u0435\u043B\u0451\u043D\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0431\u0435\u043B\u044B\u0435 \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203521
+    m_Localized: "Circulus Beetle (\u0431\u043E\u0433-\u0436\u0443\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203522
+    m_Localized: "\u0431\u0435\u043B\u043E-\u0440\u043E\u0437\u043E\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442, \u0437\u043E\u043B\u043E\u0442\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203523
+    m_Localized: "Circulus Beetle (\u043A\u0440\u0430\u0431-\u043A\u0430\u043F\u0441\u0443\u043B\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203524
+    m_Localized: "\u043E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0442\u0451\u043C\u043D\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203525
+    m_Localized: "Circulus Beetle (\u0448\u043E\u043A\u043E\u043B\u0430\u0434\u043A\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203526
+    m_Localized: "\u0440\u043E\u0437\u043E\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u043A\u043E\u0441\u0442\u044F\u043D\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0438\u0437\u0443\u043C\u0440\u0443\u0434\u043D\u044B\u0435 \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203527
+    m_Localized: "Circulus Beetle (\u0442\u0435\u043D\u0435\u0432\u043E\u0439 \u043F\u0440\u0435\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u0442\u0435\u043B\u044C)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203528
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442, \u0431\u0435\u043B\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203529
+    m_Localized: "Rana beetle (\u0442\u043E\u043A\u0441\u0438\u0447\u043D\u044B\u0435
+      \u043E\u0442\u0445\u043E\u0434\u044B)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203530
+    m_Localized: "\u0436\u0443\u043A \u0432 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C
+      \u0441\u0438\u043D\u0438\u0439 \u0438 \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0439"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203531
+    m_Localized: "Rana beetle (\u0436\u0435\u043B\u0435\u0437\u043D\u044B\u0439 \u043A\u0443\u0437\u043D\u0435\u0446)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397760
+    m_Localized: "\u043A\u0440\u0430\u0441\u043D\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0441\u0438\u043D\u0438\u0435 \u043A\u0440\u044B\u043B\u044C\u044F, \u0436\u0451\u043B\u0442\u0430\u044F
+      \u0433\u043E\u043B\u043E\u0432\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397761
+    m_Localized: "Rana beetle (\u043F\u043E\u0435\u0434\u0430\u0442\u0435\u043B\u044C
+      \u0433\u0440\u044F\u0437\u0438)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397762
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u0430,
+      \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0442\u0451\u043C\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397763
+    m_Localized: "Rana beetle (\u0428\u0438\u0432\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397764
+    m_Localized: "\u0440\u0443\u0431\u0438\u043D\u043E\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0441\u0432\u0435\u0442\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u0430\u044F
+      \u0433\u043E\u043B\u043E\u0432\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397765
+    m_Localized: "Rana beetle (\u0431\u043E\u0433-\u0436\u0443\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397766
+    m_Localized: "\u0437\u043E\u043B\u043E\u0442\u043E\u0439 \u0436\u0443\u043A,
+      \u0431\u0435\u043B\u043E-\u0440\u043E\u0437\u043E\u0432\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397767
+    m_Localized: "Vesparum cervorum (\u041B\u0443\u043A\u0430\u0440\u0438\u0441)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397768
+    m_Localized: "\u0441\u0438\u043D\u0435-\u0431\u0435\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0437\u0435\u043B\u0451\u043D\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397769
+    m_Localized: "Vesparum cervorum (\u0436\u0435\u043B\u0435\u0437\u043D\u044B\u0439
+      \u043A\u0443\u0437\u043D\u0435\u0446)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397770
+    m_Localized: "\u043A\u0440\u0430\u0441\u043D\u043E-\u0437\u043E\u043B\u043E\u0442\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0431\u0435\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0437\u043E\u043B\u043E\u0442\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397771
+    m_Localized: "Vesparum cervorum (\u0442\u0451\u043C\u043D\u044B\u0439 \u043B\u0435\u0441)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397772
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435 \u0440\u043E\u0433\u0430,
+      \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u043E\u0435 \u0442\u0435\u043B\u043E,
+      \u0431\u0435\u043B\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397773
+    m_Localized: "Vesparum cervorum (\u043A\u0440\u0430\u0441\u043D\u0430\u044F \u043C\u0430\u0440\u0438\u043E\u043D\u0435\u0442\u043A\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397774
+    m_Localized: "\u043A\u0440\u0430\u0441\u043D\u043E\u0435 \u0442\u0435\u043B\u043E,
+      \u0441\u0432\u0435\u0442\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u044B\u0435
+      \u0440\u043E\u0433\u0430 \u0438 \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397775
+    m_Localized: "Vesparum cervorum (\u0441\u0444\u0438\u043D\u043A\u0441)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397776
+    m_Localized: "\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u043E-\u0437\u043E\u043B\u043E\u0442\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0442\u0451\u043C\u043D\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0435 \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397777
+    m_Localized: "Armadillo Beetle (\u0432\u0441\u0430\u0434\u043D\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397778
+    m_Localized: "\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u043E-\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0447\u0435\u0440\u0435\u043F-\u0433\u043E\u043B\u043E\u0432\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397779
+    m_Localized: "Armadillo Beetle (\u0441\u0432\u044F\u0442\u0430\u044F)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397780
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u043E\u0435
+      \u0438 \u0441\u0432\u0435\u0442\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0442\u0451\u043C\u043D\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u0430\u044F
+      \u0433\u043E\u043B\u043E\u0432\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397781
+    m_Localized: "Armadillo Beetle (\u043F\u0430\u0440\u0430\u0434\u0438\u0433\u043C\u0430
+      \u0425\u043E\u0444\u043C\u0430\u043D\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397782
+    m_Localized: "\u0431\u0435\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0435
+      \u0438 \u0442\u0451\u043C\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u043A\u0440\u0430\u0441\u043D\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u0430,
+      \u0437\u043E\u043B\u043E\u0442\u044B\u0435 \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397783
+    m_Localized: "Armadillo Beetle (\u0431\u0435\u043B\u043E\u0441\u043D\u0435\u0436\u043A\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397784
+    m_Localized: "\u0436\u0443\u043A \u0432 \u043E\u0441\u043D\u043E\u0432\u043D\u043E\u043C
+      \u0431\u0435\u043B\u044B\u0439, \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u0430\u044F
+      \u0433\u043E\u043B\u043E\u0432\u0430, \u0441\u0430\u043F\u0444\u0438\u0440\u043E\u0432\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397785
+    m_Localized: "Armadillo Beetle (\u0441\u043B\u0430\u0434\u043A\u043E\u0435\u0436\u043A\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397786
+    m_Localized: "\u0445\u0440\u043E\u043C\u043E\u0432\u043E-\u0440\u043E\u0437\u043E\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0442\u0451\u043C\u043D\u043E-\u043A\u0440\u0430\u0441\u043D\u0430\u044F
+      \u0433\u043E\u043B\u043E\u0432\u0430, \u0441\u0432\u0435\u0442\u043B\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397787
+    m_Localized: "Larva crassa est (\u0431\u0430\u0437\u043E\u0432\u0430\u044F)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397788
+    m_Localized: "\u0431\u0435\u043B\u043E-\u0436\u0451\u043B\u0442\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0433\u043E\u043B\u0443\u0431\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0435 \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397789
+    m_Localized: "Larva crassa est (\u043F\u0440\u0438\u0437\u0440\u0430\u0447\u043D\u044B\u0439
+      \u0440\u0430\u0437\u0443\u043C)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397790
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u044B\u0435
+      \u0440\u043E\u0433\u0430, \u0431\u0435\u043B\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F
+      \u0438 \u0431\u0435\u043B\u043E\u0435 \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397791
+    m_Localized: "Larva crassa est (\u043C\u043E\u0440\u0441\u043A\u0430\u044F \u0442\u0440\u0430\u0432\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397792
+    m_Localized: "\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u043E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0431\u0435\u043B\u044B\u0435 \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397793
+    m_Localized: "Larva crassa est (\u043C\u043E\u0440\u0441\u043A\u043E\u0439 \u0441\u0430\u043B\u0430\u0442)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397794
+    m_Localized: "\u0442\u0451\u043C\u043D\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442, \u0431\u0435\u043B\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u043E\u0440\u0430\u043D\u0436\u0435\u0432\u0430\u044F \u0433\u043E\u043B\u043E\u0432\u0430
+      \u0438 \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397795
+    m_Localized: "Larva crassa est (\u043C\u0435\u0442\u0440\u043E\u0438\u0434)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397796
+    m_Localized: "\u043E\u0440\u0430\u043D\u0436\u0435\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0441\u0438\u043D\u044F\u044F \u0433\u043E\u043B\u043E\u0432\u0430, \u0431\u0435\u043B\u044B\u0439
+      \u0440\u043E\u0433"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397797
+    m_Localized: "Custodia taurus scarabaeus (\u0433\u043E\u043B\u0443\u0431\u043E\u0439
+      \u043C\u0441\u0442\u0438\u0442\u0435\u043B\u044C)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397798
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u043E\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442, \u0441\u0435\u0440\u043E-\u0441\u0438\u043D\u0438\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0442\u0451\u043C\u043D\u044B\u0435
+      \u0440\u043E\u0433\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397799
+    m_Localized: "Custodia taurus Scarabaeus (\u0436\u0435\u043B\u0435\u0437\u043D\u044B\u0439
+      \u043A\u0443\u0437\u043D\u0435\u0446)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397800
+    m_Localized: "\u043A\u0440\u0430\u0441\u043D\u044B\u0435 \u0438 \u0442\u0451\u043C\u043D\u043E-\u0441\u0435\u0440\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0431\u0435\u043B\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0437\u043E\u043B\u043E\u0442\u043E\u0439 \u0446\u0435\u043D\u0442\u0440"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397801
+    m_Localized: "Custodia taurus Scarabaeus (\u043F\u0435\u0441\u0447\u0430\u043D\u0430\u044F
+      \u0431\u0443\u0440\u044F)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397802
+    m_Localized: "\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0435 \u0438
+      \u0441\u0432\u0435\u0442\u043B\u043E-\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u0430\u044F
+      \u0433\u043E\u043B\u043E\u0432\u0430, \u043E\u0440\u0430\u043D\u0436\u0435\u0432\u043E-\u0441\u0438\u043D\u0438\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397803
+    m_Localized: "Custodia taurus Scarabaeus (\u0433\u0438\u043F\u0435\u0440-\u0441\u0443\u0449\u0435\u0441\u0442\u0432\u043E)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397804
+    m_Localized: "\u0431\u0435\u043B\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u043A\u0440\u0430\u0441\u043D\u044B\u0435 \u0438 \u0441\u0432\u0435\u0442\u043B\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0441\u0432\u0435\u0442\u043B\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u0430\u044F
+      \u0433\u043E\u043B\u043E\u0432\u0430"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397805
+    m_Localized: "Custodia taurus Scarabaeus (\u0422\u0430\u043D\u043E\u0441)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397806
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u043E-\u0437\u043E\u043B\u043E\u0442\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u0430\u044F
+      \u0433\u043E\u043B\u043E\u0432\u0430, \u0441\u0432\u0435\u0442\u043B\u043E-\u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397807
+    m_Localized: "La Scarabei cursor (\u0430\u0440\u043A\u0442\u0438\u0447\u0435\u0441\u043A\u0438\u0439
+      \u0442\u043E\u0432\u0430\u0440\u0438\u0449)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397808
+    m_Localized: "\u0441\u0435\u0440\u044B\u0439 \u0446\u0435\u043D\u0442\u0440,
+      \u0431\u0438\u0440\u044E\u0437\u043E\u0432\u043E-\u0441\u0438\u043D\u0438\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0431\u0435\u043B\u044B\u0435 \u0440\u043E\u0433\u0430,
+      \u0447\u0451\u0440\u043D\u044B\u0435 \u0430\u043D\u0442\u0435\u043D\u043D\u044B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397809
+    m_Localized: "La Scarabei cursor (\u043F\u0435\u0449\u0435\u0440\u043D\u044B\u0439
+      \u0447\u0435\u043B\u043E\u0432\u0435\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397810
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0439
+      \u0446\u0435\u043D\u0442\u0440, \u043A\u0440\u0430\u0441\u043D\u043E-\u0441\u0438\u043D\u0435\u0435
+      \u0442\u0435\u043B\u043E, \u043A\u043E\u0441\u0442\u044F\u043D\u044B\u0435
+      \u0430\u043D\u0442\u0435\u043D\u043D\u044B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397811
+    m_Localized: "La Scarabei cursor (\u0442\u0440\u043E\u043F\u0438\u0447\u0435\u0441\u043A\u0438\u0439
+      \u043E\u0445\u043E\u0442\u043D\u0438\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397812
+    m_Localized: "\u0437\u043E\u043B\u043E\u0442\u043E\u0439 \u0446\u0435\u043D\u0442\u0440,
+      \u043A\u043E\u0440\u0438\u0447\u043D\u0435\u0432\u043E-\u0437\u0435\u043B\u0451\u043D\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0442\u0451\u043C\u043D\u043E-\u0437\u043E\u043B\u043E\u0442\u044B\u0435
+      \u0430\u043D\u0442\u0435\u043D\u043D\u044B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397813
+    m_Localized: "La Scarabei cursor (\u0436\u0435\u043B\u0435\u0437\u043D\u044B\u0439
+      \u043A\u0443\u0437\u043D\u0435\u0446)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397814
+    m_Localized: "\u0442\u0451\u043C\u043D\u044B\u0439 \u0446\u0435\u043D\u0442\u0440,
+      \u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435 \u0430\u043D\u0442\u0435\u043D\u043D\u044B,
+      \u043A\u0440\u0430\u0441\u043D\u043E-\u0437\u043E\u043B\u043E\u0442\u043E\u0435
+      \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397815
+    m_Localized: "La Scarabei cursor (\u0441\u0432\u044F\u0442\u0430\u044F)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397816
+    m_Localized: "\u0431\u0435\u043B\u043E-\u0437\u043E\u043B\u043E\u0442\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0435
+      \u0430\u043D\u0442\u0435\u043D\u043D\u044B"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397817
+    m_Localized: "Insectorum thoracem laneum (\u043C\u044F\u0433\u043A\u0438\u0439
+      \u0436\u0443\u043A)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397818
+    m_Localized: "\u0444\u0438\u043E\u043B\u0435\u0442\u043E\u0432\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0441\u0432\u0435\u0442\u043B\u043E-\u0440\u043E\u0437\u043E\u0432\u044B\u0439
+      \u0445\u0440\u0435\u0431\u0435\u0442, \u0431\u0435\u043B\u043E\u0435 \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397819
+    m_Localized: "Insectorum thoracem laneum (\u043C\u0435\u0442\u0430\u043B \u0441\u043B\u0430\u0433)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397820
+    m_Localized: "\u0436\u0435\u043B\u0435\u0437\u043D\u043E\u0435 \u0442\u0435\u043B\u043E,
+      \u0431\u0435\u043B\u043E-\u0433\u043E\u043B\u0443\u0431\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0431\u0435\u043B\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397821
+    m_Localized: "Insectorum thoracem laneum (\u043B\u0430\u0437\u0443\u0440\u043D\u043E-\u0438\u0437\u0443\u043C\u0440\u0443\u0434\u043D\u044B\u0439)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397822
+    m_Localized: "\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0442\u0451\u043C\u043D\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0442\u0451\u043C\u043D\u043E-\u0437\u0435\u043B\u0451\u043D\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397823
+    m_Localized: "Insectorum thoracem laneum (\u0445\u0440\u043E\u043D\u043E\u0441\u0444\u0435\u0440\u0430)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397824
+    m_Localized: "\u0441\u0432\u0435\u0442\u043B\u043E-\u0437\u043E\u043B\u043E\u0442\u044B\u0435
+      \u043A\u0440\u044B\u043B\u044C\u044F, \u0431\u0435\u043B\u043E-\u0431\u0438\u0440\u044E\u0437\u043E\u0432\u043E\u0435
+      \u0442\u0435\u043B\u043E, \u0441\u0435\u0440\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397825
+    m_Localized: "Insectorum thoracem laneum (\u0431\u0430\u0437\u043E\u0432\u044B\u0439)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397826
+    m_Localized: "\u0442\u0451\u043C\u043D\u044B\u0439 \u0445\u0440\u0435\u0431\u0435\u0442,
+      \u0437\u043E\u043B\u043E\u0442\u044B\u0435 \u043A\u0440\u044B\u043B\u044C\u044F,
+      \u0436\u0435\u043B\u0435\u0437\u043D\u043E\u0435 \u0442\u0435\u043B\u043E"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

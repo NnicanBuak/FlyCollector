@@ -8,6 +8,7 @@ public class SceneTransition
     public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     private CanvasGroup overlay;
+    private float originalVolume;
 
     public SceneTransition(float duration)
     {
@@ -18,11 +19,14 @@ public class SceneTransition
     {
         EnsureOverlay();
         overlay.blocksRaycasts = true;
+        originalVolume = AudioListener.volume;
         float t = 0f;
         while (t < 1f)
         {
             t += Time.deltaTime / duration;
-            overlay.alpha = curve.Evaluate(Mathf.Clamp01(t));
+            float eval = curve.Evaluate(Mathf.Clamp01(t));
+            overlay.alpha = eval;
+            AudioListener.volume = Mathf.Lerp(originalVolume, 0f, eval);
             yield return null;
         }
     }
@@ -34,7 +38,9 @@ public class SceneTransition
         while (t > 0f)
         {
             t -= Time.deltaTime / duration;
-            overlay.alpha = curve.Evaluate(Mathf.Clamp01(t));
+            float eval = curve.Evaluate(Mathf.Clamp01(t));
+            overlay.alpha = eval;
+            AudioListener.volume = Mathf.Lerp(0f, originalVolume, eval);
             yield return null;
         }
         overlay.blocksRaycasts = false;

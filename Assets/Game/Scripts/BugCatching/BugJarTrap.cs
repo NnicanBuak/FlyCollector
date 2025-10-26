@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 using BugData;
 using Bug;
+using Game.Scripts.Bug;
+using Game.Scripts.Core;
 
 namespace BugCatching
 {
@@ -39,6 +41,12 @@ namespace BugCatching
 
         [Tooltip("Sound when jar is sealed")]
         [SerializeField] private AudioClip sealSound;
+        
+        [Tooltip("Sound when correct/target bug is caught")]
+        [SerializeField] private AudioClip correctBugSound;
+        
+        [Tooltip("Sound when incorrect/non-target bug is caught")]
+        [SerializeField] private AudioClip incorrectBugSound;
 
         [SerializeField] private float soundVolume = 1f;
 
@@ -282,11 +290,6 @@ namespace BugCatching
 
         public void FlyBack()
         {
-            if (currentState != State.AtTable)
-            {
-                Debug.LogWarning($"[BugJarTrap] Cannot fly back - current state: {currentState}");
-                return;
-            }
 
             if (showDebug)
             {
@@ -294,6 +297,9 @@ namespace BugCatching
             }
 
             currentState = State.FlyingBack;
+
+            // Always close lid when returning
+            TriggerClose();
 
 
             if (interactableObject != null)
@@ -389,7 +395,7 @@ namespace BugCatching
 
         /// <summary>
         /// Resolve Item ScriptableObject by targetBugName via BugItemRegistry and assign to InteractableObject.
-        /// Tries both "<bug>_Variant" and plain "<bug>" names.
+        /// Tries both bug_Variant and plain bug names.
         /// </summary>
         public void UpdateInteractableItemFromRegistry()
         {
@@ -539,6 +545,9 @@ namespace BugCatching
 
         private IEnumerator FlyBackCoroutine()
         {
+            // Always close lid when returning
+            TriggerClose();
+
             Vector3 startPos = transform.position;
             Quaternion startRot = transform.rotation;
 
@@ -633,25 +642,98 @@ namespace BugCatching
 
             if (resolvedItem != null)
             {
-                targetItem = resolvedItem;
-                targetItemKey = resolvedKey;
-                if (interactableObject != null)
+                // Перед добавлением проверим лимит: уникальные баги (ItemType.Quest) >= количество целей
+                bool limitReached = false;
+                if (Game.Scripts.BugData.BugList.Instance != null && InventoryManager.Instance != null)
                 {
-                    interactableObject.SetDynamicItem(resolvedItem);
+                    var targets = Game.Scripts.BugData.BugList.Instance.Targets;
+                    if (targets != null && targets.Count > 0)
+                    {
+                        var uniqueBugs = new HashSet<string>();
+                        var slotsNow = InventoryManager.Instance.GetItemsByType(ItemType.Quest);
+                        foreach (var s in slotsNow)
+                        {
+                            if (s.item == null || string.IsNullOrEmpty(s.item.itemID)) continue;
+                            uniqueBugs.Add(Game.Scripts.BugData.BugList.NormalizeKey(s.item.itemID));
+                        }
+                        if (uniqueBugs.Count >= targets.Count)
+                        {
+                            limitReached = true;
+                        }
+                    }
                 }
 
-                if (InventoryManager.Instance != null)
+                if (limitReached)
                 {
-                    InventoryManager.Instance.AddItem(resolvedItem, 1);
-
                     if (showDebug)
-                    {
-                        Debug.Log($"[BugJarTrap] Added {resolvedItem.itemName} to inventory");
-                    }
+                        Debug.LogWarning("[BugJarTrap] Bug quota reached — skipping AddItem to prevent overflow.");
                 }
                 else
                 {
-                    Debug.LogWarning($"[BugJarTrap] InventoryManager.Instance is null!");
+                    targetItem = resolvedItem;
+                    targetItemKey = resolvedKey;
+                    if (interactableObject != null)
+                    {
+                        interactableObject.SetDynamicItem(resolvedItem);
+                    }
+
+                    if (InventoryManager.Instance != null)
+                    {
+                        InventoryManager.Instance.AddItem(resolvedItem, 1);
+
+                        if (showDebug)
+                        {
+                            Debug.Log($"[BugJarTrap] Added {resolvedItem.itemName} to inventory");
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[BugJarTrap] InventoryManager.Instance is null!");
+                    }
+                }
+                
+                // Воспроизводим звук в зависимости от того, целевой ли жук
+                if (audioSource != null)
+                {
+                    string normalizedKey = Game.Scripts.BugData.BugList.NormalizeKey(resolvedKey);
+                    bool isTargetBug = Game.Scripts.BugData.BugList.Instance != null && 
+                                      Game.Scripts.BugData.BugList.Instance.IsTarget(normalizedKey);
+                    
+                    if (showDebug)
+                    {
+                        Debug.Log($"[BugJarTrap] Bug key: {resolvedKey}, normalized: {normalizedKey}, isTarget: {isTargetBug}");
+                    }
+                    
+                    if (isTargetBug)
+                    {
+                        if (correctBugSound != null)
+                        {
+                            audioSource.PlayOneShot(correctBugSound, soundVolume);
+                            if (showDebug)
+                                Debug.Log($"[BugJarTrap] ✓ Воспроизведен звук правильного жука");
+                        }
+                        else if (showDebug)
+                        {
+                            Debug.LogWarning($"[BugJarTrap] correctBugSound не назначен!");
+                        }
+                    }
+                    else
+                    {
+                        if (incorrectBugSound != null)
+                        {
+                            audioSource.PlayOneShot(incorrectBugSound, soundVolume);
+                            if (showDebug)
+                                Debug.Log($"[BugJarTrap] ✓ Воспроизведен звук неправильного жука");
+                        }
+                        else if (showDebug)
+                        {
+                            Debug.LogWarning($"[BugJarTrap] incorrectBugSound не назначен!");
+                        }
+                    }
+                }
+                else if (showDebug)
+                {
+                    Debug.LogWarning($"[BugJarTrap] audioSource не назначен для воспроизведения звука жука!");
                 }
             }
             else
@@ -660,9 +742,9 @@ namespace BugCatching
             }
 
 
-            if (CaughtBugsRuntime.Instance != null)
+            if (InventoryManager.Instance != null)
             {
-                CaughtBugsRuntime.Instance.RegisterCaught(bugFileName);
+                // Логика добавления в инвентарь уже выполнена выше через InventoryManager.Instance.AddItem()
             }
 
 
@@ -713,6 +795,9 @@ namespace BugCatching
             }
 
             currentState = State.FlyingBack;
+
+            // Ensure lid is closing when returning after seal as well
+            TriggerClose();
 
             if (flyBackSound != null && audioSource != null)
             {

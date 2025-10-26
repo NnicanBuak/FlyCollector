@@ -41,7 +41,6 @@ namespace BugCatching
             }
 
             Instance = this;
-            DontDestroyOnLoad(gameObject);
 
             SceneManager.sceneLoaded += OnSceneLoaded;
 

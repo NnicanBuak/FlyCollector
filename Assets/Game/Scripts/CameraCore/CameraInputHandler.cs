@@ -21,6 +21,44 @@ public class CameraInputHandler
         return currentKeyboard != null && currentKeyboard.escapeKey.wasPressedThisFrame;
     }
 
+    public bool IsFlipKeyPressed()
+    {
+        var currentKeyboard = Keyboard.current;
+        return currentKeyboard != null && currentKeyboard.fKey.wasPressedThisFrame;
+    }
+
+    public float GetScrollInput()
+    {
+        var currentMouse = Mouse.current;
+        return currentMouse != null ? currentMouse.scroll.ReadValue().y : 0f;
+    }
+
+    public UnityEngine.Vector2 GetMouseScrollDelta()
+    {
+        var currentMouse = Mouse.current;
+        return currentMouse != null ? currentMouse.scroll.ReadValue() : UnityEngine.Vector2.zero;
+    }
+
+    public bool GetMouseButtonDown(int button)
+    {
+        var currentMouse = Mouse.current;
+        if (currentMouse == null) return false;
+        
+        switch (button)
+        {
+            case 0: return currentMouse.leftButton.wasPressedThisFrame;
+            case 1: return currentMouse.rightButton.wasPressedThisFrame;
+            case 2: return currentMouse.middleButton.wasPressedThisFrame;
+            default: return false;
+        }
+    }
+
+    public UnityEngine.Vector2 GetMousePosition()
+    {
+        var currentMouse = Mouse.current;
+        return currentMouse != null ? currentMouse.position.ReadValue() : UnityEngine.Vector2.zero;
+    }
+
     /// <summary>
     /// Выходит из инспекта при нажатии ЛКМ или ESC.
     /// Обработка RMB находится внутри InspectSession (collect-mode).

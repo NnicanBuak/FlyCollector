@@ -1,14 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
-namespace Bug
+namespace Game.Scripts.Bug
 {
-    /// <summary>
-    /// Controls bug accessibility based on camera focus level.
-    /// Attach to NavMeshModifier objects or separate trigger zones.
-    /// Bugs in this zone can only be inspected/caught when camera is at required focus level.
-    /// </summary>
+
     [RequireComponent(typeof(Collider))]
     public class BugAccessZone : MonoBehaviour
     {
@@ -33,16 +28,29 @@ namespace Bug
         [SerializeField] private Color gizmoColor = new Color(1f, 0.5f, 0f, 0.3f);
         [SerializeField] private Color gizmoColorActive = new Color(0f, 1f, 0f, 0.3f);
 
-        // Bugs currently in this zone
+
+        [Header("Activation Mode")]
+        [Tooltip("Select how this access zone becomes accessible: by nest focus level or when a specific FocusableObject is focused")]
+        [SerializeField] private ActivationMode activationMode = ActivationMode.ByFocusLevel;
+
+        [Tooltip("When Activation Mode = ByFocusableObject, the zone is accessible only while this FocusableObject is focused")]
+        [SerializeField] private FocusableObject boundFocusableObject;
+
+        private enum ActivationMode
+        {
+            ByFocusLevel = 0,
+            ByFocusableObject = 1
+        }
+
         private readonly HashSet<BugAI> bugsInZone = new HashSet<BugAI>();
 
-        // Collider for zone detection
+
         private Collider zoneCollider;
 
-        // Is zone currently accessible based on focus level?
+
         private bool isAccessible = false;
 
-        // Auto-refresh timer
+
         private float nextRefreshTime = 0f;
 
         #region Properties
@@ -50,6 +58,8 @@ namespace Bug
         public bool IsAccessible => isAccessible;
         public int BugCount => bugsInZone.Count;
         public string ZoneName => zoneName;
+        public FocusableObject BoundFocusableObject => boundFocusableObject;
+        public string ActivationModeName => activationMode.ToString();
         #endregion
 
         #region Unity Lifecycle
@@ -57,13 +67,13 @@ namespace Bug
         {
             zoneCollider = GetComponent<Collider>();
 
-            // Auto-setup collider if needed
+
             if (autoSetupCollider && zoneCollider == null)
             {
                 zoneCollider = gameObject.AddComponent<BoxCollider>();
             }
 
-            // Ensure collider is trigger
+
             if (zoneCollider != null)
             {
                 zoneCollider.isTrigger = true;
@@ -76,10 +86,11 @@ namespace Bug
 
         private void Start()
         {
-            // Subscribe to focus level changes
+
             if (FocusLevelManager.Instance != null)
             {
                 FocusLevelManager.Instance.OnNestLevelChanged += OnFocusLevelChanged;
+                // initial update will consider activation mode inside UpdateAccessibility
                 UpdateAccessibility(FocusLevelManager.Instance.CurrentNestLevel);
             }
             else
@@ -87,14 +98,20 @@ namespace Bug
                 Debug.LogWarning($"[BugAccessZone] {zoneName}: FocusLevelManager.Instance is null at Start");
             }
 
-            // Scan for bugs already in zone at start
+            // Warn if activation mode expects a bound object but none assigned
+            if (activationMode == ActivationMode.ByFocusableObject && boundFocusableObject == null)
+            {
+                Debug.LogWarning($"[BugAccessZone] {zoneName}: ActivationMode is set to ByFocusableObject but Bound FocusableObject is not assigned.");
+            }
+
+
             RefreshBugs();
             nextRefreshTime = Time.time + refreshInterval;
         }
 
         private void Update()
         {
-            // Periodically refresh bugs (helps catch dynamically spawned bugs)
+
             if (autoRefresh && Time.time >= nextRefreshTime)
             {
                 RefreshBugs();
@@ -104,7 +121,7 @@ namespace Bug
 
         private void OnDestroy()
         {
-            // Unsubscribe from focus level changes
+
             if (FocusLevelManager.Instance != null)
             {
                 FocusLevelManager.Instance.OnNestLevelChanged -= OnFocusLevelChanged;
@@ -113,7 +130,7 @@ namespace Bug
 
         private void OnTriggerEnter(Collider other)
         {
-            // Check if a bug entered the zone
+
             var bugAI = other.GetComponent<BugAI>();
             if (bugAI != null && !bugsInZone.Contains(bugAI))
             {
@@ -125,14 +142,14 @@ namespace Bug
                     Debug.Log($"[BugAccessZone] {zoneName}: Bug '{bugAI.name}' entered (total: {bugsInZone.Count})");
                 }
 
-                // Update bug accessibility immediately
+
                 UpdateBugAccessibility(bugAI);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            // Check if a bug left the zone
+
             var bugAI = other.GetComponent<BugAI>();
             if (bugAI != null && bugsInZone.Contains(bugAI))
             {
@@ -143,6 +160,8 @@ namespace Bug
                 {
                     Debug.Log($"[BugAccessZone] {zoneName}: Bug '{bugAI.name}' exited (total: {bugsInZone.Count})");
                 }
+
+                UpdateBugAccessibility(bugAI);
             }
         }
         #endregion
@@ -156,16 +175,33 @@ namespace Bug
         private void UpdateAccessibility(int currentLevel)
         {
             bool wasAccessible = isAccessible;
-            isAccessible = currentLevel >= requiredFocusLevel;
+
+            if (activationMode == ActivationMode.ByFocusableObject)
+            {
+                // Determine current focused GameObject from FocusLevelManager
+                var focused = FocusLevelManager.Instance != null ? FocusLevelManager.Instance.GetLastFocusedObject() : null;
+                isAccessible = (focused != null && boundFocusableObject != null && focused == boundFocusableObject.gameObject);
+            }
+            else
+            {
+                isAccessible = currentLevel >= requiredFocusLevel;
+            }
 
             if (wasAccessible != isAccessible)
             {
                 if (showDebug)
                 {
-                    Debug.Log($"[BugAccessZone] {zoneName}: Accessibility changed to {isAccessible} (level {currentLevel}/{requiredFocusLevel})");
+                    if (activationMode == ActivationMode.ByFocusableObject)
+                    {
+                        Debug.Log($"[BugAccessZone] {zoneName}: Accessibility changed to {isAccessible} (bound object: {(boundFocusableObject!=null?boundFocusableObject.name:"<null>")})");
+                    }
+                    else
+                    {
+                        Debug.Log($"[BugAccessZone] {zoneName}: Accessibility changed to {isAccessible} (level {currentLevel}/{requiredFocusLevel})");
+                    }
                 }
 
-                // Update all bugs in zone
+
                 UpdateAllBugsAccessibility();
             }
         }
@@ -193,25 +229,19 @@ namespace Bug
         #endregion
 
         #region Public Methods
-        /// <summary>
-        /// Check if a specific bug is in this zone.
-        /// </summary>
+
         public bool ContainsBug(BugAI bug)
         {
             return bugsInZone.Contains(bug);
         }
 
-        /// <summary>
-        /// Get all bugs currently in this zone.
-        /// </summary>
+
         public IReadOnlyCollection<BugAI> GetBugsInZone()
         {
             return bugsInZone;
         }
 
-        /// <summary>
-        /// Manually refresh all bugs in zone (useful for testing).
-        /// </summary>
+
         public void RefreshBugs()
         {
             if (zoneCollider == null)
@@ -220,10 +250,10 @@ namespace Bug
                 return;
             }
 
-            // Don't clear - just add new bugs we don't have yet
+
             HashSet<BugAI> foundBugs = new HashSet<BugAI>();
 
-            // Find all bugs in trigger volume
+
             Collider[] overlaps;
 
             if (zoneCollider is BoxCollider box)
@@ -257,7 +287,7 @@ namespace Bug
                 {
                     foundBugs.Add(bug);
 
-                    // Only register if not already registered
+
                     if (!bugsInZone.Contains(bug))
                     {
                         bugsInZone.Add(bug);
@@ -276,6 +306,24 @@ namespace Bug
             {
                 Debug.Log($"[BugAccessZone] {zoneName}: Refreshed - found {foundBugs.Count} bugs, tracking {bugsInZone.Count} total");
             }
+        }
+
+        public void SetActivationModeByFocusLevel()
+        {
+            activationMode = ActivationMode.ByFocusLevel;
+            UpdateAccessibility(FocusLevelManager.Instance != null ? FocusLevelManager.Instance.CurrentNestLevel : 0);
+        }
+
+        public void BindToFocusableObject(FocusableObject focusable)
+        {
+            boundFocusableObject = focusable;
+            UpdateAccessibility(FocusLevelManager.Instance != null ? FocusLevelManager.Instance.CurrentNestLevel : 0);
+        }
+
+        public void UnbindFocusableObject()
+        {
+            boundFocusableObject = null;
+            UpdateAccessibility(FocusLevelManager.Instance != null ? FocusLevelManager.Instance.CurrentNestLevel : 0);
         }
         #endregion
 
@@ -305,7 +353,7 @@ namespace Bug
 
         private void OnDrawGizmosSelected()
         {
-            // Draw zone name label
+
             #if UNITY_EDITOR
             UnityEditor.Handles.Label(
                 transform.position + Vector3.up * 0.5f,

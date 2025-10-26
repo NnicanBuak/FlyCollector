@@ -1,5 +1,6 @@
 using UnityEngine;
 using Bug;
+using Game.Scripts.Bug;
 
 public class GAManager_IntegrationExamples
 {

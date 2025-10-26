@@ -1,0 +1,316 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: color Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: color
+  m_TableCollectionNameGuidString: 6c26658e183b22c428fcac66d8814951
+  m_Entries:
+  - m_Id: 8850957656064
+    m_Key: color.red
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851028959232
+    m_Key: color.green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851028959233
+    m_Key: color.blue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851028959234
+    m_Key: color.yellow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153536
+    m_Key: color.orange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153537
+    m_Key: color.purple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153538
+    m_Key: color.pink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153539
+    m_Key: color.black
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153540
+    m_Key: color.white
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153541
+    m_Key: color.brown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153542
+    m_Key: color.gray
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153543
+    m_Key: color.grey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153544
+    m_Key: color.gold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153545
+    m_Key: color.golden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153546
+    m_Key: color.silver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153547
+    m_Key: color.teal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153548
+    m_Key: color.emerald
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153549
+    m_Key: color.malachite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153550
+    m_Key: color.iron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153551
+    m_Key: color.chromic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153552
+    m_Key: color.ruby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153553
+    m_Key: color.sapphire
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153554
+    m_Key: color.bone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153555
+    m_Key: color.skeleton
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153556
+    m_Key: color.lightskin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153557
+    m_Key: color.swamp-green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153558
+    m_Key: color.light-red
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153559
+    m_Key: color.light-green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153560
+    m_Key: color.light-blue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153561
+    m_Key: color.light-yellow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153562
+    m_Key: color.light-orange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153563
+    m_Key: color.light-purple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153564
+    m_Key: color.light-pink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153565
+    m_Key: color.light-brown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153566
+    m_Key: color.light-gray
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153567
+    m_Key: color.light-grey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153568
+    m_Key: color.light-bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153569
+    m_Key: color.light-gold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153570
+    m_Key: color.light-teal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153571
+    m_Key: color.dark-red
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153572
+    m_Key: color.dark-green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153573
+    m_Key: color.dark-blue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153574
+    m_Key: color.dark-yellow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153575
+    m_Key: color.dark-orange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153576
+    m_Key: color.dark-purple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153577
+    m_Key: color.dark-pink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153578
+    m_Key: color.dark-brown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153579
+    m_Key: color.dark-gray
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153580
+    m_Key: color.dark-grey
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153581
+    m_Key: color.dark-teal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153582
+    m_Key: color.dark-iron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153583
+    m_Key: color.deep-red
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153584
+    m_Key: color.deep-blue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851033153585
+    m_Key: color.deep-green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347840
+    m_Key: color.deep-teal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347841
+    m_Key: color.deep-yellow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347842
+    m_Key: color.deep-purple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347843
+    m_Key: color.deep-gold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347844
+    m_Key: color.white-blue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347845
+    m_Key: color.white-pink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347846
+    m_Key: color.white-purple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347847
+    m_Key: color.white-teal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347848
+    m_Key: color.white-green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347849
+    m_Key: color.white-yellow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347850
+    m_Key: color.grey-yellow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347851
+    m_Key: color.blue-purple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347852
+    m_Key: color.red-orange
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347853
+    m_Key: color.orange-green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347854
+    m_Key: color.teal-brown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347855
+    m_Key: color.purple-yellow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347856
+    m_Key: color.chromic-pink
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8851037347857
+    m_Key: color.darkgreen
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 2851902682692845979
+  references:
+    version: 2
+    RefIds:
+    - rid: 2851902682692845979
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1760804323353

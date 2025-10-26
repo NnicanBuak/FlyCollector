@@ -1,30 +1,44 @@
-﻿using Game.Scripts.Localization;
-using UnityEngine;
-using UnityEngine.UI;
-    
-namespace Localization
+﻿using UnityEngine;
+using UnityEngine.Localization;
+
+namespace Game.Scripts.Localization
 {
 
-    public class LocalizedMaterial : MonoBehaviour {
-        public string assetKey; // напр. "tex.menu.play_button"
-        public Renderer targetRenderer; // или оставьте null и возьмите GetComponent<Renderer>()
-        public bool useSharedMaterial = true;
+    public class LocalizedMaterial : MonoBehaviour
+    {
+        [SerializeField] private LocalizedAsset<Material> localizedMaterial;
+        [SerializeField] private bool useSharedMaterial = true;
 
-        void Awake() {
-            LocalizationService.Instance.LanguageChanged += _ => Refresh();
-        }
-        void OnEnable() => Refresh();
-        void OnDestroy() {
-            if (LocalizationService.Instance != null)
-                LocalizationService.Instance.LanguageChanged -= _ => Refresh();
+        private Renderer targetRenderer;
+
+        private void OnEnable()
+        {
+            if (targetRenderer == null)
+                targetRenderer = GetComponent<Renderer>();
+
+            if (localizedMaterial != null && localizedMaterial.IsEmpty == false)
+            {
+                localizedMaterial.AssetChanged += OnMaterialChanged;
+                localizedMaterial.LoadAssetAsync();
+            }
         }
 
-        public void Refresh() {
-            var mat = LocalizationService.Instance.GetAsset<Material>(assetKey);
-            var r = targetRenderer ?? GetComponent<Renderer>();
-            if (r && mat) {
-                if (useSharedMaterial) r.sharedMaterial = mat;
-                else r.material = mat;
+        private void OnDisable()
+        {
+            if (localizedMaterial != null && localizedMaterial.IsEmpty == false)
+            {
+                localizedMaterial.AssetChanged -= OnMaterialChanged;
+            }
+        }
+
+        private void OnMaterialChanged(Material newMaterial)
+        {
+            if (newMaterial != null && targetRenderer != null)
+            {
+                if (useSharedMaterial)
+                    targetRenderer.sharedMaterial = newMaterial;
+                else
+                    targetRenderer.material = newMaterial;
             }
         }
     }

@@ -176,6 +176,45 @@ public class ClipList : MonoBehaviour
     public int NextIndex => _nextIndex;
     public int Count => items.Count;
 
+    /// <summary>Получить следующий клип без изменения индекса.</summary>
+    public AudioClip GetUpcomingClip()
+    {
+        if (items.Count == 0) return null;
+
+        int index = _nextIndex;
+        if (index >= items.Count)
+        {
+            if (!loop) return null;
+            index = 0;
+        }
+
+        return items[index].clip;
+    }
+
+    /// <summary>Получить следующий элемент без изменения индекса.</summary>
+    public Item GetUpcomingItem()
+    {
+        if (items.Count == 0) return null;
+
+        int index = _nextIndex;
+        if (index >= items.Count)
+        {
+            if (!loop) return null;
+            index = 0;
+        }
+
+        return items[index];
+    }
+
+    /// <summary>Уведомить, что первый трек уже запущен вручную, пропустить его в очереди.</summary>
+    public void NotifyFirstTrackStarted()
+    {
+        if (_nextIndex == 0 && items.Count > 0)
+        {
+            _nextIndex = 1;
+        }
+    }
+
     private bool TryNext(out Item item)
     {
         item = null;

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using Game.Scripts.UI;
 
 [DisallowMultipleComponent]
 public class GameOverSceneController : MonoBehaviour
@@ -9,15 +10,24 @@ public class GameOverSceneController : MonoBehaviour
 
     private SceneTransition transition;
     private bool transitioning;
+    private GameOverBugsSummaryUI _bugsSummaryUI;
 
     void Awake()
     {
         transition = new SceneTransition(fadeDuration);
+        _bugsSummaryUI = FindFirstObjectByType<GameOverBugsSummaryUI>();
+        if (_bugsSummaryUI != null)
+        {
+            _bugsSummaryUI.OnAnimationComplete += HandleAnimationComplete;
+        }
     }
 
     void Update()
     {
         if (transitioning) return;
+
+        bool canSkip = _bugsSummaryUI == null || _bugsSummaryUI.IsAnimationComplete;
+        if (!canSkip) return;
 
         // Check for any keyboard input
         if (Keyboard.current != null && Keyboard.current.anyKey.wasPressedThisFrame)
@@ -53,5 +63,10 @@ public class GameOverSceneController : MonoBehaviour
             GameSceneManager.Instance.LoadScene("Credits", transition);
         else
             Debug.LogError("[GameOverController] GameSceneManager.Instance == null");
+    }
+
+    private void HandleAnimationComplete()
+    {
+        // Ваш код для обработки завершения анимации
     }
 }

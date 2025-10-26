@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Game.Scripts.BugData;
 
 namespace Bug
 {
@@ -38,16 +39,59 @@ namespace Bug
         #region Unity Lifecycle
         private BugSpawner[] spawners;
         private List<GameObject> spawnedBugs = new List<GameObject>();
+        private bool spawnRequested = false;
 
         private void Start()
         {
             if (spawnOnStart)
             {
-                if (spawnDelay > 0f)
-                    Invoke(nameof(SpawnAllBugs), spawnDelay);
+                // Проверяем, готов ли BugList
+                if (BugList.Instance != null && BugList.Instance.IsReady)
+                {
+                    // BugList уже готов, спавним сразу
+                    ScheduleSpawn();
+                }
                 else
-                    SpawnAllBugs();
+                {
+                    // BugList еще не готов, подписываемся на событие
+                    spawnRequested = true;
+                    BugList.OnBugListReady += OnBugListReady;
+                    
+                    if (showDebugInfo)
+                    {
+                        Debug.Log("[BugSpawnerManager] Ожидание готовности BugList...");
+                    }
+                }
             }
+        }
+
+        private void OnDestroy()
+        {
+            // Отписываемся от события при уничтожении
+            BugList.OnBugListReady -= OnBugListReady;
+        }
+
+        private void OnBugListReady()
+        {
+            // Отписываемся от события
+            BugList.OnBugListReady -= OnBugListReady;
+            
+            if (spawnRequested)
+            {
+                if (showDebugInfo)
+                {
+                    Debug.Log("[BugSpawnerManager] BugList готов, запускаем спавн");
+                }
+                ScheduleSpawn();
+            }
+        }
+
+        private void ScheduleSpawn()
+        {
+            if (spawnDelay > 0f)
+                Invoke(nameof(SpawnAllBugs), spawnDelay);
+            else
+                SpawnAllBugs();
         }
         #endregion
 
@@ -62,13 +106,13 @@ namespace Bug
             }
 
 
-            if (TargetBugsRuntime.Instance == null || TargetBugsRuntime.Instance.BugsToSpawn == null)
+            if (BugList.Instance == null || BugList.Instance.BugsToSpawn == null)
             {
-                Debug.LogError("[BugSpawnerManager] TargetBugsRuntime не найден или список жуков для спавна пуст!");
+                Debug.LogError("[BugSpawnerManager] BugList не найден или список жуков для спавна пуст!");
                 return;
             }
 
-            List<string> bugsToSpawn = TargetBugsRuntime.Instance.BugsToSpawn;
+            List<string> bugsToSpawn = BugList.Instance.BugsToSpawn;
             if (bugsToSpawn.Count == 0)
             {
                 Debug.LogWarning("[BugSpawnerManager] Список жуков для спавна пуст!");
@@ -88,7 +132,7 @@ namespace Bug
             List<string> targetBugs = new List<string>();
             List<string> otherBugs = new List<string>();
 
-            var targets = TargetBugsRuntime.Instance.Targets ?? new List<string>();
+            var targets = BugList.Instance.Targets ?? new List<string>();
 
             foreach (var bug in bugsToSpawn)
             {

@@ -1,273 +1,259 @@
 using TMPro;
 using UnityEngine;
+using Game.Scripts.Core;
+using Game.Scripts.BugData;
 
-public class BugCounterUI : MonoBehaviour
+namespace Game.Scripts.UI
 {
-    public static BugCounterUI Instance { get; private set; }
-
-    [Header("UI")]
-    // ← УБРАТЬ SerializeField, вместо этого получать автоматически
-    private TextMeshProUGUI counterText;
-
-    [Header("Debug")]
-    [SerializeField] private bool showDebug;
-
-    private bool subscribedToBugCounter;
-    private bool subscribedToCaughtRuntime;
-    private TargetBugsRuntime currentTargetRuntime;
-
-    private void Awake()
+    public class BugCounterUI : MonoBehaviour
     {
-        if (Instance && Instance != this)
+        public static BugCounterUI Instance { get; private set; }
+
+        [Header("UI")]
+        private TextMeshProUGUI _counterText;
+
+        [Header("Debug")]
+        [SerializeField] private bool showDebug;
+
+        private bool _subscribedToBugCounter;
+        private BugList _currentTargetRuntime;
+
+        private void Awake()
         {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-    
-        // Автоматически получаем TextMeshProUGUI со своего объекта
-        counterText = GetComponent<TextMeshProUGUI>();
-    
-        // Если не нашли на том же объекте, ищем в дочерних
-        if (counterText == null)
-        {
-            counterText = GetComponentInChildren<TextMeshProUGUI>();
-        }
-    
-        // Проверка успешности
-        if (counterText == null)
-        {
-            Debug.LogError($"[BugCounterUI] TextMeshProUGUI component not found on {gameObject.name} or its children!");
-        }
-        else
-        {
-            if (showDebug)
-                Debug.Log($"[BugCounterUI] TextMeshProUGUI found on {counterText.gameObject.name}");
-        }
-    }
-
-    private void OnEnable()
-    {
-        if (InventoryManager.Instance != null)
-        {
-            InventoryManager.Instance.InventoryChanged += OnInventoryChangedCSharp;
-            InventoryManager.Instance.OnInventoryChanged.AddListener(OnInventoryChangedUnity);
-        }
-
-        BugCounter.InstanceChanged += OnBugCounterInstanceChanged;
-        TrySubscribeBugCounter();
-
-        CaughtBugsRuntime.InstanceChanged += OnCaughtRuntimeInstanceChanged;
-        TrySubscribeCaughtRuntime();
-
-        TargetBugsRuntime.InstanceChanged += OnTargetRuntimeInstanceChanged;
-        SubscribeTargetRuntime(TargetBugsRuntime.Instance);
-    }
-
-    private void Start()
-    {
-        // NOTE: Start() called after all Awake(), so singletons should be ready
-        UpdateCounter();
-    }
-
-    private void OnDisable()
-    {
-        if (InventoryManager.Instance != null)
-        {
-            InventoryManager.Instance.InventoryChanged -= OnInventoryChangedCSharp;
-            InventoryManager.Instance.OnInventoryChanged.RemoveListener(OnInventoryChangedUnity);
-        }
-
-        BugCounter.InstanceChanged -= OnBugCounterInstanceChanged;
-        UnsubscribeBugCounter();
-
-        CaughtBugsRuntime.InstanceChanged -= OnCaughtRuntimeInstanceChanged;
-        UnsubscribeCaughtRuntime();
-
-        TargetBugsRuntime.InstanceChanged -= OnTargetRuntimeInstanceChanged;
-        UnsubscribeTargetRuntime();
-    }
-
-    private void OnBugCounterInstanceChanged(BugCounter counter)
-    {
-        UnsubscribeBugCounter();
-        TrySubscribeBugCounter();
-        UpdateCounter();
-    }
-
-    private void OnCaughtRuntimeInstanceChanged(CaughtBugsRuntime runtime)
-    {
-        UnsubscribeCaughtRuntime();
-        TrySubscribeCaughtRuntime();
-        UpdateCounter();
-    }
-
-    private void TrySubscribeBugCounter()
-    {
-        if (!subscribedToBugCounter && BugCounter.Instance != null)
-        {
-            BugCounter.Instance.OnJarsChanged += OnJarsChanged;
-            subscribedToBugCounter = true;
-        }
-    }
-
-    private void UnsubscribeBugCounter()
-    {
-        if (subscribedToBugCounter && BugCounter.Instance != null)
-        {
-            BugCounter.Instance.OnJarsChanged -= OnJarsChanged;
-        }
-        subscribedToBugCounter = false;
-    }
-
-    private void TrySubscribeCaughtRuntime()
-    {
-        if (!subscribedToCaughtRuntime && CaughtBugsRuntime.Instance != null)
-        {
-            CaughtBugsRuntime.Instance.OnCaughtChanged += OnCaughtChanged;
-            subscribedToCaughtRuntime = true;
-        }
-    }
-
-    private void UnsubscribeCaughtRuntime()
-    {
-        if (subscribedToCaughtRuntime && CaughtBugsRuntime.Instance != null)
-        {
-            CaughtBugsRuntime.Instance.OnCaughtChanged -= OnCaughtChanged;
-        }
-        subscribedToCaughtRuntime = false;
-    }
-
-    private void SubscribeTargetRuntime(TargetBugsRuntime runtime)
-    {
-        if (currentTargetRuntime == runtime)
-            return;
-
-        UnsubscribeTargetRuntime();
-
-        if (runtime != null)
-        {
-            runtime.TargetsChanged += UpdateCounter;
-            runtime.BugsToSpawnChanged += UpdateCounter;
-            currentTargetRuntime = runtime;
-
-            // NOTE: Check if data already set before subscription (race condition prevention)
-            if (runtime.Targets != null && runtime.Targets.Count > 0)
+            if (Instance && Instance != this)
             {
-                Debug.Log($"[BugCounterUI] SubscribeTargetRuntime: Targets already set ({runtime.Targets.Count}), calling UpdateCounter");
-                UpdateCounter();
+                Destroy(gameObject);
+                return;
+            }
+            Instance = this;
+        
+            // Автоматически получаем TextMeshProUGUI со своего объекта
+            _counterText = GetComponent<TextMeshProUGUI>();
+        
+            // Если не нашли на том же объекте, ищем в дочерних
+            if (_counterText == null)
+            {
+                _counterText = GetComponentInChildren<TextMeshProUGUI>();
+            }
+        
+            // Проверка успешности
+            if (_counterText == null)
+            {
+                Debug.LogError($"[BugCounterUI] TextMeshProUGUI component not found on {gameObject.name} or its children!");
             }
             else
             {
-                Debug.Log($"[BugCounterUI] SubscribeTargetRuntime: Targets not set yet (runtime.Targets={(runtime.Targets == null ? "null" : runtime.Targets.Count.ToString())})");
+                if (showDebug)
+                    Debug.Log($"[BugCounterUI] TextMeshProUGUI found on {_counterText.gameObject.name}");
             }
         }
-    }
 
-    private void UnsubscribeTargetRuntime()
-    {
-        if (currentTargetRuntime != null)
+        private void OnEnable()
         {
-            currentTargetRuntime.TargetsChanged -= UpdateCounter;
-            currentTargetRuntime.BugsToSpawnChanged -= UpdateCounter;
-            currentTargetRuntime = null;
-        }
-    }
+            BugCounter.InstanceChanged += OnBugCounterInstanceChanged;
+            TrySubscribeBugCounter();
 
-    private void OnJarsChanged(int _)
-    {
-        UpdateCounter();
-    }
-
-    private void OnCaughtChanged()
-    {
-        UpdateCounter();
-    }
-
-    private void OnTargetRuntimeInstanceChanged(TargetBugsRuntime runtime)
-    {
-        SubscribeTargetRuntime(runtime);
-        UpdateCounter();
-    }
-
-    private void OnInventoryChangedCSharp() => UpdateCounter();
-    private void OnInventoryChangedUnity() => UpdateCounter();
-
-    public void UpdateCounter()
-    {
-        Debug.Log($"[BugCounterUI] UpdateCounter called");
-
-        int targetCount = 0;
-        int correctCount = 0;
-        int wrongCount = 0;
-        bool usedRuntimeStats = false;
-
-        Debug.Log($"[BugCounterUI] TargetBugsRuntime.Instance={(TargetBugsRuntime.Instance != null ? "exists" : "null")}");
-
-        if (TargetBugsRuntime.Instance != null)
-        {
-            Debug.Log($"[BugCounterUI] TargetBugsRuntime.Instance.Targets={(TargetBugsRuntime.Instance.Targets == null ? "null" : TargetBugsRuntime.Instance.Targets.Count.ToString())}");
+            BugList.InstanceChanged += OnTargetRuntimeInstanceChanged;
+            SubscribeTargetRuntime(BugList.Instance);
         }
 
-        if (TargetBugsRuntime.Instance != null &&
-            TargetBugsRuntime.Instance.Targets != null &&
-            TargetBugsRuntime.Instance.Targets.Count > 0)
+        private void Start()
         {
-            targetCount = TargetBugsRuntime.Instance.Targets.Count;
+            // NOTE: Start() called after all Awake(), so singletons should be ready
+            UpdateCounter();
+        }
 
-            if (CaughtBugsRuntime.Instance != null)
+        private void OnDisable()
+        {
+            BugCounter.InstanceChanged -= OnBugCounterInstanceChanged;
+            UnsubscribeBugCounter();
+
+            BugList.InstanceChanged -= OnTargetRuntimeInstanceChanged;
+            UnsubscribeTargetRuntime();
+        }
+
+        private void OnBugCounterInstanceChanged(BugCounter counter)
+        {
+            UnsubscribeBugCounter();
+            TrySubscribeBugCounter();
+            UpdateCounter();
+        }
+
+        private void TrySubscribeBugCounter()
+        {
+            if (!_subscribedToBugCounter && BugCounter.Instance != null)
             {
-                CaughtBugsRuntime.Instance.GetStats(out _, out correctCount, out wrongCount);
-                usedRuntimeStats = true;
+                BugCounter.Instance.OnJarsChanged += OnJarsChanged;
+                _subscribedToBugCounter = true;
             }
-
-            Debug.Log($"[BugCounterUI] Using TargetBugsRuntime: targetCount={targetCount}, correctCount={correctCount}");
         }
 
-        if (!usedRuntimeStats)
+        private void UnsubscribeBugCounter()
         {
-            if (BugCounter.Instance != null)
+            if (_subscribedToBugCounter && BugCounter.Instance != null)
             {
-                targetCount = BugCounter.Instance.MaxJars;
-                correctCount = BugCounter.Instance.MaxJars - BugCounter.Instance.CurrentJars;
+                BugCounter.Instance.OnJarsChanged -= OnJarsChanged;
+            }
+            _subscribedToBugCounter = false;
+        }
 
-                Debug.Log($"[BugCounterUI] Fallback mode: using BugCounter (max={targetCount}, current={BugCounter.Instance.CurrentJars})");
+        private void SubscribeTargetRuntime(BugList runtime)
+        {
+            if (_currentTargetRuntime == runtime)
+                return;
+
+            UnsubscribeTargetRuntime();
+
+            if (runtime != null)
+            {
+                runtime.TargetsChanged += UpdateCounter;
+                runtime.CollectedChanged += UpdateCounter;
+                runtime.BugsToSpawnChanged += UpdateCounter;
+                _currentTargetRuntime = runtime;
+
+                // NOTE: Check if data already set before subscription (race condition prevention)
+                if (runtime.Targets != null && runtime.Targets.Count > 0)
+                {
+                    Debug.Log($"[BugCounterUI] SubscribeTargetRuntime: Targets already set ({runtime.Targets.Count}), calling UpdateCounter");
+                    UpdateCounter();
+                }
+                else
+                {
+                    Debug.Log($"[BugCounterUI] SubscribeTargetRuntime: Targets not set yet (runtime.Targets={(runtime.Targets == null ? "null" : runtime.Targets.Count.ToString())})");
+                }
             }
         }
 
-        int remain = Mathf.Max(0, targetCount - correctCount);
-        Debug.Log($"[BugCounterUI] Setting text to {remain} (counterText={(counterText != null ? "exists" : "null")})");
-
-        if (counterText != null) counterText.text = remain.ToString();
-
-        Debug.Log($"[BugCounterUI] Final: target={targetCount}, correct={correctCount}, wrong={wrongCount} => remain={remain}");
-    }
-
-    public void DecrementCounter(int amount = 1)
-    {
-        if (counterText == null) return;
-
-        if (int.TryParse(counterText.text, out int current))
+        private void UnsubscribeTargetRuntime()
         {
-            int newValue = Mathf.Max(0, current - amount);
-            counterText.text = newValue.ToString();
-
-            if (showDebug)
-                Debug.Log($"[BugCounterUI] Decremented: {current} -> {newValue}");
+            if (_currentTargetRuntime != null)
+            {
+                _currentTargetRuntime.TargetsChanged -= UpdateCounter;
+                _currentTargetRuntime.CollectedChanged -= UpdateCounter;
+                _currentTargetRuntime.BugsToSpawnChanged -= UpdateCounter;
+                _currentTargetRuntime = null;
+            }
         }
-    }
 
-    public void IncrementCounter(int amount = 1)
-    {
-        if (counterText == null) return;
-
-        if (int.TryParse(counterText.text, out int current))
+        private void OnJarsChanged(int _)
         {
-            int newValue = current + amount;
-            counterText.text = newValue.ToString();
+            UpdateCounter();
+        }
 
-            if (showDebug)
-                Debug.Log($"[BugCounterUI] Incremented: {current} -> {newValue}");
+        private void OnTargetRuntimeInstanceChanged(BugList runtime)
+        {
+            SubscribeTargetRuntime(runtime);
+            UpdateCounter();
+        }
+
+        private void OnInventoryChangedCSharp() => UpdateCounter();
+        private void OnInventoryChangedUnity() => UpdateCounter();
+
+        public void UpdateCounter()
+        {
+            Debug.Log($"[BugCounterUI] UpdateCounter called");
+
+            int targetCount = 0;
+            int correctCount = 0;
+            int wrongCount = 0;
+            bool usedRuntimeStats = false;
+
+            Debug.Log($"[BugCounterUI] BugList.Instance={(BugList.Instance != null ? "exists" : "null")}");
+
+            if (BugList.Instance != null)
+            {
+                Debug.Log($"[BugCounterUI] BugList.Instance.Targets={(BugList.Instance.Targets == null ? "null" : BugList.Instance.Targets.Count.ToString())}");
+            }
+
+            if (BugList.Instance != null &&
+                BugList.Instance.Targets != null &&
+                BugList.Instance.Targets.Count > 0)
+            {
+                targetCount = BugList.Instance.Targets.Count;
+
+                if (InventoryManager.Instance != null)
+                {
+                    // Подсчитываем правильные и неправильные жуки по уникальным типам (только баги ItemType.Quest)
+                    var collectedSet = new System.Collections.Generic.HashSet<string>();
+                    var bugSlots = InventoryManager.Instance.GetItemsByType(ItemType.Quest);
+                    foreach (var slot in bugSlots)
+                    {
+                        if (slot.item != null && !string.IsNullOrEmpty(slot.item.itemID))
+                        {
+                            string normalizedId = BugList.NormalizeKey(slot.item.itemID);
+                            collectedSet.Add(normalizedId);
+                        }
+                    }
+                    
+                    correctCount = 0;
+                    foreach (var target in BugList.Instance.Targets)
+                    {
+                        if (collectedSet.Contains(BugList.NormalizeKey(target)))
+                            correctCount++;
+                    }
+                    
+                    wrongCount = Mathf.Max(0, collectedSet.Count - correctCount);
+                    
+                    usedRuntimeStats = true;
+                }
+
+                Debug.Log($"[BugCounterUI] Using BugList: targetCount={targetCount}, correctCount={correctCount}");
+            }
+
+            if (!usedRuntimeStats)
+            {
+                if (BugCounter.Instance != null)
+                {
+                    targetCount = BugCounter.Instance.MaxJars;
+                    correctCount = BugCounter.Instance.MaxJars - BugCounter.Instance.CurrentJars;
+
+                    Debug.Log($"[BugCounterUI] Fallback mode: using BugCounter (max={targetCount}, current={BugCounter.Instance.CurrentJars})");
+                }
+            }
+
+            int remain = Mathf.Max(0, targetCount - (correctCount + wrongCount));
+            Debug.Log($"[BugCounterUI] Setting text to {remain} (counterText={(_counterText != null ? "exists" : "null")})");
+
+            if (_counterText != null) _counterText.text = remain.ToString();
+
+            Debug.Log($"[BugCounterUI] Final: target={targetCount}, correct={correctCount}, wrong={wrongCount} => remain={remain}");
+        }
+
+        private string ExtractBugKeyFromItemName(string itemName)
+        {
+            if (string.IsNullOrEmpty(itemName)) return null;
+            
+            // Нормализация имени предмета для ��звлечения ключа жука
+            string normalized = itemName.Replace("(Clone)", "").Replace("_Variant", "").Trim();
+            return BugList.NormalizeKey(normalized);
+        }
+
+        public void DecrementCounter(int amount = 1)
+        {
+            if (_counterText == null) return;
+
+            if (int.TryParse(_counterText.text, out int current))
+            {
+                int newValue = Mathf.Max(0, current - amount);
+                _counterText.text = newValue.ToString();
+
+                if (showDebug)
+                    Debug.Log($"[BugCounterUI] Decremented: {current} -> {newValue}");
+            }
+        }
+
+        public void IncrementCounter(int amount = 1)
+        {
+            if (_counterText == null) return;
+
+            if (int.TryParse(_counterText.text, out int current))
+            {
+                int newValue = current + amount;
+                _counterText.text = newValue.ToString();
+
+                if (showDebug)
+                    Debug.Log($"[BugCounterUI] Incremented: {current} -> {newValue}");
+            }
         }
     }
 }

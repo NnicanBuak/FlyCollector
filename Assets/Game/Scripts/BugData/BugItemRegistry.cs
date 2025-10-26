@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Bug;
+using Game.Scripts.Bug;
 
 #if UNITY_EDITOR
 using UnityEditor;
 using System.Linq;
 #endif
+using Game.Scripts.BugData;
 
 namespace BugData
 {
@@ -98,7 +100,7 @@ namespace BugData
                 {
                     string canonical = BugKeyUtil.CanonicalizeKey(e.key);
                     if (string.IsNullOrEmpty(canonical))
-                        canonical = TargetBugsRuntime.NormalizeKey(e.key);
+                        canonical = BugList.NormalizeKey(e.key);
                     if (!string.IsNullOrEmpty(canonical))
                         _itemToKey[e.item] = canonical;
                 }

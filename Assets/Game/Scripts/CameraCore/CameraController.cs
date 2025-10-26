@@ -3,8 +3,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
 using DG.Tweening;
-using Bug;
-using BugCatching;
+using Game.Scripts.Bug;
+using Game.Scripts.BugCatching;
+using Game.Scripts.CameraInspect;
 
 public class CameraController : MonoBehaviour
 {
@@ -39,7 +40,7 @@ public class CameraController : MonoBehaviour
     [Tooltip("Maximum camera rotation angle (degrees)")]
     public float mouseFollowAmount = 3f;
     [Tooltip("Mouse follow speed")]
-    public float mouseFollowSpeed = 3f;
+    public float mouseFollowSpeed = 1f;
 
     [Header("Push Settings")]
     public float pushForce = 5f;
@@ -159,6 +160,11 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
+        // Ensure holdPoint always faces the camera ONLY when not inspecting
+        if (holdPoint != null && cam != null && inspectManager != null && !inspectManager.IsInspecting)
+        {
+            holdPoint.LookAt(cam.transform);
+        }
 
         if (inspectManager.IsInspecting) 
         {
@@ -465,5 +471,10 @@ public class CameraController : MonoBehaviour
             isReturningHome = false;
         }
     }
-}
 
+    // Added to allow external end of inspect session
+    public void ForceEndInspectSession()
+    {
+        inspectManager.ForceEndInspect();
+    }
+}

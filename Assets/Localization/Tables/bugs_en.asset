@@ -1,0 +1,1015 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: bugs_en
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 26ccc157afd2947459be5b6ef6a88e53, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 6608036814848
+    m_Localized: Cicada magna pede (heaven bug)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814849
+    m_Localized: teal spine, yellow head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814850
+    m_Localized: Cicada magna pede (tropical hunter)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814851
+    m_Localized: most of the bug is green
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814852
+    m_Localized: Cicada magna pede (forest dweller)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814853
+    m_Localized: brown and green body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814854
+    m_Localized: Cicada magna pede (crystal bug)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814855
+    m_Localized: blue and white body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814856
+    m_Localized: La Regina Semiramide (the saint)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814857
+    m_Localized: blue wings, yellow body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814858
+    m_Localized: La Regina Semiramide (red dot)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814859
+    m_Localized: purple wings, light-blue body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814860
+    m_Localized: La Regina Semiramide (parrot mode)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814861
+    m_Localized: thick orange wings, blue center
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814862
+    m_Localized: La Regina Semiramide (tree baboon)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814863
+    m_Localized: white legs, brown wings and head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814864
+    m_Localized: La Regina Semiramide (night wish)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814865
+    m_Localized: purple wings, red head and body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814866
+    m_Localized: Aranea Cancri Armatae (monkey style)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814867
+    m_Localized: brown legs, grey-yellow hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814868
+    m_Localized: Aranea Cancri Armatae (clownfish)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814869
+    m_Localized: purple legs, orange body, teal hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814870
+    m_Localized: Aranea Cancri Armatae (arctic fellow)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814871
+    m_Localized: deep blue legs, white-blue hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814872
+    m_Localized: Aranea Cancri Armatae (crazy orange)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814873
+    m_Localized: deep green legs, orange-green hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814874
+    m_Localized: Aranea Cancri Armatae (snow white)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814875
+    m_Localized: most of the bug is white
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814876
+    m_Localized: Un insecto timido (shipbreaker)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814877
+    m_Localized: black head, white wings, brown antennae
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814878
+    m_Localized: Un insecto timido (fruit plate)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814879
+    m_Localized: green head, orange wings, pink antennae
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814880
+    m_Localized: Un insecto timido (lumen)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814881
+    m_Localized: deep yellow head, pink wings, blue antennae
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814882
+    m_Localized: Un insecto timido (shadow walker)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814883
+    m_Localized: blue wings, purple head, green antennae
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814884
+    m_Localized: Un insecto timido (god-bug)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814885
+    m_Localized: most of the bug is white
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814886
+    m_Localized: Vesparum cornua (toxic waste)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814887
+    m_Localized: purple and green body, grey horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814888
+    m_Localized: Vesparum cornua (the saint)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814889
+    m_Localized: light-yellow and light-blue body, grey horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814890
+    m_Localized: Vesparum cornua (centaurus)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814891
+    m_Localized: dark-green body, dark-pink wings, light blue horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814892
+    m_Localized: Vesparum cornua (god-bug)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608036814893
+    m_Localized: teal eyes, lightskin body, grey wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009152
+    m_Localized: Vesparum cornua (pinkman)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009153
+    m_Localized: teal and pink body, brown wings, blue horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009154
+    m_Localized: Duplex cadaver-esus beetle (dead orange)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009155
+    m_Localized: purple and orange body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009156
+    m_Localized: Duplex cadaver-esus beetle (arctic fellow)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009157
+    m_Localized: light-blue and deep-teal body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009158
+    m_Localized: Duplex cadaver-esus beetle (sheeva)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009159
+    m_Localized: deep green and deep blue body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009160
+    m_Localized: Duplex cadaver-esus beetle (frog-lester)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009161
+    m_Localized: orange and emerald body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009162
+    m_Localized: Duplex cadaver-esus beetle (prometheus)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009163
+    m_Localized: red and blue body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009164
+    m_Localized: Cantharum cellularum est (the pinkman)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009165
+    m_Localized: golden hat, pink and blue body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009166
+    m_Localized: Cantharum cellularum est (royal guard)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009167
+    m_Localized: light green hat, blue and white body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009168
+    m_Localized: Cantharum cellularum est (crazy orange)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009169
+    m_Localized: orange and green body, teal-brown hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009170
+    m_Localized: Cantharum cellularum est (fluffy bunny)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009171
+    m_Localized: pink and white body, teal hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009172
+    m_Localized: Cantharum cellularum est (the saint)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009173
+    m_Localized: light-blue and white-blue body, yellow hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009174
+    m_Localized: Culex turtur (swamp king)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009175
+    m_Localized: green wings, white hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009176
+    m_Localized: Culex turtur (underdog)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009177
+    m_Localized: light-yellow and green wings, white-blue hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009178
+    m_Localized: Culex turtur (shadow walker)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009179
+    m_Localized: purple-yellow wings, blue hat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009180
+    m_Localized: Culex turtur (stephano)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009181
+    m_Localized: brown hat, blue-purple wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009182
+    m_Localized: Culex turtur (avanger)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009183
+    m_Localized: white hat, most of the bug is teal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009184
+    m_Localized: Lepus Volant (the basis bunny)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009185
+    m_Localized: most of the bug is white
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009186
+    m_Localized: Lepus Volant (freeze-bunny)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009187
+    m_Localized: most of the bug is blue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009188
+    m_Localized: Lepus Volant (shadow tyrant)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009189
+    m_Localized: most of the bug is deep-blue, red-orange spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009190
+    m_Localized: Lepus Volant (Lucaris)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009191
+    m_Localized: Blue ears, red spune
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009192
+    m_Localized: Lepus Volant (young turtle)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009193
+    m_Localized: most of the bug is light green, blue spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009194
+    m_Localized: Volare Umbrella (salad)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009195
+    m_Localized: green and white center, light blue spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009196
+    m_Localized: Volare Umbrella (royal blue)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009197
+    m_Localized: golden center, blue spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009198
+    m_Localized: Volare Umbrella (tropical hunter)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009199
+    m_Localized: black and purple center, light-green spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009200
+    m_Localized: Volare Umbrella (the saint)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009201
+    m_Localized: light-blue and light-yellow center, orange spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009202
+    m_Localized: Volare Umbrella (chameleon)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009203
+    m_Localized: white-teal center, light-teal spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009204
+    m_Localized: Sciurus culex (the rabbit)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009205
+    m_Localized: brown body, grey spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009206
+    m_Localized: Sciurus culex (arctic fellow)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009207
+    m_Localized: blue and white body, blue dot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009208
+    m_Localized: Sciurus culex (swamp keeper)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009209
+    m_Localized: white-purple body, orange spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608041009210
+    m_Localized: Sciurus culex (magma-bug)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203456
+    m_Localized: orange body, pink spine, white dot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203457
+    m_Localized: Sciurus culex (the trickster)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203458
+    m_Localized: pink body, most of the bug is emerald
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203459
+    m_Localized: Regia Vesparum (the candybar)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203460
+    m_Localized: teal and pink body, purple horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203461
+    m_Localized: Regia Vesparum (snow-white)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203462
+    m_Localized: most of the bug is white
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203463
+    m_Localized: Regia Vesparum (baboon)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203464
+    m_Localized: green and brown body, deep green horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203465
+    m_Localized: Regia Vesparum (god-bug)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203466
+    m_Localized: white-green and light-yellow body, white-blue horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203467
+    m_Localized: Regia Vesparum (pink peach)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203468
+    m_Localized: pink and brown body, pink horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203469
+    m_Localized: Aranea Caprae (violet avenger)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203470
+    m_Localized: purple spine, blue horns, yellow antennae
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203471
+    m_Localized: Aranea Caprae (blue diamond)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203472
+    m_Localized: most of the bug is blue and light-blue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203473
+    m_Localized: Aranea Caprae (spider-blue)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203474
+    m_Localized: green spine, blue and white horns, malachite antennae
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203475
+    m_Localized: Aranea Caprae (chameleon)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203476
+    m_Localized: light-brown spine, malachite antennae, chromic horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203477
+    m_Localized: Aranea Caprae (drain-angel)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203478
+    m_Localized: pink spine, deep-purple and dark-green horns, orange antennae
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203479
+    m_Localized: Struthio culex (dying-star)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203480
+    m_Localized: iron spine, purple legs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203481
+    m_Localized: Struthio culex (cyber-imperia)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203482
+    m_Localized: dark-iron spine, dark-teal legs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203483
+    m_Localized: Struthio culex (swamp beast)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203484
+    m_Localized: swamp-green wings, malachite body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203485
+    m_Localized: Struthio culex (angel-chameleon)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203486
+    m_Localized: chromic wings, most of the bug is white
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203487
+    m_Localized: Struthio culex (steppen wolf)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203488
+    m_Localized: white body, light blue wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203489
+    m_Localized: Stultus magnus cimex est (Thanos)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203490
+    m_Localized: purple spine, light-blue body, golden wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203491
+    m_Localized: Stultus magnus cimex est (shadow walker)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203492
+    m_Localized: blue spine, blue body, purple wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203493
+    m_Localized: Stultus magnus cimex est (sapphire)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203494
+    m_Localized: darkgreen spine, most of the bug is blue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203495
+    m_Localized: Stultus magnus cimex est (tropical hunter)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203496
+    m_Localized: most of the bug is light green, dark green wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203497
+    m_Localized: Stultus magnus cimex est (the candybar)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203498
+    m_Localized: pink spine, purple body, iron wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203499
+    m_Localized: Scarabaeus exanimatio (queen bee)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203500
+    m_Localized: light-orange and brown body, light-blue wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203501
+    m_Localized: Scarabaeus exanimatio (dreambreaker)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203502
+    m_Localized: white-pink and iron body, white wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203503
+    m_Localized: Scarabaeus exanimatio (frog-lester)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203504
+    m_Localized: teal and white body, brown wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203505
+    m_Localized: Scarabaeus exanimatio (chameleon)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203506
+    m_Localized: chromic body, light green legs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203507
+    m_Localized: Scarabaeus exanimatio (shadow walker)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203508
+    m_Localized: brown wings, purple and dark-blue body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203509
+    m_Localized: Bulla beetle (steppen wolf)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203510
+    m_Localized: light blue spine, dark teal wings, orange head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203511
+    m_Localized: Bulla beetle (the saint)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203512
+    m_Localized: dark-blue spine, light-yellow wings, malachite head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203513
+    m_Localized: Bulla beetle (farmer)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203514
+    m_Localized: light-purple spine, white and orange wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203515
+    m_Localized: Bulla beetle (frog-lester)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203516
+    m_Localized: most of the bug is green, light-bronze spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203517
+    m_Localized: Bulla beetle (cyber-stalker)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203518
+    m_Localized: light-blue spine, dark-purple wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203519
+    m_Localized: Circulus Beetle (the basic)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203520
+    m_Localized: blue spine, green wings, white horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203521
+    m_Localized: Circulus Beetle (god-bug)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203522
+    m_Localized: white-pink spine, golden wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203523
+    m_Localized: Circulus Beetle (crab-pod)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203524
+    m_Localized: orange spine, dark wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203525
+    m_Localized: Circulus Beetle (the candybar)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203526
+    m_Localized: pink spine, bone wings, emerald horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203527
+    m_Localized: Circulus Beetle (shadow stalker)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203528
+    m_Localized: light purple spine, white-teal wings, purple horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203529
+    m_Localized: Rana beetle (toxic waste)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203530
+    m_Localized: most of the bug is blue and purple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608045203531
+    m_Localized: Rana beetle (iron smith)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397760
+    m_Localized: red spine, blue wings, yellow head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397761
+    m_Localized: Rana beetle (dirt eater)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397762
+    m_Localized: purple head, brown spine, dark-green wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397763
+    m_Localized: Rana beetle (sheeva)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397764
+    m_Localized: ruby spine, purple wings, light-blue head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397765
+    m_Localized: Rana beetle (god-bug)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397766
+    m_Localized: golden bug, white-pink wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397767
+    m_Localized: Vesparum cervorum (lucaris)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397768
+    m_Localized: blue and white-blue body, brown wings, green horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397769
+    m_Localized: Vesparum cervorum (iron smith)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397770
+    m_Localized: red and gold body, white-blue wings, gold horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397771
+    m_Localized: Vesparum cervorum (darkwood)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397772
+    m_Localized: purple horns, brown body, white wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397773
+    m_Localized: Vesparum cervorum (red puppet)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397774
+    m_Localized: red body, light-blue horns and wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397775
+    m_Localized: Vesparum cervorum (sphinx)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397776
+    m_Localized: teal and gold body, dark wings, teal horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397777
+    m_Localized: Armadillo Beetle (horseman)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397778
+    m_Localized: brown and purple body, skeleton head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397779
+    m_Localized: Armadillo Beetle (the saint)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397780
+    m_Localized: light-brown and light-blue body, deep-teal head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397781
+    m_Localized: Armadillo Beetle (hophman paradigma)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397782
+    m_Localized: white-blue and dark-green body, red head, gold horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397783
+    m_Localized: Armadillo Beetle (snow white)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397784
+    m_Localized: most of the bug is white, brown head, sapphire horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397785
+    m_Localized: Armadillo Beetle (sweet tooth)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397786
+    m_Localized: chromic-pink body, deep-red head, light-green horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397787
+    m_Localized: Larva crassa est (the basic)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397788
+    m_Localized: white-yellow spine, light-blue wings, brown horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397789
+    m_Localized: Larva crassa est (ghost-mind)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397790
+    m_Localized: light-blue horns, white wings and white body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397791
+    m_Localized: Larva crassa est (seawood)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397792
+    m_Localized: teal spine, orange wings, white horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397793
+    m_Localized: Larva crassa est (ocean lettuce)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397794
+    m_Localized: deep-teal spine, white wings, orange head and horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397795
+    m_Localized: Larva crassa est (metroid)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397796
+    m_Localized: orange spine, brown wings, blue head, white horn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397797
+    m_Localized: Custodia taurus scarabaeus (blue avenger)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397798
+    m_Localized: light-blue spine, grey and blue wings, dark horns
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397799
+    m_Localized: Custodia taurus Scarabaeus (iron smith)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397800
+    m_Localized: red and dark-grey wings, white spine, gold center
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397801
+    m_Localized: Custodia taurus Scarabaeus (sandstorm)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397802
+    m_Localized: brown and light-brown wings, brown head, orange and blue spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397803
+    m_Localized: Custodia taurus Scarabaeus (hyper-being)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397804
+    m_Localized: white spine, red and light-teal wings, light-teal head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397805
+    m_Localized: Custodia taurus Scarabaeus (thanos)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397806
+    m_Localized: purple and gold wings, purple head, light-brown spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397807
+    m_Localized: "La Scarabei \u0441ursor (arctic fellow)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397808
+    m_Localized: grey center, teal-blue wings, white horns, black antennae
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397809
+    m_Localized: "La Scarabei \u0441ursor (caveman)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397810
+    m_Localized: light-green center, red and blue body, bone antennae
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397811
+    m_Localized: "La Scarabei \u0441ursor (tropical hunter)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397812
+    m_Localized: gold center, brown and green body, deep-gold antennae
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397813
+    m_Localized: "La Scarabei \u0441ursor (iron smith)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397814
+    m_Localized: dark center, purple antennae, gold and red body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397815
+    m_Localized: "La Scarabei \u0441ursor (the saint)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397816
+    m_Localized: white and gold body, teal antennae
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397817
+    m_Localized: Insectorum thoracem laneum (soft bug)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397818
+    m_Localized: purple wings, light-pink spine, white body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397819
+    m_Localized: Insectorum thoracem laneum (metalslug)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397820
+    m_Localized: iron body, white-blue wings, white spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397821
+    m_Localized: Insectorum thoracem laneum (azure-emerald)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397822
+    m_Localized: teal spine, deep-teal body, dark-green wings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397823
+    m_Localized: Insectorum thoracem laneum (chronosphere)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397824
+    m_Localized: light-gold wings, white-teal body, grey spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397825
+    m_Localized: Insectorum thoracem laneum (the basic)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6608049397826
+    m_Localized: dark spine, gold wings, iron body
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

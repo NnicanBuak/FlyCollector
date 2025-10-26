@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using BugData;
+using Game.Scripts.BugData;
 
 public static class BugSummaryUtil
 {
@@ -45,8 +46,8 @@ public static class BugSummaryUtil
 
     private static List<string> GetTargets()
     {
-        if (TargetBugsRuntime.Instance?.Targets != null)
-            return new List<string>(TargetBugsRuntime.Instance.Targets);
+        if (BugList.Instance?.Targets != null)
+            return new List<string>(BugList.Instance.Targets);
         return new List<string>();
     }
 
@@ -75,13 +76,26 @@ public static class BugSummaryUtil
 
     private static void CollectFromRuntime(List<string> caught)
     {
-        var runtime = CaughtBugsRuntime.Instance;
-        if (runtime == null || runtime.Caught == null) return;
+        var runtime = InventoryManager.Instance;
+        if (runtime == null) return;
 
-        foreach (var raw in runtime.Caught)
+        // Заменено BugInventory на InventoryManager
+        // Получаем все предметы из инвентаря и извлекаем их ключи
+        var slots = runtime.GetAllItems();
+        foreach (var slot in slots)
         {
-            if (string.IsNullOrWhiteSpace(raw)) continue;
-            caught.Add(Canonicalize(raw));
+            if (slot.item == null || slot.quantity <= 0) continue;
+            
+            // Извлекаем ключ из имени предмета
+            string key = BugKeyUtil.ExtractKey(slot.item.itemName);
+            if (!string.IsNullOrWhiteSpace(key))
+            {
+                // Добавляем количество раз равное количеству в слоте
+                for (int i = 0; i < slot.quantity; i++)
+                {
+                    caught.Add(Canonicalize(key));
+                }
+            }
         }
     }
 
@@ -115,6 +129,6 @@ public static class BugSummaryUtil
     private static string Canonicalize(string raw)
     {
         string canonical = BugKeyUtil.CanonicalizeKey(raw);
-        return string.IsNullOrEmpty(canonical) ? TargetBugsRuntime.NormalizeKey(raw) : canonical;
+        return string.IsNullOrEmpty(canonical) ? BugList.NormalizeKey(raw) : canonical;
     }
 }

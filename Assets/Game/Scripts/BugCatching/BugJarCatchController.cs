@@ -1,8 +1,10 @@
 using System.Collections;
-using UnityEngine;
 using BugData;
+using UnityEngine;
+using Game.Scripts.BugData;
+using Game.Scripts.Core;
 
-namespace BugCatching
+namespace Game.Scripts.BugCatching
 {
     public class BugJarCatchController : MonoBehaviour
     {
@@ -25,7 +27,7 @@ namespace BugCatching
         [SerializeField] private bool autoDecrementJarCounter = false;
 
         [Header("Debug")]
-        [SerializeField] private bool showDebug = false;
+        [SerializeField] private bool showDebug;
         #endregion
 
         #region Properties
@@ -86,15 +88,21 @@ namespace BugCatching
 
             string bugFileName = bug.name;
 
+            // Нормализуем имя жука для проверки
+            string normalizedKey = BugList.NormalizeKey(bugFileName);
+            bool isTargetBug = BugList.Instance != null && BugList.Instance.IsTarget(normalizedKey);
+
+            if (showDebug)
+            {
+                Debug.Log($"[BugJarCatchController] Пойман жук: {bugFileName}");
+                Debug.Log($"[BugJarCatchController] Нормализованный ключ: {normalizedKey}");
+                Debug.Log($"[BugJarCatchController] Целевой жук: {isTargetBug}");
+            }
 
             if (registry && registry.TryGetItem(bugFileName, out var item) && item)
             {
                 InventoryManager.Instance?.AddItem(item, 1);
             }
-
-
-            CaughtBugsRuntime.Instance?.RegisterCaught(bugFileName);
-
 
             if (autoDecrementJarCounter && BugCounter.Instance != null)
             {
@@ -110,6 +118,11 @@ namespace BugCatching
             if (hideHintOnDone && MultiHintController.Instance)
                 // Keep showing Put (LMB), hide Collect (RMB)
                 MultiHintController.Instance.Show(MultiHintController.PanelNames.LeftMouse);
+
+            // Завершаем инсп��кцию после сбора жука
+            var camController = Object.FindFirstObjectByType<CameraController>();
+            if (camController != null)
+                camController.ForceEndInspectSession();
         }
         #endregion
 

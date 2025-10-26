@@ -52,11 +52,11 @@ public class GameTimer : MonoBehaviour
 
     void Awake()
     {
-
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            // Removed DontDestroyOnLoad to reset timer per scene
+            // DontDestroyOnLoad(gameObject);
         }
         else
         {

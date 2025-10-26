@@ -189,7 +189,6 @@ public class InteractableObject : MonoBehaviour, IInteractable
         _isRunning = true;
         onInteractStarted?.Invoke();
 
-
         var ctx = new InteractionContext
         {
             Camera = cam,
@@ -201,30 +200,37 @@ public class InteractableObject : MonoBehaviour, IInteractable
             FailureReason = null
         };
 
-
-        for (int i = 0; i < actions.Count; i++)
+        try
         {
-            var act = actions[i];
-            if (!act) continue;
-            IEnumerator e = null;
-            try
+            for (int i = 0; i < actions.Count; i++)
             {
-                e = act.Execute(ctx);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogError($"[{name}] Action {act.GetType().Name} threw on start: {ex.Message}", this);
-                break;
+                var act = actions[i];
+                if (!act) continue;
+                IEnumerator e = null;
+                try
+                {
+                    e = act.Execute(ctx);
+                }
+                catch (Exception ex)
+                {
+                    Debug.LogError($"[{name}] Action {act.GetType().Name} threw on start: {ex.Message}", this);
+                    break;
+                }
+
+                if (e != null) { yield return StartCoroutine(e); }
             }
 
-            if (e != null) { yield return StartCoroutine(e); }
+            Play(interactSuccessClip);
+        }
+        finally
+        {
+            _isRunning = false;
+            onInteractFinished?.Invoke();
         }
 
-        Play(interactSuccessClip);
-        _isRunning = false;
-        onInteractFinished?.Invoke();
-
-
+        // Принудительная задержка для завершения всех операций
+        yield return new WaitForEndOfFrame();
+        
         if (_hovered) ApplyHoverVisuals();
     }
 
@@ -275,8 +281,10 @@ public class InteractableObject : MonoBehaviour, IInteractable
         finally
         {
             _isRunning = false;
-            if (_hovered) ApplyHoverVisuals();
         }
+
+        yield return new WaitForEndOfFrame();
+        if (_hovered) ApplyHoverVisuals();
     }
 
 
@@ -354,5 +362,30 @@ public class InteractableObject : MonoBehaviour, IInteractable
         var src = audioSource ? audioSource : GetComponent<AudioSource>();
         if (src) src.PlayOneShot(clip, audioVolume);
         else AudioSource.PlayClipAtPoint(clip, transform.position, audioVolume);
+    }
+
+    public void ForceUnlock()
+    {
+        _isRunning = false;
+        
+        // Принудительно очищаем InteractionFreeze
+        var freezeType = System.Type.GetType("InteractionFreeze");
+        if (freezeType != null)
+        {
+            var isLockedProp = freezeType.GetProperty("IsLocked", 
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+            var popMethod = freezeType.GetMethod("Pop", 
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+            
+            if (isLockedProp != null && popMethod != null)
+            {
+                int attempts = 0;
+                while ((bool)isLockedProp.GetValue(null) && attempts < 10)
+                {
+                    popMethod.Invoke(null, null);
+                    attempts++;
+                }
+            }
+        }
     }
 }

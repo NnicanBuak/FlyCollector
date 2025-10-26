@@ -52,6 +52,10 @@ public class LightPulseController : MonoBehaviour
     [Header("Extra (optional)")]
     public UnityEvent OnTick;
 
+    [Header("Автозапуск таймера при старте")]
+    [SerializeField] private bool autoStartOnAwake = true;
+
+    private readonly float[] forcedShutdownTimes = { 60f, 120f, 150f }; // 1:00, 2:00, 2:30
     private float startTime;
     private float nextTickTime;
     private Coroutine humFadeRoutine;
@@ -60,6 +64,8 @@ public class LightPulseController : MonoBehaviour
     private bool isShuttingDown = false;
     private Coroutine shutdownRoutine;
     private float lightInitialIntensity = 1f;
+    private int forcedIndex = 0;
+    private bool timerStarted = false;
 
     private void OnEnable()
     {
@@ -77,24 +83,44 @@ public class LightPulseController : MonoBehaviour
     {
         if (mainLight != null) lightInitialIntensity = mainLight.intensity;
 
-        startTime = Time.time;
-        nextTickTime = startTime + 60f;
-
         if (humAudio != null) humInitialVolume = humAudio.volume;
 
         if (mainLight != null && mainLight.enabled)
             StartHum();
+        if (autoStartOnAwake)
+            BeginLightTimer();
+    }
+
+    public void BeginLightTimer()
+    {
+        startTime = Time.time;
+        nextTickTime = startTime + forcedShutdownTimes[0];
+        forcedIndex = 0;
+        timerStarted = true;
     }
 
     private void Update()
     {
-        if (Time.time < nextTickTime) return;
-
-        Tick();
-
+        if (!timerStarted) return;
         float elapsed = Time.time - startTime;
-        float interval = (elapsed < 120f) ? 60f : 30f;
-        nextTickTime += interval;
+        // Сначала выключаем на 1:00, 2:00, 2:30
+        if (forcedIndex < forcedShutdownTimes.Length && elapsed >= forcedShutdownTimes[forcedIndex])
+        {
+            Tick();
+            forcedIndex++;
+            if (forcedIndex < forcedShutdownTimes.Length)
+                nextTickTime = startTime + forcedShutdownTimes[forcedIndex];
+            else
+                nextTickTime = startTime + forcedShutdownTimes[forcedShutdownTimes.Length - 1] + 30f;
+            return;
+        }
+        // После 2:30 — каждые 30 секунд шанс 50%
+        if (forcedIndex >= forcedShutdownTimes.Length && elapsed >= nextTickTime - startTime)
+        {
+            if (Random.value < 0.5f)
+                Tick();
+            nextTickTime += 30f;
+        }
     }
 
     private void Tick()

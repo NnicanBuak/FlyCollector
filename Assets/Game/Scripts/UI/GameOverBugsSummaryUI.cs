@@ -1,11 +1,15 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 using DG.Tweening;
+using Game.Scripts.BugData;
 
 namespace Game.Scripts.UI
 {
+    public enum GameOutcome { Victory, WrongBugs, Timeout, Escaped }
+
     [DisallowMultipleComponent]
     public class GameOverBugsSummaryUI : MonoBehaviour
     {
@@ -18,7 +22,11 @@ namespace Game.Scripts.UI
         [Header("State Names")]
         [SerializeField] private string rightStateName = "Right";
         [SerializeField] private string wrongStateName = "Wrong";
-        [SerializeField] private string missingStateName = "WShow";
+        [SerializeField] private string missingStateName = "Missing";
+
+        [Header("Game Rules")]
+        [SerializeField] private int minCorrectForVictory = 12;
+        [SerializeField] private int totalTargets = 16;
 
         [Header("Persistent Keys (GameSceneManager)")]
         [SerializeField] private string totalCaughtKey = "totalCaught";
@@ -43,27 +51,87 @@ namespace Game.Scripts.UI
         [SerializeField] private AudioClip skippedAppearSound;
         [SerializeField, Range(0f, 1f)] private float soundVolume = 1f;
 
-        [Header("Result UI")]
-        [Tooltip("Reference to EndGameResultUI to play result label animation after slots appear")]
-        [SerializeField] private EndGameResultUI endGameResultUI;
+        [Header("Canvas")]
+        [Tooltip("Reference to the root Canvas for calculating offscreen offset")]
+        [SerializeField] private Canvas rootCanvas;
+
+        [Header("End Game Result UI")]
+        [Tooltip("UI State Controller for result labels")]
+        [SerializeField] private UIStateToggle resultStateToggle;
+        [Tooltip("State name for victory/escape")]
+        [SerializeField] private string victoryStateName = "Escape";
+        [Tooltip("State name for wrong bugs")]
+        [SerializeField] private string wrongBugsStateName = "Mismatch";
+        [Tooltip("State name for timeout")]
+        [SerializeField] private string timeoutStateName = "Fail";
+        [Tooltip("Key in GameSceneManager persistent data for outcome")]
+        [SerializeField] private string outcomeKey = "gameOutcome";
+        [Tooltip("CanvasGroup for victory text")]
+        [SerializeField] private CanvasGroup victoryLabel;
+        [Tooltip("CanvasGroup for wrong bugs text")]
+        [SerializeField] private CanvasGroup wrongLabel;
+        [Tooltip("CanvasGroup for timeout text")]
+        [SerializeField] private CanvasGroup timeoutLabel;
+        [Tooltip("Animation duration for labels")]
+        [SerializeField] private float labelAnimDuration = 0.35f;
+        [Tooltip("Delay before label animation")]
+        [SerializeField] private float labelAnimDelay = 0.12f;
+        [Tooltip("Ease for label animation")]
+        [SerializeField] private Ease labelEase = Ease.OutBack;
+        [Tooltip("Start scale for label animation")]
+        [SerializeField] private float labelStartScale = 1.08f;
+        [Tooltip("Vertical start offset for label animation")]
+        [SerializeField] private float labelStartYOffset = 18f;
+        [Tooltip("Audio source for label sounds")]
+        [SerializeField] private AudioSource resultAudioSource;
+        [Tooltip("Sound clip for label appear")]
+        [SerializeField] private AudioClip labelAppearClip;
+        [Tooltip("Volume for label sound")]
+        [Range(0f, 1f)] [SerializeField] private float labelVolume = 1f;
+        [Tooltip("Flip axis for label animation")]
+        [SerializeField] private FlipAxis flipAxis = FlipAxis.None;
 
         private Sequence _seq;
+        private Sequence _labelSeq;
         private readonly List<Behaviour> _disabledLayouts = new List<Behaviour>();
         private bool _layoutsDisabled;
 
-        private object _lastOutcome = "Victory";
+        private GameOutcome _lastOutcome = GameOutcome.Victory;
+
+        private bool _isAnimationComplete;
+        public bool IsAnimationComplete => _isAnimationComplete;
+        public event Action OnAnimationComplete;
 
         private void OnValidate()
         {
+            // Auto collect slots in editor when root set
             AutoCollectSlotsIfRequested();
         }
 
         private void Awake()
         {
             AutoCollectSlotsIfRequested();
+            if (resultStateToggle == null)
+                resultStateToggle = GetComponent<UIStateToggle>();
+            InitLabelGroup(victoryLabel);
+            InitLabelGroup(wrongLabel);
+            InitLabelGroup(timeoutLabel);
             RefreshFromPersistent();
             if (animateOnAwake)
                 PlayAppearAnimation();
+        }
+
+        private void Start()
+        {
+            GameOutcome outcome = GameOutcome.Victory;
+            var gsm = GameSceneManager.Instance;
+            if (gsm != null && gsm.HasPersistentData(outcomeKey))
+            {
+                var obj = gsm.GetPersistentData<object>(outcomeKey);
+                if (Enum.TryParse<GameOutcome>(obj?.ToString(), out var parsed))
+                    outcome = parsed;
+            }
+            ApplyOutcomeFromName(outcome);
         }
 
         public void RefreshFromPersistent()
@@ -83,8 +151,8 @@ namespace Game.Scripts.UI
                 {
                     totalCaught = gsm.GetPersistentData<int>(totalCaughtKey);
                     wrong = gsm.GetPersistentData<int>(wrongCountKey);
-                    if (TargetBugsRuntime.Instance != null && TargetBugsRuntime.Instance.Targets != null)
-                        target = TargetBugsRuntime.Instance.Targets.Count;
+                    if (BugList.Instance != null && BugList.Instance.Targets != null)
+                        target = BugList.Instance.Targets.Count;
 
                     correct = Mathf.Clamp(totalCaught - wrong, 0, target > 0 ? target : int.MaxValue);
                     missing = Mathf.Max(0, target - correct);
@@ -103,16 +171,17 @@ namespace Game.Scripts.UI
             if (logInfo)
             {
                 string source = summary.HasData
-                    ? (summary.UsedInventory ? "Inventory" : "CaughtBugsRuntime")
+                    ? (summary.UsedInventory ? "Inventory" : "InventoryManager")
                     : "PersistentFallback";
                 Debug.Log(
                     $"[GameOverBugsSummaryUI] source={source}, target={target}, totalCaught={totalCaught}, wrong={wrong}, correct={correct}, missing={missing}");
             }
 
 
-            if (wrong > 0) _lastOutcome = "WrongBugs";
-            else if (missing > 0) _lastOutcome = "Timeout";
-            else _lastOutcome = "Escaped";
+            if (correct >= minCorrectForVictory) _lastOutcome = GameOutcome.Victory;
+            else if (wrong > 0) _lastOutcome = GameOutcome.WrongBugs;
+            else if (missing > 0) _lastOutcome = GameOutcome.Timeout;
+            else _lastOutcome = GameOutcome.Escaped;
 
             Apply(correct, wrong, missing);
         }
@@ -121,18 +190,14 @@ namespace Game.Scripts.UI
         {
             int idx = 0;
 
-
             for (int i = 0; i < correct && idx < slots.Count; i++, idx++)
                 SetExclusive(slots[idx], rightStateName);
-
 
             for (int i = 0; i < wrong && idx < slots.Count; i++, idx++)
                 SetExclusive(slots[idx], wrongStateName);
 
-
             for (int i = 0; i < missing && idx < slots.Count; i++, idx++)
                 SetExclusive(slots[idx], missingStateName);
-
 
             for (; idx < slots.Count; idx++)
                 ClearAll(slots[idx]);
@@ -142,8 +207,13 @@ namespace Game.Scripts.UI
         {
             if (!toggle) return;
 
-            foreach (var e in toggle.States)
-                e.Show = false;
+            if (toggle.States != null)
+            {
+                foreach (var e in toggle.States)
+                    if (e != null)
+                        e.Show = false;
+            }
+
             toggle.SetExclusive(stateName);
             toggle.ApplyStateVisibility();
         }
@@ -151,8 +221,12 @@ namespace Game.Scripts.UI
         private void ClearAll(UIStateToggle toggle)
         {
             if (!toggle) return;
-            foreach (var e in toggle.States)
-                e.Show = false;
+            if (toggle.States != null)
+            {
+                foreach (var e in toggle.States)
+                    if (e != null)
+                        e.Show = false;
+            }
             toggle.ApplyStateVisibility();
         }
 
@@ -177,10 +251,9 @@ namespace Game.Scripts.UI
             DisableLayoutsForAnimation();
 
             RectTransform canvasRect = null;
-            var canvas = (slotsRoot ? slotsRoot.GetComponentInParent<Canvas>() : GetComponentInParent<Canvas>()) ??
-                         FindFirstObjectByType<Canvas>();
-            if (canvas != null && canvas.rootCanvas != null)
-                canvasRect = canvas.rootCanvas.GetComponent<RectTransform>();
+            _isAnimationComplete = false;
+
+            canvasRect = rootCanvas ? rootCanvas.GetComponent<RectTransform>() : null;
 
             var rect = canvasRect ? canvasRect.rect : new Rect(0, 0, 1920, 1080);
             Vector2 offset = new Vector2(rect.width * offscreenFactor, -rect.height * offscreenFactor);
@@ -210,35 +283,41 @@ namespace Game.Scripts.UI
                 if (perItemStagger > 0f) _seq.AppendInterval(perItemStagger);
             }
 
+            // После появления всех слотов — проигрываем анимацию результата (текст)
+            // Сначала убедимся, что у нас есть ссылка на EndGameResultUI, затем вычислим длительность
+            float labelAnimationTime = GetTotalAnimationDuration();
 
             _seq.AppendCallback(() =>
             {
-                if (endGameResultUI == null)
-                    endGameResultUI = FindFirstObjectByType<EndGameResultUI>();
-
-                if (endGameResultUI != null)
-                {
-                    var labels = endGameResultUI.GetLabelsForOutcome(_lastOutcome);
-                    endGameResultUI.PlayResultAnimation(_lastOutcome, labels);
-                }
+                // Вызываем один раз — EndGameResultUI самостоятельно выберет целевой label
+                PlayResultAnimation(_lastOutcome);
             });
 
-            if (hasTweens)
+            if (hasTweens || labelAnimationTime > 0f)
             {
+                // Ждём время анимации текста (если есть)
+                if (labelAnimationTime > 0f)
+                    _seq.AppendInterval(labelAnimationTime);
+
+                _seq.AppendCallback(() =>
+                {
+                    _isAnimationComplete = true;
+                    OnAnimationComplete?.Invoke();
+                });
+
                 _seq.OnComplete(RestoreLayouts);
                 _seq.OnKill(RestoreLayouts);
             }
             else
             {
-                if (endGameResultUI == null)
-                    endGameResultUI = FindFirstObjectByType<EndGameResultUI>();
-                if (endGameResultUI != null)
+                // Нет анимаций — сразу восстановим лэйауты и пометим как завершено
+                _seq.AppendCallback(() =>
                 {
-                    var labels = endGameResultUI.GetLabelsForOutcome(_lastOutcome);
-                    endGameResultUI.PlayResultAnimation(_lastOutcome, labels);
-                }
-
-                RestoreLayouts();
+                    _isAnimationComplete = true;
+                    OnAnimationComplete?.Invoke();
+                });
+                _seq.OnComplete(RestoreLayouts);
+                _seq.OnKill(RestoreLayouts);
             }
         }
 
@@ -293,6 +372,11 @@ namespace Game.Scripts.UI
         private void OnDisable()
         {
             KillAnim();
+            if (_labelSeq != null && _labelSeq.IsActive())
+            {
+                _labelSeq.Kill();
+                _labelSeq = null;
+            }
         }
 
         private void DisableLayoutsForAnimation()
@@ -345,104 +429,37 @@ namespace Game.Scripts.UI
             _disabledLayouts.Clear();
             _layoutsDisabled = false;
         }
-    }
 
-    public class EndGameResultUI : MonoBehaviour
-    {
-        [Header("UI State Controller")]
-        [SerializeField] private UIStateToggle stateToggle;
-
-        [Header("State Names")]
-        [SerializeField] private string victoryStateName = "Escape";
-        [SerializeField] private string wrongBugsStateName = "Mismatch";
-        [SerializeField] private string timeoutStateName = "Fail";
-
-        [Header("Keys in GameSceneManager persistent data")]
-        [SerializeField] private string outcomeKey = "gameOutcome";
-        [SerializeField] private string totalCaughtKey = "totalCaught";
-        [SerializeField] private string wrongCountKey = "wrongCount";
-
-        [Header("Optional: animated labels")]
-        [Tooltip("CanvasGroup for the victory text (used for animated appearance)")]
-        [SerializeField] private CanvasGroup victoryLabel;
-        [Tooltip("CanvasGroup for the wrong-bugs text (used for animated appearance)")]
-        [SerializeField] private CanvasGroup wrongLabel;
-        [Tooltip("CanvasGroup for the timeout text (used for animated appearance)")]
-        [SerializeField] private CanvasGroup timeoutLabel;
-
-        [Header("Animation")]
-        [SerializeField] private float labelAnimDuration = 0.35f;
-        [SerializeField] private float labelAnimDelay = 0.12f;
-        [SerializeField] private Ease labelEase = Ease.OutBack;
-        [SerializeField] private float labelStartScale = 1.08f;
-        [Tooltip("Vertical start offset (in local units) for the 'appear from top' effect")]
-        [SerializeField] private float labelStartYOffset = 18f;
-
-        [Header("Audio (optional)")]
-        [SerializeField] private AudioSource audioSource;
-        [SerializeField] private AudioClip labelAppearClip;
-        [SerializeField, Range(0f, 1f)] private float labelVolume = 1f;
-
-        private Sequence _labelSeq;
-
-        private void Awake()
+        private void ApplyOutcomeFromName(GameOutcome outcome)
         {
-            if (stateToggle == null)
-                stateToggle = GetComponent<UIStateToggle>();
-
-
-            InitLabelGroup(victoryLabel);
-            InitLabelGroup(wrongLabel);
-            InitLabelGroup(timeoutLabel);
-        }
-
-        private void InitLabelGroup(CanvasGroup cg)
-        {
-            if (cg == null) return;
-            cg.alpha = 0f;
-            cg.transform.localScale = Vector3.one * labelStartScale;
-            cg.gameObject.SetActive(true);
-        }
-
-        private void Start()
-        {
-            string outcomeName = null;
-
-            var gsm = GameSceneManager.Instance;
-            if (gsm != null && gsm.HasPersistentData(outcomeKey))
+            if (resultStateToggle == null)
             {
-                var obj = gsm.GetPersistentData<object>(outcomeKey);
-                outcomeName = obj?.ToString();
-            }
-
-            if (!string.IsNullOrEmpty(outcomeName))
-                ApplyOutcomeFromName(outcomeName);
-            else
-                ApplyOutcomeFromName("Victory");
-        }
-
-        private void ApplyOutcomeFromName(string outcomeName)
-        {
-            if (stateToggle == null)
-            {
-                Debug.LogWarning("[EndGameResultUI] UIStateToggle не назначен!");
+                Debug.LogWarning("[GameOverBugsSummaryUI] UIStateToggle не назначен!");
                 return;
             }
 
             string stateName;
-            if (outcomeName == "Escaped" || outcomeName == "Victory")
-                stateName = victoryStateName;
-            else if (outcomeName == "WrongBugs" || outcomeName == "Wrong")
-                stateName = wrongBugsStateName;
-            else if (outcomeName == "Timeout")
-                stateName = timeoutStateName;
-            else
-                stateName = victoryStateName;
+            switch (outcome)
+            {
+                case GameOutcome.Victory:
+                case GameOutcome.Escaped:
+                    stateName = victoryStateName;
+                    break;
+                case GameOutcome.WrongBugs:
+                    stateName = wrongBugsStateName;
+                    break;
+                case GameOutcome.Timeout:
+                    stateName = timeoutStateName;
+                    break;
+                default:
+                    stateName = victoryStateName;
+                    break;
+            }
 
-            stateToggle.SetExclusive(stateName);
+            resultStateToggle.SetExclusive(stateName);
         }
 
-        public void PlayResultAnimation(object outcome, params CanvasGroup[] sequentialLabels)
+        public void PlayResultAnimation(GameOutcome outcome, params CanvasGroup[] sequentialLabels)
         {
             if (_labelSeq != null && _labelSeq.IsActive())
             {
@@ -451,29 +468,35 @@ namespace Game.Scripts.UI
             }
 
             CanvasGroup target;
-            var outcomeName = outcome?.ToString() ?? string.Empty;
-
-            if (outcomeName == "Escaped" || outcomeName == "Victory")
-                target = victoryLabel;
-            else if (outcomeName == "WrongBugs" || outcomeName == "Wrong")
-                target = wrongLabel;
-            else if (outcomeName == "Timeout")
-                target = timeoutLabel;
-            else
-                target = victoryLabel;
-
-            if (target == null)
+            switch (outcome)
             {
-                ApplyOutcomeFromName(outcomeName);
-                return;
+                case GameOutcome.Victory:
+                case GameOutcome.Escaped:
+                    target = victoryLabel;
+                    break;
+                case GameOutcome.WrongBugs:
+                    target = wrongLabel;
+                    break;
+                case GameOutcome.Timeout:
+                    target = timeoutLabel;
+                    break;
+                default:
+                    target = victoryLabel;
+                    break;
             }
 
+            // Ensure state is set so the correct label is present in UI
+            ApplyOutcomeFromName(outcome);
 
-            ApplyOutcomeFromName(outcomeName);
+            // Hide all and then enable only target (we rely on alpha for visibility)
+            if (victoryLabel != null) victoryLabel.alpha = 0f;
+            if (wrongLabel != null) wrongLabel.alpha = 0f;
+            if (timeoutLabel != null) timeoutLabel.alpha = 0f;
 
+            if (target == null)
+                return;
 
-            target.alpha = 0f;
-            target.transform.localScale = Vector3.one * labelStartScale;
+            target.transform.localScale = GetStartScale();
             target.gameObject.SetActive(true);
 
             Vector3 originalLocalPos = target.transform.localPosition;
@@ -488,25 +511,21 @@ namespace Game.Scripts.UI
             _labelSeq.Join(target.transform.DOScale(Vector3.one, labelAnimDuration).SetEase(labelEase));
             _labelSeq.OnStart(() => { PlayLabelSfx(); });
 
-
             if (sequentialLabels != null && sequentialLabels.Length > 0)
             {
                 foreach (var extra in sequentialLabels)
                 {
                     if (extra == null) continue;
-
-
                     _labelSeq.AppendInterval(0.06f);
                     _labelSeq.AppendCallback(() =>
                     {
                         extra.alpha = 0f;
-                        extra.transform.localScale = Vector3.one * labelStartScale;
+                        extra.transform.localScale = GetStartScale();
                         extra.gameObject.SetActive(true);
 
                         var orig = extra.transform.localPosition;
                         extra.transform.localPosition = orig + new Vector3(0f, labelStartYOffset, 0f);
                     });
-
                     _labelSeq.Append(extra.DOFade(1f, labelAnimDuration).SetEase(Ease.Linear));
                     _labelSeq.Join(extra.transform
                         .DOLocalMoveY(extra.transform.localPosition.y - labelStartYOffset, labelAnimDuration)
@@ -516,34 +535,65 @@ namespace Game.Scripts.UI
                 }
             }
 
-            _labelSeq.OnComplete(() => { });
+            _labelSeq.OnComplete(() => { /* no-op by default */ });
         }
 
         private void PlayLabelSfx()
         {
-            if (audioSource == null || labelAppearClip == null) return;
-            audioSource.PlayOneShot(labelAppearClip, labelVolume);
+            if (resultAudioSource == null || labelAppearClip == null) return;
+            resultAudioSource.PlayOneShot(labelAppearClip, labelVolume);
         }
 
-        private void OnDisable()
+        public CanvasGroup[] GetLabelsForOutcome(GameOutcome outcome)
         {
-            if (_labelSeq != null && _labelSeq.IsActive())
+            // Возвращаем дополнительные лейблы (которые могут идти после основного),
+            // но обычно их нет — вернуть пустой массив безопасно.
+            return Array.Empty<CanvasGroup>();
+        }
+
+        public float GetTotalAnimationDuration()
+        {
+            // Базовая длительность для первого лейбла
+            float duration = labelAnimDuration + labelAnimDelay;
+
+            // Добавим время для дополнительных лейблов
+            int additionalLabels = 0;
+            if (victoryLabel != null) additionalLabels++;
+            if (wrongLabel != null) additionalLabels++;
+            if (timeoutLabel != null) additionalLabels++;
+
+            // Вычитаем 1, так как один лейбл уже учтён в базовой длительности
+            additionalLabels = Mathf.Max(0, additionalLabels - 1);
+
+            // Для каждого дополнительного лейбла добавляем задержку и время анимации
+            duration += additionalLabels * (0.06f + labelAnimDuration);
+
+            // Добавим небольшой запас времени
+            duration += 0.2f;
+
+            return duration;
+        }
+
+        private void InitLabelGroup(CanvasGroup cg)
+        {
+            if (cg == null) return;
+            cg.alpha = 0f;
+            cg.transform.localScale = GetStartScale();
+            // Keep gameObject active so layout can compute; hide by alpha
+            cg.gameObject.SetActive(true);
+        }
+
+        private Vector3 GetStartScale()
+        {
+            switch (flipAxis)
             {
-                _labelSeq.Kill();
-                _labelSeq = null;
+                case FlipAxis.X: return new Vector3(-labelStartScale, 1, 1);
+                case FlipAxis.Y: return new Vector3(1, -labelStartScale, 1);
+                case FlipAxis.GlobalY: return new Vector3(1, 1, -labelStartScale);
+                default: return Vector3.one * labelStartScale;
             }
         }
-
-        public CanvasGroup[] GetLabelsForOutcome(object outcome)
-        {
-            var outcomeName = outcome?.ToString() ?? string.Empty;
-            if (outcomeName == "Escaped" || outcomeName == "Victory")
-                return new[] { victoryLabel };
-            if (outcomeName == "WrongBugs" || outcomeName == "Wrong")
-                return new[] { wrongLabel };
-            if (outcomeName == "Timeout")
-                return new[] { timeoutLabel };
-            return new[] { victoryLabel };
-        }
     }
+
+    public enum FlipAxis { None, X, Y, GlobalY }
 }

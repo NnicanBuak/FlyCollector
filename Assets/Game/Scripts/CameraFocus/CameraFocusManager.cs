@@ -85,8 +85,15 @@ public class /**/CameraFocusManager
             return false;
 
         var top = focusStack.Peek();
-        if (!top.IsAnimating && (escPressed || rmbPressed))
+        
+        // ИСПРАВЛЕНИЕ: Разрешаем выход даже во время анимации
+        if (escPressed || rmbPressed)
         {
+            if (top.IsAnimating)
+            {
+                Debug.Log("[CameraFocusManager] Cancelling focus animation on exit request");
+            }
+            
             top.RequestExit();
             return true;
         }

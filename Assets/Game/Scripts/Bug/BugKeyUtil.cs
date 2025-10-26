@@ -1,5 +1,5 @@
-﻿// BugKeyUtil.cs
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+using Game.Scripts.BugData;
 
 public static class BugKeyUtil
 {
@@ -10,7 +10,7 @@ public static class BugKeyUtil
     {
         if (string.IsNullOrWhiteSpace(raw)) return string.Empty;
 
-        string key = TargetBugsRuntime.NormalizeKey(raw);
+        string key = BugList.NormalizeKey(raw);
         if (string.IsNullOrEmpty(key)) return key;
 
         int dot = key.IndexOf('.');
@@ -30,6 +30,6 @@ public static class BugKeyUtil
         raw = raw.Replace("(Clone)", "").Replace("_Variant", "").Trim();
         var m = keyRx.Match(raw);
         if (!m.Success) return null;
-        return TargetBugsRuntime.NormalizeKey(m.Value);
+        return BugList.NormalizeKey(m.Value);
     }
 }

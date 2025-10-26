@@ -1,9 +1,7 @@
-namespace Game
+public enum GameOutcome
 {
-    public enum GameOutcome
-    {
-        Victory,
-        WrongBugs,
-        Timeout
-    }
+    Escaped,
+    WrongBugs,
+    Timeout
 }
+
